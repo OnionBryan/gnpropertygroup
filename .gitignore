@@ -1,0 +1,31 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Claude Code
+.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+*.ipynb
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Architecture docs (optional - remove if you want to include)
+# napier-portfolio-architecture.md
+
+# Original source photos (if keeping separately)
+Napier Portfolio/
+
+# Stray dirs
+~/

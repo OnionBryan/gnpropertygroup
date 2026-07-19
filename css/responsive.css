@@ -1,0 +1,602 @@
+/* ============================================
+   RESPONSIVE.CSS - Media Queries
+   Forged Light clean theme support. No glass.
+   Architecture: main.css → components.css → gallery.css → responsive.css
+   Breakpoints: 480px, 768px, 1024px, 1200px
+   ============================================ */
+
+/* --------------------------------------------
+   WIDE SCREENS (min-width: 1200px)
+   -------------------------------------------- */
+@media (min-width: 1200px) {
+    .section-container {
+        max-width: 1280px;
+    }
+
+    .hero-title {
+        font-size: 4.5rem;
+    }
+
+    .property-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 36px;
+    }
+
+    .modal-container {
+        max-width: 1200px;
+    }
+
+    .main-image {
+        max-height: 75vh;
+    }
+
+    .thumbnail-item {
+        width: 100px;
+        height: 75px;
+    }
+}
+
+/* --------------------------------------------
+   DESKTOP (max-width: 1024px)
+   -------------------------------------------- */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: var(--text-5xl);
+    }
+
+    .property-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .modal-container {
+        max-width: 95vw;
+    }
+
+    .gallery-arrow {
+        width: 48px;
+        height: 48px;
+    }
+
+    .gallery-arrow svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* --------------------------------------------
+   TABLET (max-width: 768px)
+   -------------------------------------------- */
+@media (max-width: 768px) {
+    /* Typography adjustments */
+    h1 {
+        font-size: var(--text-4xl);
+    }
+
+    h2 {
+        font-size: var(--text-2xl);
+    }
+
+    /* Navigation */
+    .sticky-nav {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .nav-logo {
+        font-size: var(--text-lg);
+    }
+
+    .nav-links {
+        gap: var(--space-1);
+    }
+
+    .nav-link {
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-xs);
+    }
+
+    .nav-contact-btn {
+        display: none; /* Use floating contact button on mobile */
+    }
+
+    /* Hero - disable parallax on tablet/mobile */
+    .hero {
+        padding: var(--space-16) var(--space-4);
+        padding-top: calc(var(--space-16) + 56px);
+        background-attachment: scroll;
+    }
+
+    .hero-title {
+        font-size: var(--text-4xl);
+    }
+
+    .hero-subtitle {
+        font-size: var(--text-lg);
+    }
+
+    /* Section containers */
+    .section-container {
+        padding: var(--space-6) var(--space-4);
+    }
+
+    .section-header {
+        margin-bottom: var(--space-8);
+    }
+
+    /* Property Grid */
+    .property-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+    }
+
+    .card-title {
+        font-size: var(--text-base);
+    }
+
+    .card-subtitle {
+        font-size: var(--text-xs);
+    }
+
+    /* Investment section - polished card */
+    .investment-card {
+        padding: 28px 24px;
+        max-width: 92%;
+    }
+
+    .investment-metrics {
+        gap: 20px;
+    }
+
+    .metric-mini-value {
+        font-size: 1.15rem;
+    }
+
+    /* Modal */
+    .modal-overlay {
+        padding: 0;
+    }
+
+    .modal-container {
+        max-width: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .modal-header {
+        padding: var(--space-4);
+    }
+
+    .modal-title {
+        font-size: var(--text-xl);
+    }
+
+    .modal-main-image {
+        padding: var(--space-2);
+    }
+
+    .gallery-arrow {
+        width: 44px;
+        height: 44px;
+    }
+
+    .gallery-arrow-prev {
+        left: var(--space-2);
+    }
+
+    .gallery-arrow-next {
+        right: var(--space-2);
+    }
+
+    .thumbnail-strip {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .thumbnail-item {
+        width: 70px;
+        height: 52px;
+    }
+
+    /* Description panel */
+    .description-content {
+        padding: var(--space-4);
+    }
+
+    .property-details {
+        gap: var(--space-4);
+    }
+
+    /* Contact panel */
+    .contact-wrapper {
+        bottom: var(--space-4);
+        right: var(--space-4);
+    }
+
+    .contact-panel {
+        width: calc(100vw - var(--space-8));
+        max-width: 320px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: var(--space-8) var(--space-4);
+    }
+}
+
+/* --------------------------------------------
+   MOBILE (max-width: 480px)
+   -------------------------------------------- */
+@media (max-width: 480px) {
+    /* Root font size adjustment for small screens */
+    html {
+        font-size: 14px;
+    }
+
+    /* Navigation - simplified */
+    .sticky-nav {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .nav-container {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .nav-logo {
+        font-size: var(--text-base);
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-link {
+        padding: var(--space-1) var(--space-2);
+        font-size: 10px;
+    }
+
+    /* Hero */
+    .hero {
+        padding: var(--space-12) var(--space-4);
+        padding-top: calc(var(--space-12) + 80px); /* Account for wrapped nav */
+        min-height: auto;
+    }
+
+    .hero-badge {
+        font-size: 9px;
+        padding: 4px 12px;
+        letter-spacing: 1.5px;
+    }
+
+    .hero-title {
+        font-size: 2.1rem;
+        letter-spacing: -0.03em;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .scroll-indicator span {
+        font-size: var(--text-xs);
+    }
+
+    /* Property Grid - single column */
+    .property-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .property-card {
+        border-radius: var(--radius-lg);
+    }
+
+    .card-image-wrapper {
+        aspect-ratio: 3 / 2; /* Slightly shorter ratio on mobile */
+    }
+
+    .card-body {
+        padding: var(--space-4);
+    }
+
+    .card-badge {
+        top: 10px;
+        right: 10px;
+        font-size: 9px;
+        padding: 2px 8px;
+    }
+
+    /* Section headers */
+    .section-title {
+        font-size: var(--text-2xl);
+    }
+
+    .section-subtitle {
+        font-size: var(--text-base);
+    }
+
+    /* Investment section */
+    .investment-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .investment-icon svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .investment-card h3 {
+        font-size: var(--text-xl);
+    }
+
+    .investment-metrics {
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .metric-mini {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+    }
+
+    .metric-mini-value {
+        font-size: var(--text-lg);
+    }
+
+    .metric-mini-label {
+        margin-top: 0;
+    }
+
+    /* Modal */
+    .modal-header {
+        padding: var(--space-3);
+    }
+
+    .modal-title {
+        font-size: var(--text-lg);
+    }
+
+    .modal-address {
+        font-size: var(--text-xs);
+    }
+
+    .modal-close {
+        width: 36px;
+        height: 36px;
+        margin-left: var(--space-2);
+    }
+
+    .modal-main-image {
+        min-height: 200px;
+    }
+
+    .main-image {
+        max-height: 50vh;
+    }
+
+    .gallery-arrow {
+        width: 40px;
+        height: 40px;
+    }
+
+    .gallery-arrow svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .gallery-arrow-prev {
+        left: var(--space-1);
+    }
+
+    .gallery-arrow-next {
+        right: var(--space-1);
+    }
+
+    .image-counter {
+        font-size: var(--text-xs);
+        padding: var(--space-1) var(--space-3);
+    }
+
+    .thumbnail-strip {
+        padding: var(--space-2) var(--space-3);
+        gap: var(--space-1);
+    }
+
+    .thumbnail-item {
+        width: 60px;
+        height: 45px;
+    }
+
+    /* Description panel */
+    .description-toggle {
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-xs);
+    }
+
+    .description-content {
+        padding: var(--space-3) var(--space-4);
+        max-height: 150px;
+    }
+
+    .description-content p {
+        font-size: var(--text-xs);
+    }
+
+    .property-details {
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .detail-item {
+        font-size: var(--text-xs);
+    }
+
+    /* Contact */
+    .contact-wrapper {
+        bottom: var(--space-3);
+        right: var(--space-3);
+    }
+
+    .contact-btn {
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-xs);
+    }
+
+    .contact-btn span {
+        display: none; /* Icon only on small mobile */
+    }
+
+    .contact-panel {
+        width: calc(100vw - var(--space-6));
+        right: calc(-1 * var(--space-3));
+    }
+
+    .contact-panel-header {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .contact-panel-header h3 {
+        font-size: var(--text-base);
+    }
+
+    .contact-panel-content {
+        padding: var(--space-4);
+    }
+
+    .contact-panel-content p {
+        font-size: var(--text-xs);
+    }
+
+    .contact-email {
+        padding: var(--space-3);
+        font-size: var(--text-xs);
+    }
+
+    /* Footer */
+    .footer {
+        padding: var(--space-6) var(--space-4);
+    }
+
+    .footer-brand {
+        font-size: var(--text-lg);
+    }
+
+    .footer-location,
+    .footer-copyright {
+        font-size: var(--text-xs);
+    }
+}
+
+/* --------------------------------------------
+   TOUCH DEVICE OPTIMIZATIONS
+   -------------------------------------------- */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .nav-link {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .gallery-arrow {
+        width: 56px;
+        height: 56px;
+    }
+
+    .thumbnail-item {
+        width: 80px;
+        height: 60px;
+    }
+
+    /* Remove hover effects that don't work on touch */
+    .property-card:hover {
+        transform: none;
+    }
+
+    .property-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* --------------------------------------------
+   REDUCED MOTION
+   Accessibility for users who prefer reduced motion
+   -------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .scroll-arrow {
+        animation: none;
+    }
+}
+
+/* --------------------------------------------
+   HIGH CONTRAST MODE
+   -------------------------------------------- */
+@media (prefers-contrast: high) {
+    :root {
+        --border: #000000;
+        --border2: #333333;
+    }
+
+    .property-card {
+        border-width: 2px;
+    }
+
+    .nav-link.active {
+        outline: 2px solid var(--text);
+    }
+
+    .thumbnail-item.active {
+        border-width: 3px;
+    }
+}
+
+/* --------------------------------------------
+   PRINT STYLES
+   -------------------------------------------- */
+@media print {
+    .sticky-nav,
+    .contact-wrapper,
+    .modal-overlay,
+    .scroll-indicator,
+    .gallery-arrow {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 2rem;
+    }
+
+    .property-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .property-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid var(--border);
+    }
+
+    a {
+        text-decoration: underline;
+    }
+}

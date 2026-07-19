@@ -1,0 +1,440 @@
+/* ============================================
+   MAIN.CSS - Core Variables & Reset
+   Forged Light theme (default). Clean solid modern high-end real estate.
+   NO glassmorphism. Architecture: main.css → components.css → gallery.css → responsive.css
+   ============================================ */
+
+/* --------------------------------------------
+   CSS VARIABLES (:root & Themes)
+   Lodge-inspired clean theme (light default) - warm gold accent, no teal
+   Clean solid colors, NO glassmorphism, NO backdrop-filter, NO blur, NO rgba bg transparencies
+   High-end professional real estate aesthetic (Sotheby's / Berkshire style)
+   -------------------------------------------- */
+:root {
+    /* Base shared */
+    --white: #ffffff;
+    --black: #000000;
+
+    /* Typography - Forge theme fonts + Lato fallback for compatibility */
+    --font-display: 'Syne', 'Lato', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body: 'DM Sans', 'Lato', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'Fragment Mono', 'JetBrains Mono', ui-monospace, monospace;
+    --font-family: var(--font-body);
+    --font-light: 300;
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-bold: 700;
+
+    /* Font Sizes */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+    --text-6xl: 3.75rem;
+
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+
+    /* Forged geometry (rounded clean, not sharp zero) */
+    --radius-sm: 5px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 140ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 400ms ease;
+    --transition-bounce: 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* Z-Index Scale */
+    --z-base: 1;
+    --z-dropdown: 100;
+    --z-sticky: 500;
+    --z-modal: 1000;
+    --z-tooltip: 1500;
+}
+
+/* ============================================
+   FORGED LIGHT THEME (DEFAULT - Light Mode)
+   Exact mapping from forged-light.json
+   All solid colors, excellent contrast, professional high-end RE
+   ============================================ */
+:root,
+[data-theme="light"] {
+    /* Forged Light palette - primary */
+    --bg: #ffffff;
+    --bg2: #f4f6fa;
+    --surface: #ffffff;
+    --surface2: #eef1f6;
+    --surface3: #e2e7ef;
+    --border: #d4dae5;
+    --border2: #b8c1d1;
+
+    --text: #0e1a2b;
+    --text2: #4a5670;   /* secondary text */
+    --text3: #8090a8;   /* muted */
+
+    --accent: #c9a96e;       /* warm gold - primary brand (lodge) */
+    --accent-dim: #a67c52;
+    --accent-glow: #c9a96e;
+    --accent-faint: #f5e8d3; /* very light gold tint for subtle bg */
+
+    --accent2: #c96d28;      /* warm orange-brown */
+    --accent2-dim: #a5571f;
+    --accent2-glow: #c96d28;
+
+    --success: #1d8c5a;
+    --warning: #a37b1f;
+    --danger: #c0392b;
+    --info: #1f5fbf;
+
+    /* Legacy mappings for compatibility (point to new) */
+    --primary: var(--bg2);
+    --secondary: var(--surface2);
+    --accent-text: #1a1814;  /* dark text on warm gold */
+    --light: var(--bg);
+    --text-light: var(--text2);
+
+    --bg-body: var(--bg);
+    --bg-card: var(--surface);
+
+    /* No glass - use solid */
+    --glass: var(--surface);
+    --glass-border: var(--border);
+    --glass-dark: var(--surface2);
+
+    /* Clean gradients using solid palette (no heavy transparency) */
+    --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%); /* minimal for photo legibility only */
+    --gradient-primary: linear-gradient(135deg, var(--bg2) 0%, var(--surface2) 100%);
+    --gradient-card: var(--surface);
+
+    /* Subtle professional shadows (drop shadows only, no glass blur) */
+    --shadow-sm: 0 1px 3px rgba(14, 26, 43, 0.06);
+    --shadow-md: 0 4px 12px rgba(14, 26, 43, 0.08);
+    --shadow-lg: 0 10px 30px rgba(14, 26, 43, 0.10);
+    --shadow-xl: 0 20px 50px rgba(14, 26, 43, 0.12);
+    --shadow-glass: 0 8px 24px rgba(14, 26, 43, 0.06); /* legacy name, now subtle solid shadow */
+
+    /* No blur effects */
+    --blur-sm: 0;
+    --blur-md: 0;
+    --blur-lg: 0;
+}
+
+/* Dark Theme - updated to complement forged but light is default & primary */
+[data-theme="dark"] {
+    --bg: #2a394d;
+    --bg2: #354a61;
+    --surface: #31455c;
+    --surface2: #3c516b;
+    --surface3: #4a627d;
+    --border: #58718a;
+    --border2: #7b92ad;
+
+    --text: #f0f4f8;
+    --text2: #c5d1e0;
+    --text3: #9aa9bc;
+
+    --accent: #c9a96e;
+    --accent-dim: #a67c52;
+    --accent-glow: #c9a96e;
+    --accent-faint: #3c2f22;
+
+    --accent2: #c96d28;
+    --accent2-dim: #a5571f;
+    --accent2-glow: #c96d28;
+
+    --success: #1d8c5a;
+    --warning: #a37b1f;
+    --danger: #c0392b;
+    --info: #1f5fbf;
+
+    --primary: var(--bg2);
+    --secondary: var(--surface2);
+    --accent-text: #1a1814;
+    --light: var(--surface);
+    --text-light: var(--text2);
+
+    --bg-body: var(--bg);
+    --bg-card: var(--surface);
+
+    --glass: var(--surface);
+    --glass-border: var(--border);
+    --glass-dark: var(--surface2);
+
+    --gradient-hero: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.4) 100%);
+    --gradient-primary: linear-gradient(135deg, var(--bg2) 0%, var(--surface2) 100%);
+    --gradient-card: var(--surface);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.28);
+    --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.38);
+    --shadow-glass: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+    --blur-sm: 0;
+    --blur-md: 0;
+    --blur-lg: 0;
+}
+
+
+/* --------------------------------------------
+   CSS RESET
+   Modern reset for consistent cross-browser styling
+   -------------------------------------------- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: var(--font-regular);
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--bg-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove default list styles */
+ul, ol {
+    list-style: none;
+}
+
+/* Remove default link styles */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Reset button styles */
+button {
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Reset image styles */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Reset form elements */
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+/* Remove default focus outline, add custom later */
+:focus {
+    outline: none;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* --------------------------------------------
+   TYPOGRAPHY
+   Forged fonts: Syne for display/headings (elegant high-end), DM Sans for body
+   Excellent contrast, professional typography
+   -------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    color: var(--text);
+    letter-spacing: -0.015em;
+}
+
+h1 {
+    font-size: var(--text-5xl);
+    letter-spacing: -0.025em;
+}
+
+h2 {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.02em;
+}
+
+h3 {
+    font-size: var(--text-xl);
+    letter-spacing: -0.01em;
+}
+
+h4 {
+    font-size: var(--text-lg);
+}
+
+p {
+    color: var(--text2);
+    margin-bottom: var(--space-4);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+.text-light {
+    font-weight: var(--font-light);
+    color: var(--text2);
+}
+
+.text-bold {
+    font-weight: var(--font-bold);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+.text-primary {
+    color: var(--bg2);
+}
+
+.text-accent {
+    color: var(--accent);
+}
+
+/* --------------------------------------------
+   BASE BODY STYLES
+   Layout containers and utility classes
+   -------------------------------------------- */
+
+/* Main section container */
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+}
+
+/* Section header styling */
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+}
+
+.section-title {
+    color: var(--text);
+    margin-bottom: var(--space-4);
+}
+
+.section-subtitle {
+    color: var(--text2);
+    font-size: var(--text-lg);
+    font-weight: var(--font-light);
+}
+
+/* Utility: Hidden but accessible */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Utility: Flex layouts */
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Utility: Grid layouts */
+.grid {
+    display: grid;
+}
+
+/* Utility: Gaps */
+.gap-2 { gap: var(--space-2); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+
+/* Selection styling */
+::selection {
+    background: var(--accent);
+    color: #ffffff;
+}
+
+/* Scrollbar styling (webkit) - clean solid */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--surface2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border2);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}

@@ -1,0 +1,459 @@
+/* ============================================
+   GALLERY.CSS - Photo Gallery & Modal Styles
+   Clean solid forged-light theme. NO glass/blur.
+   Architecture: main.css → components.css → gallery.css → responsive.css
+   ============================================ */
+
+/* --------------------------------------------
+   MODAL OVERLAY
+   Full-screen backdrop (dark for focus on content/photos, no glass)
+   -------------------------------------------- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    background: rgba(0, 0, 0, 0.88);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Prevent body scroll when modal open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* --------------------------------------------
+   MODAL CONTAINER
+   Main modal content wrapper
+   -------------------------------------------- */
+.modal-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 95vh;
+    max-height: 95vh;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.96) translateY(20px);
+    transition: transform var(--transition-base);
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1) translateY(0);
+}
+
+/* --------------------------------------------
+   MODAL HEADER
+   Title, address, close button
+   -------------------------------------------- */
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.modal-title-group {
+    flex: 1;
+}
+
+.modal-title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--text);
+    margin-bottom: var(--space-1);
+}
+
+.modal-address {
+    font-size: var(--text-sm);
+    color: var(--text2);
+    font-weight: var(--font-light);
+}
+
+.modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--text2);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    margin-left: var(--space-4);
+}
+
+.modal-close:hover {
+    color: var(--text);
+    background: var(--surface2);
+}
+
+/* --------------------------------------------
+   MODAL DESCRIPTION
+   Collapsible property details panel
+   -------------------------------------------- */
+.modal-description {
+    border-bottom: 1px solid var(--border);
+}
+
+.description-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    color: var(--text2);
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--surface2);
+    transition: all var(--transition-fast);
+}
+
+.description-toggle:hover {
+    background: var(--accent-faint);
+    color: var(--accent);
+}
+
+.toggle-icon {
+    transition: transform var(--transition-base);
+}
+
+.description-toggle.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.description-content {
+    padding: var(--space-5) var(--space-6);
+    background: var(--surface);
+    max-height: 200px;
+    overflow: hidden;
+    transition: all var(--transition-base);
+}
+
+.description-content.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.description-content p {
+    color: var(--text2);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+}
+
+.property-details {
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text2);
+    font-size: var(--text-sm);
+}
+
+.detail-item svg {
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.detail-item strong {
+    color: var(--text);
+    font-weight: var(--font-bold);
+}
+
+/* --------------------------------------------
+   MAIN IMAGE DISPLAY
+   Central large image with navigation arrows
+   -------------------------------------------- */
+.modal-main-image {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: var(--space-4);
+    background: var(--bg2);
+    overflow: hidden;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-image {
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+    transition: opacity var(--transition-fast);
+}
+
+.main-image.loading {
+    opacity: 0.5;
+}
+
+.image-counter {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    color: var(--text);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+}
+
+/* --------------------------------------------
+   GALLERY ARROWS
+   Prev/Next navigation buttons
+   -------------------------------------------- */
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--text);
+    z-index: 10;
+    transition: all var(--transition-base);
+}
+
+.gallery-arrow:hover {
+    background: var(--accent);
+    color: var(--accent-text);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.gallery-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.gallery-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.gallery-arrow:disabled:hover {
+    background: var(--bg-card);
+    transform: translateY(-50%);
+}
+
+.gallery-arrow-prev {
+    left: var(--space-4);
+}
+
+.gallery-arrow-next {
+    right: var(--space-4);
+}
+
+/* --------------------------------------------
+   THUMBNAIL STRIP
+   Horizontal scrollable thumbnail navigation
+   -------------------------------------------- */
+.thumbnail-strip {
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Custom scrollbar for thumbnail strip */
+.thumbnail-strip::-webkit-scrollbar {
+    height: 6px;
+}
+
+.thumbnail-strip::-webkit-scrollbar-track {
+    background: var(--surface2);
+    border-radius: var(--radius-full);
+}
+
+.thumbnail-strip::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: var(--radius-full);
+}
+
+.thumbnail-item {
+    flex-shrink: 0;
+    width: 80px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    opacity: 0.65;
+    transition: all var(--transition-fast);
+}
+
+.thumbnail-item:hover {
+    opacity: 0.95;
+    border-color: var(--border2);
+}
+
+.thumbnail-item.active {
+    opacity: 1;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+.thumbnail-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --------------------------------------------
+   GALLERY ANIMATIONS
+   -------------------------------------------- */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes imageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes imageSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+
+/* Image transition effect */
+.main-image.slide-in {
+    animation: imageSlideIn 0.3s ease forwards;
+}
+
+/* --------------------------------------------
+   LOADING STATE
+   Placeholder while images load
+   -------------------------------------------- */
+.image-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* --------------------------------------------
+   TOUCH/SWIPE HINTS
+   Mobile touch indicators
+   -------------------------------------------- */
+.swipe-hint {
+    position: absolute;
+    bottom: var(--space-16);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text3);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.modal-overlay.active .swipe-hint {
+    animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+    }
+    20%, 80% {
+        opacity: 1;
+    }
+}

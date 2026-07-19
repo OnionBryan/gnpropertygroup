@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napier Properties | Macon, GA Real Estate Portfolio</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Napier Properties - A residential investment portfolio of historic homes in Macon, Georgia. Located in the Napier Heights Historic District, minutes from Mercer University and Downtown Macon.">
+    <meta name="keywords" content="Macon Georgia real estate, Napier Heights, investment property, Mercer University housing, Macon rental homes">
+    <meta name="author" content="GN Property Group">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Napier Properties | Macon, GA Real Estate Portfolio">
+    <meta property="og:description" content="A residential investment portfolio of historic homes in Macon, Georgia's Napier Heights Historic District.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/2525-napier-ave/exterior.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Fonts: Syne (display) + DM Sans (body) from Forged theme, with Lato fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Modules (per architecture: main → components → gallery → responsive) -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- ============================================
+         HEADER COMPONENT
+         - Logo/Title
+         - Navigation (Portfolio Tab, Investment Tab, Contact Button)
+         ============================================ -->
+    <header class="sticky-nav" id="header">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Napier Properties</a>
+            <nav class="nav-links">
+                <a href="#portfolio" class="nav-link active" data-section="portfolio">Portfolio</a>
+                <a href="macon.html" class="nav-link">Macon</a>
+                <a href="rent.html" class="nav-link">Investment Tools</a>
+                
+                <button class="btn-icon" id="themeToggleBtn" aria-label="Toggle Theme" style="margin-left: 1rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="nav-cta" id="navContactBtn">Contact</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ============================================
+         HERO SECTION
+         - Title: Napier Properties
+         - Subtitle/Tagline
+         - Scroll Indicator
+         ============================================ -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Napier Heights Historic District • Macon, Georgia</span>
+            <h1 class="hero-title">Napier Properties</h1>
+            <p class="hero-subtitle">An exceptional portfolio of historic homes</p>
+            <div class="hero-cta">
+                <a href="#portfolio" class="scroll-indicator">
+                    <span>Explore the Collection</span>
+                    <svg class="scroll-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14M5 12l7 7 7-7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PORTFOLIO SECTION
+         - Section Header
+         - Property Card Grid (6 cards per architecture)
+         ============================================ -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">The Portfolio</h2>
+                <p class="section-subtitle">Six distinguished historic properties. Click any to view the full gallery.</p>
+            </div>
+
+            <!-- Property Card Grid -->
+            <div class="property-grid" id="propertyGrid">
+                <!-- Cards rendered by app.js using data from data.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         INVESTMENT SECTION
+         - Links to rent.html Investment Analysis
+         ============================================ -->
+    <section class="investment-section" id="investment">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Investment Tools &amp; Analysis</h2>
+                <p class="section-subtitle">Transparent metrics for discerning investors</p>
+            </div>
+
+            <div class="investment-preview">
+                <div class="investment-card">
+                    <div class="investment-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 3v18h18"/>
+                            <path d="M18 9l-5 5-4-4-3 3"/>
+                        </svg>
+                    </div>
+                    <h3>Portfolio Snapshot</h3>
+                    <p>Interactive calculators for any small rental portfolio: cap rates, cash-on-cash, DSCR, equity multiple, sensitivity &amp; more. Our Macon portfolio is the working example.</p>
+                    <div class="investment-metrics">
+                        <div class="metric-mini">
+                            <span class="metric-mini-value">$137K</span>
+                            <span class="metric-mini-label">Annual GSR</span>
+                        </div>
+                        <div class="metric-mini">
+                            <span class="metric-mini-value">$86.7K</span>
+                            <span class="metric-mini-label">Stabilized NOI</span>
+                        </div>
+                        <div class="metric-mini">
+                            <span class="metric-mini-value">7.5%</span>
+                            <span class="metric-mini-label">Cap Rate</span>
+                        </div>
+                    </div>
+                    <a href="rent.html" class="btn-primary">Open Investment Tools →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         MODAL GALLERY COMPONENT
+         - Overlay
+         - Content Container
+         - Header (Property Title + Close Button)
+         - Description Panel (collapsible)
+         - Main Image Display
+         - Thumbnail Strip
+         - Prev/Next Arrows
+         ============================================ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container" id="modalContainer">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <h2 class="modal-title" id="modalTitle">Property Name</h2>
+                    <span class="modal-address" id="modalAddress">Address</span>
+                </div>
+                <button class="modal-close" id="modalClose" aria-label="Close gallery">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Description Panel (collapsible) -->
+            <div class="modal-description" id="modalDescription">
+                <button class="description-toggle" id="descriptionToggle">
+                    <span>Property Details</span>
+                    <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </button>
+                <div class="description-content" id="descriptionContent">
+                    <p id="modalDescText">Property description will appear here.</p>
+                    <div class="property-details" id="propertyDetails">
+                        <!-- Property metrics rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Image Display -->
+            <div class="modal-main-image">
+                <button class="gallery-arrow gallery-arrow-prev" id="prevImage" aria-label="Previous image">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+
+                <div class="image-container">
+                    <img src="" alt="" class="main-image" id="mainImage">
+                    <div class="image-counter" id="imageCounter">1 / 10</div>
+                </div>
+
+                <button class="gallery-arrow gallery-arrow-next" id="nextImage" aria-label="Next image">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Thumbnail Strip -->
+            <div class="thumbnail-strip" id="thumbnailStrip">
+                <!-- Thumbnails rendered by gallery.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         CONTACT PANEL
+         - Floating Button (bottom-right)
+         - Expanded Panel (slides up)
+         - Email: gnpropertygroup@gmail.com
+         ============================================ -->
+    <div class="contact-wrapper" id="contactWrapper">
+        <!-- Floating Button -->
+        <button class="contact-btn" id="contactBtn" aria-label="Open contact panel">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span>Contact</span>
+        </button>
+
+        <!-- Expanded Panel -->
+        <div class="contact-panel" id="contactPanel">
+            <div class="contact-panel-header">
+                <h3>Get In Touch</h3>
+                <button class="contact-panel-close" id="contactPanelClose" aria-label="Close contact panel">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="contact-panel-content">
+                <p>Interested in our properties? Reach out for inquiries, tours, or investment opportunities.</p>
+                <a href="mailto:gnpropertygroup@gmail.com" class="contact-email">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    gnpropertygroup@gmail.com
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <p class="footer-brand">Napier Properties</p>
+            <p class="footer-location">Macon, Georgia</p>
+            <p class="footer-copyright">&copy; 2026 GN Property Group. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT MODULES
+         Load order per architecture:
+         1. data.js (property store)
+         2. navigation.js (sticky nav, scroll)
+         3. contact.js (contact panel toggle)
+         4. gallery.js (modal logic)
+         5. app.js (main controller - initializes all)
+         ============================================ -->
+    <script src="js/data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

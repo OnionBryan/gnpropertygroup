@@ -1,0 +1,1328 @@
+ <!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get to Know Macon | Napier Properties</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover Macon, Georgia - home to Mercer University, world-class healthcare, and a legendary music heritage. Learn about the vibrant downtown, dining, and culture near Napier Properties.">
+    <meta name="keywords" content="Macon Georgia, Mercer University, Otis Redding, Allman Brothers, downtown Macon, Capricorn Records, Macon restaurants">
+    <meta name="author" content="GN Property Group">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Get to Know Macon | Napier Properties">
+    <meta property="og:description" content="Discover Macon, Georgia - a city of music, medicine, and momentum. Home to Mercer University and legendary music heritage.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/1045-patterson/1045 Patterson St.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Fonts: Syne (display) + DM Sans (body) from Forged theme + Lato + Playfair (page heritage) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:wght@400;500;700&family=Lato:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Plotly.js for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- Page-specific styles: Premium modern real estate aesthetic (lodge palette, high-end feel) -->
+    <style>
+        /* Refined typography & spacing for high-end feel */
+        .macon-page {
+            --section-gap: 5rem;
+        }
+
+        .macon-page .lead-text {
+            font-size: 1.25rem;
+            line-height: 1.75;
+            max-width: 70ch;
+        }
+
+        .macon-page h1, .macon-page .hero-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: -0.02em;
+        }
+
+        .macon-page .section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.5rem;
+            letter-spacing: -0.015em;
+            position: relative;
+            display: inline-block;
+        }
+
+        .macon-page .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 48px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .macon-page .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 60ch;
+        }
+
+        .macon-page .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.75rem;
+            border-radius: var(--radius-lg);
+        }
+
+        /* Premium modern styles for Macon page (lodge palette, high-end RE) */
+        .macon-hero {
+            /* Forged clean: minimal overlay for legibility on photo */
+            background: linear-gradient(180deg, rgba(14,26,43,0.35) 0%, rgba(14,26,43,0.55) 100%), url('images/1045-patterson/1045 Patterson St.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 68vh;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.25rem;
+            margin: 2.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 1.5rem 1.75rem;
+            text-align: left;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* Clean data tables */
+        .data-table-wrapper {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.875rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table th {
+            background: var(--bg-card);
+            color: var(--text);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.75px;
+        }
+
+        .data-table .number {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--accent-faint);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(49, 130, 206, 0.2);
+        }
+
+        .stat-card.gold {
+            background: var(--accent2-glow, #fef3e8);
+            border: 1px solid var(--border);
+            border-color: var(--border);
+        }
+
+        
+
+        .stat-card.purple {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-color: var(--border);
+        }
+
+        
+
+        .stat-card.gold {
+            background: var(--accent-faint);
+            border: 1px solid var(--border);
+            border-color: var(--border);
+        }
+
+        
+
+        .stat-card.pink {
+            background: linear-gradient(135deg, rgba(237, 100, 166, 0.2) 0%, rgba(213, 63, 140, 0.15) 100%);
+            border-color: var(--border);
+        }
+
+        
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Two column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent) 0%, rgba(49, 130, 206, 0.2) 100%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            margin-left: 1.5px;
+        }
+
+        .timeline-year {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-text {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        /* Music Heritage Cards */
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .legend-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 100%);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border-left: 4px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .legend-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .legend-card.gold { border-left-color: var(--accent); }
+        .legend-card.purple { border-left-color: var(--accent); }
+        .legend-card.gold { border-left-color: var(--accent); }
+        .legend-card.pink { border-left-color: var(--accent); }
+
+        .legend-card h3 {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .legend-card .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .legend-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .legend-card a.venue-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .legend-card a.venue-link:hover {
+            color: var(--text);
+            gap: 0.75rem;
+        }
+
+        /* Quote callout */
+        .quote-callout {
+            background: linear-gradient(135deg, rgba(159, 122, 234, 0.15) 0%, rgba(128, 90, 213, 0.1) 100%);
+            border: 1px solid rgba(159, 122, 234, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 2rem 2.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .quote-callout::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(159, 122, 234, 0.3);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-callout blockquote {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .quote-callout cite {
+            display: block;
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--text-light);
+            font-style: normal;
+        }
+
+        /* Venue grid */
+        .venue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .venue-card {
+            background: var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .venue-card:hover {
+            background: var(--border);
+            border-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .venue-card h4 {
+            color: var(--text);
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .venue-card h4 a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .venue-card h4 a:hover {
+            color: var(--accent);
+        }
+
+        .venue-card .venue-type {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.75rem;
+        }
+
+        .venue-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Places of Interest Categories */
+        .poi-section {
+            margin-bottom: 3rem;
+        }
+
+        .poi-section h3 {
+            font-size: 1.75rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .poi-section h3 .emoji {
+            font-size: 1.5rem;
+        }
+
+        .poi-section .section-desc {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .poi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .poi-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .poi-card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+            border-color: var(--border);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .poi-card h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .poi-card h4 a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.2s ease;
+        }
+
+        .poi-card h4 a:hover {
+            color: var(--accent);
+        }
+
+        .poi-card .poi-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        
+        
+        
+        
+
+        .poi-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Colorful section headers */
+        .section-header-colored {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header-colored .section-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .section-icon.music {
+            background: linear-gradient(135deg, rgba(159, 122, 234, 0.3) 0%, rgba(128, 90, 213, 0.2) 100%);
+            border: 2px solid rgba(159, 122, 234, 0.5);
+        }
+
+        .section-icon.food {
+            background: linear-gradient(135deg, rgba(246, 173, 85, 0.3) 0%, rgba(237, 137, 54, 0.2) 100%);
+            border: 2px solid rgba(246, 173, 85, 0.5);
+        }
+    </style>
+
+    <!-- Additional premium redesign styles -->
+    <style>
+        .macon-page .hero-eyebrow {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .macon-page .hero-meta {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: rgba(241, 234, 216, 0.75);
+            letter-spacing: 0.5px;
+        }
+
+        .macon-page .content-section {
+            padding: 4rem 0;
+        }
+
+        .macon-page .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+        }
+
+        .macon-page .section-title {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .macon-page .lead-text {
+            font-size: 1.15rem;
+            max-width: 65ch;
+        }
+    </style>
+</head>
+<body class="macon-page">
+    <!-- ============================================
+         HEADER COMPONENT
+         ============================================ -->
+    <header class="sticky-nav" id="header">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Napier Properties</a>
+            <nav class="nav-links">
+                <a href="index.html#portfolio" class="nav-link">Portfolio</a>
+                <a href="macon.html" class="nav-link active">Macon</a>
+                <a href="rent.html" class="nav-link">Investment</a>
+                <button class="btn-icon" id="themeToggleBtn" aria-label="Toggle Theme" style="margin-left: 1rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="mailto:gnpropertygroup@gmail.com" class="btn-glass nav-contact-btn">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ============================================
+         HERO SECTION - Modern premium
+         ============================================ -->
+    <section class="hero hero-short macon-hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-eyebrow">Napier Heights Historic District • Macon, Georgia</div>
+            <h1 class="hero-title">Macon</h1>
+            <p class="hero-subtitle">A city where history, education, and culture create enduring value.</p>
+            <div class="hero-meta">
+                <span>Founded 1823</span>
+                <span> • </span>
+                <span>Home to Mercer University</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         MACON AT A GLANCE
+         ============================================ -->
+    <section class="content-section" id="location">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Macon at a Glance</h2>
+                <p class="section-subtitle">A city where Southern heritage and modern momentum create exceptional opportunities for those who value character and community.</p>
+            </div>
+
+            <div class="content-card">
+                <p class="lead-text">The Napier Properties portfolio consists of a contiguous group of homes located within the <strong>Napier Heights Historic District</strong>, added to the National Register of Historic Places in 2020. All properties sit within 2 miles of Mercer University's main campus and minutes from Downtown Macon. This location offers residents and investors a rare combination of historic integrity, walkable access to education and culture, and the quiet confidence of a neighborhood that has stood the test of time.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1.9</div>
+                        <div class="stat-label">Miles to Mercer University</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Minutes to Campus</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2020</div>
+                        <div class="stat-label">National Register of Historic Places</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">6</div>
+                        <div class="stat-label">Properties in the Portfolio</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div>
+                        <h3 class="card-heading" style="margin-top:0;">The College Hill Corridor</h3>
+                        <p>A two-square mile area that elegantly connects Mercer's campus to downtown Macon's business and cultural core. Tree-lined streets and a mix of historic homes create a neighborhood fabric that supports both long-term residents and the transient energy of university life.</p>
+                    </div>
+                    <div>
+                        <h3 class="card-heading" style="margin-top:0;">Historic Architecture</h3>
+                        <p>Craftsman bungalows and cottages built between 1890 and 1930. These homes represent a period of architectural confidence and craftsmanship that continues to attract those who appreciate authenticity over new construction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         MERCER UNIVERSITY SECTION
+         ============================================ -->
+    <section class="content-section alt-bg" id="mercer">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Mercer University</h2>
+                <p class="section-subtitle">Georgia's oldest private university, founded 1833</p>
+            </div>
+
+            <div class="content-card">
+                <div class="two-col">
+                    <div>
+                        <div class="data-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Total Enrollment</td>
+                                        <td class="number">9,200+</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Macon Undergrads (Fall 2024)</td>
+                                        <td class="number">4,690</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Main Campus Size</td>
+                                        <td class="number">150 acres</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Student-Faculty Ratio</td>
+                                        <td class="number">11:1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Schools & Colleges</td>
+                                        <td class="number">12</td>
+                                    </tr>
+                                    <tr class="highlight-row">
+                                        <td>U.S. News Ranking (2026)</td>
+                                        <td class="number">#169 National</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="card-heading">Macon Campus Schools</h3>
+                        <ul class="feature-list">
+                            <li><strong><a href="https://medicine.mercer.edu/" target="_blank" rel="noopener">School of Medicine</a></strong></li>
+                            <li><strong><a href="https://engineering.mercer.edu/" target="_blank" rel="noopener">School of Engineering</a></strong></li>
+                            <li><strong><a href="https://business.mercer.edu/" target="_blank" rel="noopener">School of Business</a></strong></li>
+                            <li><strong><a href="https://liberalarts.mercer.edu/" target="_blank" rel="noopener">College of Liberal Arts & Sciences</a></strong></li>
+                            <li><strong><a href="https://education.mercer.edu/" target="_blank" rel="noopener">College of Education</a></strong></li>
+                            <li><strong><a href="https://music.mercer.edu/" target="_blank" rel="noopener">School of Music</a></strong></li>
+                            <li><strong><a href="https://law.mercer.edu/" target="_blank" rel="noopener">School of Law</a></strong> — 1 mile away on Coleman Hill</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Mercer Student Population Distribution</div>
+                    <div id="mercerChart"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HEALTHCARE SECTION
+         ============================================ -->
+    <section class="content-section" id="healthcare">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Healthcare & Medical Training</h2>
+                <p class="section-subtitle">A regional hub for medical education and care</p>
+            </div>
+
+            <div class="content-card">
+                <div class="stats-grid">
+                    <div class="stat-card gold">
+                        <div class="stat-value">637</div>
+                        <div class="stat-label">Beds at Navicent</div>
+                    </div>
+                    <div class="stat-card gold">
+                        <div class="stat-value">#2</div>
+                        <div class="stat-label">Largest in Georgia</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-value">100+</div>
+                        <div class="stat-label">Medical Residents</div>
+                    </div>
+                    <div class="stat-card pink">
+                        <div class="stat-value">750K</div>
+                        <div class="stat-label">Service Population</div>
+                    </div>
+                </div>
+
+                <div class="data-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Hospital</th>
+                                <th>Beds</th>
+                                <th>Designation</th>
+                                <th>Distance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td><a href="https://navicenthealth.org/service-center/the-medical-center" target="_blank" rel="noopener">Atrium Health Navicent Medical Center</a></td>
+                                <td class="number">637</td>
+                                <td>Level 1 Trauma, Magnet®</td>
+                                <td>2.5 mi</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.piedmont.org/locations/piedmont-macon" target="_blank" rel="noopener">Piedmont Macon Medical Center</a></td>
+                                <td class="number">310</td>
+                                <td>24-Hour Emergency</td>
+                                <td>3.1 mi</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.northside.com/locations/northside-hospital-macon" target="_blank" rel="noopener">Macon Northside Hospital</a></td>
+                                <td class="number">103</td>
+                                <td>Neighborhood Facility</td>
+                                <td>4.2 mi</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Healthcare Capacity Comparison</div>
+                    <div id="hospitalChart"></div>
+                </div>
+
+                <div class="highlight-box">
+                    <p>Medical residents receive teaching appointments to Mercer University School of Medicine, with access to campus facilities including the $35 million student center with indoor pool, track, and fitness facilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         DOWNTOWN MACON SECTION
+         ============================================ -->
+    <section class="content-section alt-bg" id="downtown">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Downtown Macon</h2>
+                <p class="section-subtitle">2024 Great American Main Street Award Winner</p>
+            </div>
+
+            <div class="content-card">
+                <div class="stats-grid">
+                    <div class="stat-card gold">
+                        <div class="stat-value">$1B</div>
+                        <div class="stat-label">Total Investment</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-value">171</div>
+                        <div class="stat-label">New Businesses</div>
+                    </div>
+                    <div class="stat-card gold">
+                        <div class="stat-value">84%</div>
+                        <div class="stat-label">Storefront Occupancy</div>
+                    </div>
+                    <div class="stat-card pink">
+                        <div class="stat-value">1,000+</div>
+                        <div class="stat-label">Downtown Residents</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <div>
+                        <h3 class="card-heading">Revitalization Timeline</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-year">1996</div>
+                                <div class="timeline-text">NewTown Macon founded; 30% storefront occupancy</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">2009</div>
+                                <div class="timeline-text">College Hill Alliance established with Knight Foundation grant</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">2020</div>
+                                <div class="timeline-text">Napier Heights added to National Register of Historic Places</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">2024</div>
+                                <div class="timeline-text">Great American Main Street Award; 84% occupancy achieved</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-year">2025</div>
+                                <div class="timeline-text">Otis Redding Center for the Arts opening</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="card-heading">Recent Developments</h3>
+                        <ul class="feature-list">
+                            <li><strong>Atrium Health Amphitheater</strong> — 10,000-seat venue opened 2024</li>
+                            <li><strong>Rhythm and Rally</strong> — World's largest indoor pickleball (150,000 sq ft)</li>
+                            <li><strong>753 Downtown Lofts</strong> — Urban living in historic buildings</li>
+                            <li><strong>109 Buildings Rehabilitated</strong> — Historic preservation efforts</li>
+                            <li><strong>50 Black-Owned Businesses</strong> — Up from 28 via Downtown Diversity Initiative</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Downtown Macon Growth (1996-2024)</div>
+                    <div id="downtownChart"></div>
+                </div>
+
+                <div class="highlight-box">
+                    <p>Featured in <em>Travel+Leisure's</em> "50 Best Places to Travel in 2024," <em>AARP's</em> "8 Affordable U.S. Destinations for 2024," and <em>Southern Living's</em> "12 Southern Trips We Can't Wait to Plan."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         MUSIC HERITAGE SECTION
+         ============================================ -->
+    <section class="content-section" id="music">
+        <div class="section-container">
+            <div class="section-header-colored">
+                <div class="section-icon music">🎸</div>
+                <h2 class="section-title">Music Heritage</h2>
+                <p class="section-subtitle">Birthplace of Southern Rock and Soul</p>
+            </div>
+
+            <div class="content-card">
+                <div class="quote-callout">
+                    <blockquote>There are three M's in the history of rock & roll — Memphis, Muscle Shoals, and Macon.</blockquote>
+                    <cite>— Bonnie Bramlett, rock and soul vocalist</cite>
+                </div>
+
+                <p class="lead-text">It's impossible to explain how little Macon, Georgia, became an epicenter of influence on modern pop music. Aside from Memphis and Detroit, it would be difficult to find one city that has produced more groundbreaking musical figures in the 20th century.</p>
+
+                <!-- Music Legends Grid -->
+                <div class="legend-grid">
+                    <div class="legend-card gold">
+                        <h3>Little Richard</h3>
+                        <div class="subtitle">The Architect of Rock & Roll</div>
+                        <p>Born Richard Wayne Penniman in Macon in 1932. One of the original inductees into the Rock & Roll Hall of Fame. His explosive performances and iconic songs like "Tutti Frutti" and "Long Tall Sally" shaped the sound of rock music forever.</p>
+                        <a href="https://visitmacon.org/music/little-richard/" target="_blank" rel="noopener" class="venue-link">
+                            Visit Little Richard House →
+                        </a>
+                    </div>
+
+                    <div class="legend-card purple">
+                        <h3>Otis Redding</h3>
+                        <div class="subtitle">King of Soul</div>
+                        <p>Grew up in Macon, dropped out at 15 to work with Little Richard's backing band, the Upsetters. "I would not be here without Richard — he is my inspiration." His "(Sittin' On) The Dock of the Bay" became the first posthumous #1 single.</p>
+                        <a href="https://otisreddingfoundation.org/" target="_blank" rel="noopener" class="venue-link">
+                            Otis Redding Foundation →
+                        </a>
+                    </div>
+
+                    <div class="legend-card gold">
+                        <h3>The Allman Brothers Band</h3>
+                        <div class="subtitle">Southern Rock Pioneers</div>
+                        <p>Signed with Phil Walden's Capricorn Records in 1969 and made Macon their home. Lived communally at "The Big House," rehearsed constantly, and found songwriting inspiration in Rose Hill Cemetery.</p>
+                        <a href="https://www.thebighousemuseum.com/" target="_blank" rel="noopener" class="venue-link">
+                            The Big House Museum →
+                        </a>
+                    </div>
+
+                    <div class="legend-card pink">
+                        <h3>Capricorn Records</h3>
+                        <div class="subtitle">1969-1979: The Southern Rock Era</div>
+                        <p>Founded by Phil Walden, who managed Otis Redding, Percy Sledge, and Sam & Dave. Between 1969 and 1979, produced 9 platinum albums, 17 gold albums, and 5 gold singles. Launched the Allman Brothers, Wet Willie, and Marshall Tucker Band.</p>
+                        <a href="https://capricorn.mercer.edu/" target="_blank" rel="noopener" class="venue-link">
+                            Mercer Music at Capricorn →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Historic Venues -->
+                <h3 class="card-heading" style="margin-top: 3rem;">Historic & Live Music Venues</h3>
+                <div class="venue-grid">
+                    <div class="venue-card">
+                        <h4><a href="https://historicgrants.com/" target="_blank" rel="noopener">Grant's Lounge</a></h4>
+                        <div class="venue-type">Original Home of Southern Rock • Est. 1971</div>
+                        <p>Three blocks from Capricorn Studios, Grant's hosted all Capricorn artists for legendary jam sessions. Tom Petty, Eric Clapton, and the Marshall Tucker Band all played here. Live music Wed-Sun with open jams on Sunday.</p>
+                    </div>
+
+                    <div class="venue-card">
+                        <h4><a href="https://www.douglasstheatre.org/" target="_blank" rel="noopener">The Douglass Theatre</a></h4>
+                        <div class="venue-type">Historic Venue • Est. 1921</div>
+                        <p>Founded by Charles H. Douglass, Macon's first African American millionaire. Hosted Bessie Smith, Ma Rainey, Duke Ellington, and Cab Calloway. Young Otis Redding performed here on the "Teenage Party" talent show.</p>
+                    </div>
+
+                    <div class="venue-card">
+                        <h4><a href="https://capricorn.mercer.edu/" target="_blank" rel="noopener">Capricorn Sound Studios</a></h4>
+                        <div class="venue-type">Recording Studio & Museum</div>
+                        <p>Now "Mercer Music at Capricorn" — the fully restored studio offers recording facilities, a music incubator for young musicians, and an interpretive center with historic artifacts and interactive exhibits.</p>
+                    </div>
+
+                    <div class="venue-card">
+                        <h4><a href="https://visitmacon.org/directory/hummingbird-stage-taproom/" target="_blank" rel="noopener">The Hummingbird Stage & Taproom</a></h4>
+                        <div class="venue-type">Live Music Venue</div>
+                        <p>A beloved live music venue in the heart of downtown Macon. Features touring bands and local artists across rock, country, blues, and Americana genres.</p>
+                    </div>
+
+                    <div class="venue-card">
+                        <h4><a href="https://visitmacon.org/directory/jba/" target="_blank" rel="noopener">JBA</a></h4>
+                        <div class="venue-type">Jazz Bar • 425 Cherry St</div>
+                        <p>Intimate music venue featuring live jazz, jam nights, dart tournaments, and karaoke. Craft cocktails with fresh house-made ingredients and an extensive whiskey selection.</p>
+                    </div>
+
+                    <div class="venue-card">
+                        <h4><a href="https://visitmacon.org/music/otis-redding/" target="_blank" rel="noopener">Otis Redding Center for the Arts</a></h4>
+                        <div class="venue-type">Opening 2025</div>
+                        <p>Fulfills Redding's dream of music education for Macon's children. Located near his statue at Gateway Park. Will offer programs for aspiring musicians as young as 4 years old.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PLACES OF INTEREST SECTION
+         ============================================ -->
+    <section class="content-section alt-bg" id="places">
+        <div class="section-container">
+            <div class="section-header-colored">
+                <div class="section-icon food">🍽️</div>
+                <h2 class="section-title">Places of Interest</h2>
+                <p class="section-subtitle">Food, Culture & Entertainment</p>
+            </div>
+
+            <div class="content-card">
+                <!-- DINING -->
+                <div class="poi-section">
+                    <h3>Dining</h3>
+                    <p class="section-desc">From farm-to-table fine dining to Southern comfort food — downtown Macon's restaurant scene is booming.</p>
+
+                    <div class="poi-grid">
+                        <div class="poi-card">
+                            <h4><a href="https://www.dovetailmacon.com/" target="_blank" rel="noopener">Dovetail</a></h4>
+                            <div class="poi-type dining">Fine Dining • Farm-to-Table</div>
+                            <p>Ranked #18 best restaurant in Georgia by Yelp. Pre-Prohibition cocktails and seasonal Southern cuisine. Reservations recommended.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://loommacon.com/" target="_blank" rel="noopener">Loom Comfort Kitchen</a></h4>
+                            <div class="poi-type dining">Hotel Forty Five • Southern</div>
+                            <p>Chef-driven restaurant blending southern charm with soulful sophistication. Heritage-rooted dishes with seasonal ingredients.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.downtowngrillmacon.com/" target="_blank" rel="noopener">Downtown Grill</a></h4>
+                            <div class="poi-type dining">Steakhouse • Fine Dining</div>
+                            <p>A Macon treasure since 1997. English steakhouse specializing in prime Black Angus steaks, fresh pasta, and decadent desserts.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.kudzuseafood.com/" target="_blank" rel="noopener">Kudzu Seafood Company</a></h4>
+                            <div class="poi-type dining">Seafood • Gulf Coast</div>
+                            <p>Authentic Gulf coast seafood with house-made breading and Po' Boy bread from Gambino's in Louisiana. Rooftop bar "The Wheelhouse" with downtown views.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.rookerymacon.com/" target="_blank" rel="noopener">The Rookery</a></h4>
+                            <div class="poi-type dining">Burgers • Casual</div>
+                            <p>A Macon landmark. Creative gourmet burgers, old-fashioned milkshakes, and rock & roll atmosphere. One of the city's most noticeable icons.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.ocmulgeebrewpub.com/" target="_blank" rel="noopener">Ocmulgee Brewpub</a></h4>
+                            <div class="poi-type dining">Brewery • Burgers</div>
+                            <p>Handcrafted burgers paired with handcrafted beers. The perfect spot for gourmet pub fare and local brews.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.bearfoottavern.com/" target="_blank" rel="noopener">Bearfoot Tavern</a></h4>
+                            <div class="poi-type dining">European-American Pub</div>
+                            <p>50+ beers on tap, European and American pub cuisine, live music, and bottomless mimosa brunch. Great for watching games.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.parishoncherrystreet.com/" target="_blank" rel="noopener">Parish on Cherry St.</a></h4>
+                            <div class="poi-type dining">Louisiana • Cajun</div>
+                            <p>Your favorite NOLA dishes in downtown Macon. Known for shrimp & Georgia grits and flavorful gumbo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BARS & NIGHTLIFE -->
+                <div class="poi-section">
+                    <h3><span class="emoji">🍸</span> Bars & Nightlife</h3>
+                    <p class="section-desc">Cherry Street is the heart of Macon's nightlife — from craft cocktail lounges to hidden speakeasies.</p>
+
+                    <div class="poi-grid">
+                        <div class="poi-card">
+                            <h4><a href="https://www.rebootmacon.com/" target="_blank" rel="noopener">Reboot Retrocade & Bar</a></h4>
+                            <div class="poi-type bar">Arcade Bar • 566 Cherry St</div>
+                            <p>Macon's favorite retro arcade and bar. Classic arcade games, pinball machines, full bar, and custom nerdy cocktails.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.cashmansmacon.com/" target="_blank" rel="noopener">Cashman's Pub</a></h4>
+                            <div class="poi-type bar">Irish Pub • Cherry Street</div>
+                            <p>Neighborhood pub with an authentic atmosphere. Great for casual drinks and conversation in downtown Macon.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://visitmacon.org/directory/the-mill/" target="_blank" rel="noopener">The Mill</a></h4>
+                            <div class="poi-type bar">Nightclub • Dance</div>
+                            <p>Middle Georgia's newest nightlife destination. Front bar for low-key evenings, huge dance floor with DJ, premium sound, and light show.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://visitmacon.org/directory/the-daisy-tequila-bar/" target="_blank" rel="noopener">The Daisy Tequila Bar</a></h4>
+                            <div class="poi-type bar">Tequila Bar • Rooftop</div>
+                            <p>Specializing in tequila and mezcal cocktails with a vibrant atmosphere in the heart of downtown.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://visitmacon.org/things-to-do/nightlife/" target="_blank" rel="noopener">Hidden Speakeasies</a></h4>
+                            <div class="poi-type bar">Craft Cocktails • Secret</div>
+                            <p>Discover two hidden gems near The Woodward Hotel: <strong>Ours (Quill)</strong> and <strong>The Monkey's Paw</strong>, a tiki speakeasy.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MUSEUMS & CULTURE -->
+                <div class="poi-section">
+                    <h3><span class="emoji">🏛️</span> Museums & Culture</h3>
+                    <p class="section-desc">From ancient mounds to African American heritage — Macon's cultural institutions are world-class.</p>
+
+                    <div class="poi-grid">
+                        <div class="poi-card">
+                            <h4><a href="https://tubmanmuseum.com/" target="_blank" rel="noopener">Tubman Museum</a></h4>
+                            <div class="poi-type museum">African American History</div>
+                            <p>The largest museum in the Southeast devoted to African American art, history and culture. 49,500 sq ft facility with galleries including "From Africa to America."</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.nps.gov/ocmu/" target="_blank" rel="noopener">Ocmulgee Mounds National Historical Park</a></h4>
+                            <div class="poi-type museum">National Park • 17,000 Years</div>
+                            <p>Earth lodge with original floors from 1010 AD. Walk atop the Great Temple Mound for views of downtown Macon. One of the oldest continuously occupied sites in North America.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.thebighousemuseum.com/" target="_blank" rel="noopener">The Big House Museum</a></h4>
+                            <div class="poi-type museum">Allman Brothers Band</div>
+                            <p>The communal home where the Allman Brothers Band lived from 1970-1973. Features personal artifacts, instruments, and memorabilia from the Southern rock pioneers.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.georgiastateparks.org/HayHouse" target="_blank" rel="noopener">Hay House</a></h4>
+                            <div class="poi-type museum">Historic Mansion • 1859</div>
+                            <p>An 18,000 sq ft Italian Renaissance Revival mansion. Called the "Palace of the South" — features period rooms, secret passages, and stunning architecture.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://gshf.org/" target="_blank" rel="noopener">Georgia Sports Hall of Fame</a></h4>
+                            <div class="poi-type museum">Sports History</div>
+                            <p>43,000 sq ft museum honoring Georgia's greatest athletes. Interactive exhibits and memorabilia from legends across all sports.</p>
+                        </div>
+
+                        <div class="poi-card">
+                            <h4><a href="https://www.masmacon.org/" target="_blank" rel="noopener">Museum of Arts and Sciences</a></h4>
+                            <div class="poi-type museum">Art • Science • Planetarium</div>
+                            <p>Middle Georgia's museum of discovery featuring art galleries, science exhibits, a planetarium, and nature trails. Great for families.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SOURCES SECTION
+         ============================================ -->
+    <section class="content-section" id="sources">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Sources</h2>
+            </div>
+
+            <div class="content-card sources-card">
+                <ul class="sources-list">
+                    <li><a href="https://www.mercer.edu/about-mercer/facts-and-figures/" target="_blank" rel="noopener">Mercer University Facts & Figures</a></li>
+                    <li><a href="https://medicine.mercer.edu/about-the-school/campus-locations/" target="_blank" rel="noopener">Mercer School of Medicine Campus Locations</a></li>
+                    <li><a href="https://navicenthealth.org/service-center/the-medical-center" target="_blank" rel="noopener">Atrium Health Navicent Medical Center</a></li>
+                    <li><a href="https://visitmacon.org/music/" target="_blank" rel="noopener">Visit Macon — Music Heritage</a></li>
+                    <li><a href="https://www.rollingstone.com/music/music-country/capricorn-studios-allman-brothers-southern-rock-923818/" target="_blank" rel="noopener">Rolling Stone — Inside the Rebirth of Capricorn Sound Studios</a></li>
+                    <li><a href="https://www.artsatl.org/remembrance-how-little-richard-invented-rock-n-roll-in-macon-georgia/" target="_blank" rel="noopener">ArtsATL — How Little Richard Invented Rock 'n' Roll in Macon</a></li>
+                    <li><a href="https://www.georgiaencyclopedia.org/articles/arts-culture/otis-redding-1941-1967/" target="_blank" rel="noopener">New Georgia Encyclopedia — Otis Redding</a></li>
+                    <li><a href="https://historicgrants.com/" target="_blank" rel="noopener">Grant's Lounge — Original Home of Southern Rock</a></li>
+                    <li><a href="https://www.douglasstheatre.org/history/" target="_blank" rel="noopener">The Douglass Theatre — History</a></li>
+                    <li><a href="https://visitmacon.org/blog/top-9-restaurants-in-downtown-macon/" target="_blank" rel="noopener">Visit Macon — Top 9 Restaurants in Downtown Macon</a></li>
+                    <li><a href="https://visitmacon.org/things-to-do/nightlife/" target="_blank" rel="noopener">Visit Macon — Nightlife</a></li>
+                    <li><a href="https://tubmanmuseum.com/" target="_blank" rel="noopener">Tubman African American Museum</a></li>
+                    <li><a href="https://www.nps.gov/ocmu/" target="_blank" rel="noopener">National Park Service — Ocmulgee Mounds</a></li>
+                    <li><a href="http://historicmacon.org/macons-historic-districts" target="_blank" rel="noopener">Historic Macon Foundation — National Register Districts</a></li>
+                    <li><a href="https://www.gpb.org/news/2024/04/02/how-downtown-macons-revitalization-going-effort-has-proven-worthy-of-award-chance" target="_blank" rel="noopener">Georgia Public Broadcasting — Downtown Macon Revitalization</a></li>
+                    <li><a href="https://georgiamainstreet.org/news/macon-ga-named-2024-great-american-main-street/" target="_blank" rel="noopener">Georgia Main Street — 2024 Great American Main Street Award</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <p class="footer-brand">Napier Properties</p>
+            <p class="footer-location">Macon, Georgia</p>
+            <p class="footer-copyright">&copy; 2024 GN Property Group. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT - Charts
+         ============================================ -->
+    <script>
+        // Chart color scheme — Lodge palette
+        const chartColors = {
+            primary: '#c9a96e',
+            secondary: '#6b5d52',
+            accent: '#c9a96e',
+            gold: '#c9a96e',
+            pink: '#8a7e6d',
+            text: 'rgba(26, 24, 20, 0.85)',
+            grid: 'rgba(26, 24, 20, 0.1)'
+        };
+
+        const chartLayout = {
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: {
+                family: 'Lato, sans-serif',
+                color: chartColors.text
+            },
+            margin: { t: 30, r: 30, b: 50, l: 60 }
+        };
+
+        const chartConfig = {
+            displayModeBar: false,
+            responsive: true
+        };
+
+        // Mercer Student Population Pie Chart - more colorful
+        Plotly.newPlot('mercerChart', [{
+            type: 'pie',
+            values: [4690, 2500, 1200, 810],
+            labels: ['Macon Undergrads', 'Atlanta Campus', 'Graduate Programs', 'Medical/Law'],
+            marker: {
+                colors: [chartColors.primary, chartColors.secondary, chartColors.accent, chartColors.gold]
+            },
+            textinfo: 'label+percent',
+            textposition: 'outside',
+            hole: 0.4,
+            textfont: { size: 13 }
+        }], {
+            ...chartLayout,
+            showlegend: false,
+            height: 350
+        }, chartConfig);
+
+        // Hospital Capacity Bar Chart - gradient colors
+        Plotly.newPlot('hospitalChart', [{
+            type: 'bar',
+            x: ['Navicent Medical Center', 'Piedmont Macon', 'Northside Hospital'],
+            y: [637, 310, 103],
+            marker: {
+                color: [chartColors.accent, chartColors.secondary, chartColors.pink],
+                line: { color: 'rgba(255,255,255,0.3)', width: 1 }
+            },
+            text: ['637 beds', '310 beds', '103 beds'],
+            textposition: 'outside',
+            textfont: { color: chartColors.text }
+        }], {
+            ...chartLayout,
+            height: 300,
+            xaxis: {
+                tickfont: { size: 12 },
+                gridcolor: chartColors.grid
+            },
+            yaxis: {
+                title: 'Number of Beds',
+                gridcolor: chartColors.grid,
+                tickfont: { size: 11 }
+            }
+        }, chartConfig);
+
+        // Downtown Growth Line Chart - dual axis with better colors
+        Plotly.newPlot('downtownChart', [
+            {
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Storefront Occupancy',
+                x: [1996, 2005, 2010, 2015, 2020, 2024],
+                y: [30, 42, 55, 68, 76, 84],
+                line: { color: chartColors.gold, width: 3 },
+                marker: { size: 10, color: chartColors.gold }
+            },
+            {
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Downtown Lofts',
+                x: [1996, 2005, 2010, 2015, 2020, 2024],
+                y: [10, 80, 200, 400, 580, 753],
+                yaxis: 'y2',
+                line: { color: chartColors.secondary, width: 3 },
+                marker: { size: 10, color: chartColors.secondary }
+            }
+        ], {
+            ...chartLayout,
+            height: 350,
+            xaxis: {
+                title: 'Year',
+                gridcolor: chartColors.grid,
+                tickfont: { size: 11 }
+            },
+            yaxis: {
+                title: 'Occupancy %',
+                gridcolor: chartColors.grid,
+                tickfont: { size: 11 },
+                titlefont: { color: chartColors.gold },
+                range: [0, 100]
+            },
+            yaxis2: {
+                title: 'Downtown Lofts',
+                overlaying: 'y',
+                side: 'right',
+                tickfont: { size: 11, color: chartColors.secondary },
+                titlefont: { color: chartColors.secondary },
+                range: [0, 800]
+            },
+            legend: {
+                x: 0.5,
+                y: 1.15,
+                xanchor: 'center',
+                orientation: 'h',
+                font: { size: 12 }
+            }
+        }, chartConfig);
+    </script>
+
+    <!-- Navigation JS -->
+    <script src="js/data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+/script>
+</body>
+</html>
+l>
