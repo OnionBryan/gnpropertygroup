@@ -29,3 +29,7 @@ Napier Portfolio/
 
 # Stray dirs
 ~/
+
+# Local ops scripts (not part of the website)
+site-health.sh
+.playwright-mcp/
