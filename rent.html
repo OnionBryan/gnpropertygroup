@@ -11,9 +11,18 @@
     <meta name="author" content="GN Property Group">
 
     <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="Real Estate Investment Calculator | Multifamily Deal Analyzer">
-    <meta property="og:description" content="Powerful free tools for real estate investors: live scenario analysis, sensitivity matrices, amortization schedules, and pro forma projections. Example uses a 5-property Macon, GA rental portfolio.">
+    <meta property="og:title" content="Investment Calculator | GN Property Group">
+    <meta property="og:description" content="Interactive multifamily underwriting: cap rate, cash-on-cash, DSCR, equity multiple, IRR sensitivity, and pro formas. Free tools from GN Property Group — Napier portfolio example, Macon GA.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gnpropertygroup.com/rent.html">
+    <meta property="og:site_name" content="GN Property Group">
+    <meta property="og:image" content="https://gnpropertygroup.com/images/2525-napier-ave/2525%20Napier%20Ave.jpg">
+    <meta property="og:image:alt" content="Napier Avenue rental portfolio — Macon, Georgia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Investment Calculator | GN Property Group">
+    <meta name="twitter:description" content="Free real estate investment calculator: cash-on-cash, DSCR, cap rate, IRR. Model any small rental deal.">
+    <meta name="twitter:image" content="https://gnpropertygroup.com/images/2525-napier-ave/2525%20Napier%20Ave.jpg">
+    <link rel="canonical" href="https://gnpropertygroup.com/rent.html">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -37,6 +46,11 @@
             box-sizing: border-box;
         }
 
+        html {
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: var(--font-body);
             line-height: 1.65;
@@ -45,6 +59,8 @@
             max-width: 1100px;
             margin: 0 auto;
             padding: 40px 60px;
+            overflow-x: hidden;
+            width: 100%;
         }
 
         /* Header */
@@ -134,11 +150,43 @@
         }
 
         /* Tables */
+        .table-scroll {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 15px 0;
+            /* Contain wide tables so they scroll instead of expanding the page */
+            display: block;
+        }
+
+        .table-scroll table {
+            margin: 0;
+            width: 100%;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
             font-size: 14px;
+        }
+
+        section,
+        .header,
+        .controls-panel,
+        .chart-wrapper,
+        .paydown-panel,
+        .value-box,
+        .metric-card,
+        .callout,
+        .math-block {
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        canvas {
+            max-width: 100%;
         }
 
         th {
@@ -276,6 +324,13 @@
             margin: 20px 0;
             border-radius: 0 8px 8px 0;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            max-width: 100%;
+        }
+
+        .math-block mjx-container {
+            overflow-x: auto;
+            max-width: 100%;
         }
 
         /* Lists */
@@ -407,6 +462,86 @@
             text-align: center;
         }
 
+        .tool-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+            align-items: center;
+        }
+
+        .tool-btn {
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: var(--font-body);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tool-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .tool-btn.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--accent-text);
+        }
+
+        .tool-btn.primary:hover {
+            filter: brightness(0.95);
+            color: var(--accent-text);
+        }
+
+        .tool-btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .tool-status {
+            font-size: 12px;
+            color: var(--text2);
+            min-height: 1.2em;
+        }
+
+        .disclaimer-note {
+            font-size: 12px;
+            color: var(--text2);
+            background: var(--light);
+            border-left: 3px solid var(--border);
+            padding: 10px 14px;
+            margin: 16px 0 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .rent-input {
+            width: 100%;
+            max-width: 110px;
+            padding: 6px 8px;
+            font-size: 13px;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            text-align: right;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-card);
+            color: var(--text);
+        }
+
+        .rent-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        #printScenarioSummary {
+            display: none;
+        }
+
         /* Sensitivity Matrix */
         .sensitivity-matrix {
             margin: 20px 0;
@@ -444,7 +579,7 @@
         /* PDF Export Button */
         .export-btn {
             position: fixed;
-            top: 20px;
+            top: 100px;
             right: 20px;
             background: var(--accent);
             color: var(--accent-text);
@@ -579,6 +714,22 @@
         .site-nav-contact:hover {
             background: var(--accent);
             color: var(--accent-text);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            cursor: pointer;
+            color: var(--text);
+            line-height: 0;
+        }
+
+        .nav-toggle:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
 
         /* Section Navigation (below site header) */
@@ -765,23 +916,371 @@
             color: var(--warning);
         }
 
-        @media print {
-            .export-btn, .sticky-nav, .site-header {
+        /* --------------------------------------------
+           RESPONSIVE — tablet & mobile
+           rent.html uses self-contained styles (does not
+           load css/responsive.css), so breakpoints live here.
+           -------------------------------------------- */
+        @media (max-width: 1024px) {
+            body {
+                padding: 28px 28px;
+                padding-top: 110px;
+            }
+
+            .controls-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .live-metrics {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .paydown-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .export-btn {
+                top: auto;
+                bottom: 20px;
+                right: 16px;
+                padding: 10px 14px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px 14px 80px;
+                padding-top: 108px;
+            }
+
+            .site-header {
+                padding: 0.65rem 1rem;
+            }
+
+            .site-nav-container {
+                gap: 0.5rem;
+            }
+
+            .site-nav-logo {
+                font-size: 1.05rem;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .site-nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                background: var(--bg-card);
+                border-bottom: 1px solid var(--border);
+                box-shadow: var(--shadow-md);
+                padding: 0.5rem;
+                z-index: 1003;
+            }
+
+            .site-nav-links.open {
+                display: flex;
+            }
+
+            .site-nav-link,
+            .site-nav-contact {
+                margin: 0;
+                width: 100%;
+                text-align: left;
+                border-radius: 6px;
+                padding: 0.75rem 1rem;
+            }
+
+            .site-header {
+                position: fixed;
+            }
+
+            .site-nav-container {
+                position: relative;
+                flex-wrap: nowrap;
+            }
+
+            .sticky-nav {
+                top: 52px;
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                gap: 6px;
+                padding: 8px 12px;
+                scrollbar-width: none;
+            }
+
+            .sticky-nav::-webkit-scrollbar {
                 display: none;
             }
+
+            .sticky-nav a {
+                flex: 0 0 auto;
+                white-space: nowrap;
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+
+            h1 {
+                font-size: 22px;
+                line-height: 1.25;
+                letter-spacing: -0.3px;
+            }
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+            .meta-strip {
+                gap: 10px 16px;
+            }
+
+            .meta-item {
+                font-size: 12px;
+            }
+
+            h2 {
+                font-size: 16px;
+                gap: 8px;
+                padding-right: 24px;
+            }
+
+            h2::before {
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+                flex-shrink: 0;
+            }
+
+            h3 {
+                font-size: 14px;
+            }
+
+            .header {
+                padding-bottom: 20px;
+                margin-bottom: 28px;
+            }
+
+            .value-box {
+                padding: 18px 16px;
+            }
+
+            .value-box-value {
+                font-size: 22px;
+                letter-spacing: -0.5px;
+                word-break: break-word;
+            }
+
             .controls-panel {
+                padding: 16px;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px;
+            }
+
+            .control-value {
+                font-size: 18px;
+            }
+
+            .live-metrics {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px;
+            }
+
+            .live-metric {
+                padding: 12px 8px;
+            }
+
+            .live-metric-value {
+                font-size: 15px;
+            }
+
+            .live-metric-label {
+                font-size: 9px;
+            }
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .paydown-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .paydown-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .paydown-stat-value {
+                font-size: 14px;
+            }
+
+            .chart-container {
+                height: 220px;
+            }
+
+            .waterfall-container {
+                height: 260px;
+            }
+
+            .math-block {
+                padding: 14px 12px;
+                font-size: 13px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+
+            /* Wide multi-column tables scroll inside .table-scroll */
+            .table-scroll table.yearly-table,
+            .sensitivity-matrix table {
+                width: max-content;
+                min-width: 100%;
+            }
+
+            .yearly-table {
+                font-size: 11px;
+            }
+
+            .sensitivity-matrix {
+                max-width: 100%;
+            }
+
+            .sensitivity-matrix th,
+            .sensitivity-matrix td {
+                padding: 6px 8px;
+                min-width: 52px;
+                font-size: 11px;
+            }
+
+            /* Prevent sticky UI from causing horizontal page growth */
+            .site-header,
+            .sticky-nav {
+                max-width: 100vw;
+            }
+
+            .export-btn {
+                bottom: 16px;
+                right: 12px;
+                padding: 10px 12px;
+                border-radius: 999px;
+                box-shadow: var(--shadow-md);
+            }
+
+            .export-btn span.export-label {
                 display: none;
+            }
+
+            .metric-value {
+                font-size: 20px;
+            }
+
+            .select-group select {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px 10px 88px;
+                padding-top: 104px;
+            }
+
+            .live-metrics {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .value-box-value {
+                font-size: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .header-badge {
+                font-size: 10px;
+                padding: 5px 12px;
+            }
+
+            .paydown-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .chart-container {
+                height: 200px;
+            }
+        }
+
+        @media print {
+            .export-btn, .sticky-nav, .site-header, .nav-toggle,
+            .tool-actions, .nav-toggle, #themeToggleBtn {
+                display: none !important;
+            }
+            /* Keep a text snapshot of the scenario; hide interactive widgets */
+            .controls-panel input[type="range"],
+            .controls-panel input[type="number"],
+            .controls-panel select,
+            .controls-panel button,
+            .tool-btn,
+            .rent-input {
+                display: none !important;
+            }
+            #printScenarioSummary {
+                display: block !important;
+                border: 1px solid #ccc;
+                padding: 12px 16px;
+                margin: 12px 0 20px;
+                font-size: 12px;
+                page-break-inside: avoid;
             }
             body {
-                padding: 20px 40px;
-                padding-top: 20px;
+                padding: 16px 24px;
+                padding-top: 16px;
+                max-width: 100%;
+                color: #000;
+                background: #fff;
             }
-            .chart-wrapper {
+            .chart-wrapper,
+            .value-box,
+            .paydown-panel,
+            table {
                 page-break-inside: avoid;
             }
             .section-content.collapsed {
-                max-height: none;
-                opacity: 1;
+                max-height: none !important;
+                opacity: 1 !important;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
             }
         }
     </style>
@@ -791,7 +1290,12 @@
     <header class="site-header">
         <div class="site-nav-container">
             <a href="index.html" class="site-nav-logo">Napier Properties</a>
-            <nav class="site-nav-links">
+            <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="siteNavLinks">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M3 6h18M3 12h18M3 18h18"></path>
+                </svg>
+            </button>
+            <nav class="site-nav-links" id="siteNavLinks">
                 <a href="index.html#portfolio" class="site-nav-link">Portfolio</a>
                 <a href="macon.html" class="site-nav-link">Macon</a>
                 <a href="rent.html" class="site-nav-link active">Investment</a>
@@ -818,12 +1322,12 @@
     </nav>
 
     <!-- PDF Export Button -->
-    <button class="export-btn" onclick="window.print()" style="top: 95px;">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <button class="export-btn" onclick="window.print()" aria-label="Export PDF">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
             <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
         </svg>
-        Export PDF
+        <span class="export-label">Export PDF</span>
     </button>
 
     <header class="header">
@@ -845,7 +1349,10 @@
 
         <div class="value-box">
             <div class="value-box-label">Indicated As-Is Value</div>
-            <div class="value-box-value">$1,075,000 – $1,200,000</div>
+            <div class="value-box-value" id="indicatedValue">$1,150,000</div>
+            <div id="indicatedValueNote" style="margin-top: 10px; font-size: 14px; opacity: 0.95;">
+                At <strong id="indicatedCapNote">7.54%</strong> acquisition cap (NOI ÷ value)
+            </div>
         </div>
 
         <!-- Base Deal Inputs - Customizable for any property -->
@@ -868,20 +1375,26 @@
                 </div>
             </div>
             
-            <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
-                <button id="applyCustomBtn" class="btn-secondary" style="padding: 8px 16px; font-size: 13px;">Apply Custom Numbers</button>
-                <button id="resetToExampleBtn" class="btn-secondary" style="padding: 8px 16px; font-size: 13px;">Reset to Napier Portfolio</button>
+            <div class="tool-actions">
+                <button type="button" id="applyCustomBtn" class="tool-btn primary">Apply Custom Numbers</button>
+                <button type="button" id="resetToExampleBtn" class="tool-btn">Reset to Napier Portfolio</button>
             </div>
         </div>
 
         <!-- Interactive Scenario Controls -->
         <div class="controls-panel">
             <h3 style="margin-top: 0; margin-bottom: 20px;">Scenario Analysis (Financing &amp; Returns)</h3>
-            <div class="controls-grid" style="grid-template-columns: repeat(5, 1fr);">
+            <div id="printScenarioSummary" aria-hidden="true"></div>
+            <div class="controls-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="control-group">
                     <label for="priceSlider">Purchase Price</label>
-                    <input type="range" id="priceSlider" min="1000000" max="1300000" step="10000" value="1150000">
+                    <input type="range" id="priceSlider" min="800000" max="1600000" step="5000" value="1150000">
                     <div class="control-value" id="priceValue">$1,150,000</div>
+                </div>
+                <div class="control-group">
+                    <label for="acqCapSlider">Target Acquisition Cap</label>
+                    <input type="range" id="acqCapSlider" min="5.5" max="10" step="0.05" value="7.54">
+                    <div class="control-value" id="acqCapValue">7.54%</div>
                 </div>
                 <div class="control-group">
                     <label for="ltvSlider">LTV Ratio</label>
@@ -904,40 +1417,60 @@
                     <div class="control-value" id="noiGrowthValue">2.0%</div>
                 </div>
             </div>
+            <p style="font-size: 12px; color: var(--text2); margin: 8px 0 0;">
+                Price and target cap stay linked: \(V = \text{NOI}/\kappa\). Move either control.
+            </p>
 
             <!-- Live Calculated Metrics -->
             <div class="live-metrics" style="grid-template-columns: repeat(6, 1fr);">
                 <div class="live-metric">
                     <div class="live-metric-label">Acquisition Cap</div>
-                    <div class="live-metric-value" id="liveCap">7.48%</div>
+                    <div class="live-metric-value" id="liveCap">7.54%</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Cash-on-Cash</div>
-                    <div class="live-metric-value positive" id="liveCoc">4.7%</div>
+                    <div class="live-metric-value positive" id="liveCoc">5.0%</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">DSCR</div>
-                    <div class="live-metric-value" id="liveDscr">1.19×</div>
+                    <div class="live-metric-value" id="liveDscr">1.20×</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Debt Yield</div>
-                    <div class="live-metric-value positive" id="liveDebtYield">9.97%</div>
+                    <div class="live-metric-value positive" id="liveDebtYield">10.05%</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Equity Multiple</div>
-                    <div class="live-metric-value positive" id="liveEM">1.52×</div>
+                    <div class="live-metric-value positive" id="liveEM">1.60×</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Break-Even Occ.</div>
-                    <div class="live-metric-value" id="liveBE">84.2%</div>
+                    <div class="live-metric-value" id="liveBE">81.6%</div>
                 </div>
             </div>
+
+            <div class="tool-actions">
+                <button type="button" id="copySummaryBtn" class="tool-btn primary">Copy Summary</button>
+                <button type="button" id="copyLinkBtn" class="tool-btn">Copy Share Link</button>
+                <button type="button" id="saveScenarioBtn" class="tool-btn">Save Scenario</button>
+                <button type="button" id="loadScenarioBtn" class="tool-btn">Load Saved</button>
+                <button type="button" id="exportCsvBtn" class="tool-btn">Export CSV</button>
+                <span class="tool-status" id="toolStatus" role="status" aria-live="polite"></span>
+            </div>
+            <p class="disclaimer-note">
+                Illustrative model only — not an offer to sell, solicitation, or investment advice.
+                Verify all figures independently. Share links encode your scenario assumptions in the URL.
+            </p>
         </div>
     </section>
 
     <section id="section-2">
         <h2 data-num="2">Rent Roll (In-Place Only)</h2>
-        <table>
+        <p style="font-size: 13px; color: var(--text2); margin-bottom: 10px;">
+            Edit monthly rents to remodel the portfolio. Totals update Gross Scheduled Rent (apply base numbers to push into the calculator).
+        </p>
+        <div class="table-scroll">
+        <table id="rentRollTable">
             <thead>
                 <tr>
                     <th>Address</th>
@@ -945,40 +1478,45 @@
                     <th class="text-right">Annual Rent</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="rentRollBody">
+                <tr data-unit="0">
                     <td>2553 Napier Ave</td>
-                    <td class="text-right currency">$3,000</td>
-                    <td class="text-right currency">$36,000</td>
+                    <td class="text-right"><input class="rent-input" type="number" min="0" step="25" value="3000" data-rent-idx="0" aria-label="Monthly rent 2553 Napier"></td>
+                    <td class="text-right currency rent-annual" data-rent-annual="0">$36,000</td>
                 </tr>
-                <tr>
+                <tr data-unit="1">
                     <td>2525 Napier Ave</td>
-                    <td class="text-right currency">$3,150</td>
-                    <td class="text-right currency">$37,800</td>
+                    <td class="text-right"><input class="rent-input" type="number" min="0" step="25" value="3150" data-rent-idx="1" aria-label="Monthly rent 2525 Napier"></td>
+                    <td class="text-right currency rent-annual" data-rent-annual="1">$37,800</td>
                 </tr>
-                <tr>
+                <tr data-unit="2">
                     <td>2511 Napier Ave</td>
-                    <td class="text-right currency">$1,750</td>
-                    <td class="text-right currency">$21,000</td>
+                    <td class="text-right"><input class="rent-input" type="number" min="0" step="25" value="1750" data-rent-idx="2" aria-label="Monthly rent 2511 Napier"></td>
+                    <td class="text-right currency rent-annual" data-rent-annual="2">$21,000</td>
                 </tr>
-                <tr>
+                <tr data-unit="3">
                     <td>2534 Napier Ave</td>
-                    <td class="text-right currency">$1,925</td>
-                    <td class="text-right currency">$23,100</td>
+                    <td class="text-right"><input class="rent-input" type="number" min="0" step="25" value="1925" data-rent-idx="3" aria-label="Monthly rent 2534 Napier"></td>
+                    <td class="text-right currency rent-annual" data-rent-annual="3">$23,100</td>
                 </tr>
-                <tr>
+                <tr data-unit="4">
                     <td>1045 Patterson St</td>
-                    <td class="text-right currency">$1,600</td>
-                    <td class="text-right currency">$19,200</td>
+                    <td class="text-right"><input class="rent-input" type="number" min="0" step="25" value="1600" data-rent-idx="4" aria-label="Monthly rent 1045 Patterson"></td>
+                    <td class="text-right currency rent-annual" data-rent-annual="4">$19,200</td>
                 </tr>
                 <tr class="total-row">
                     <td>Total Gross Scheduled Rent</td>
-                    <td class="text-right currency">$11,425</td>
-                    <td class="text-right currency">$137,100</td>
+                    <td class="text-right currency" id="rentRollMonthlyTotal">$11,425</td>
+                    <td class="text-right currency" id="rentRollAnnualTotal">$137,100</td>
                 </tr>
             </tbody>
         </table>
-        <p><em>No mid-term premium, rent increases, or redevelopment income assumed.</em></p>
+        </div>
+        <div class="tool-actions" style="margin-top: 8px;">
+            <button type="button" id="applyRentRollBtn" class="tool-btn primary">Apply Rent Roll → GSR</button>
+            <span class="tool-status" id="rentRollStatus" role="status"></span>
+        </div>
+        <p><em>No mid-term premium, rent increases, or redevelopment income assumed in the base case.</em></p>
 
         <div class="chart-wrapper">
             <h3>Revenue Distribution by Property</h3>
@@ -994,6 +1532,7 @@
         <div class="grid-2">
             <div>
                 <h3>Verified Property Taxes</h3>
+                <div class="table-scroll">
                 <table>
                     <thead>
                         <tr>
@@ -1028,10 +1567,12 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
 
             <div>
                 <h3>Stabilized Expense Assumptions</h3>
+                <div class="table-scroll">
                 <table>
                     <thead>
                         <tr>
@@ -1073,6 +1614,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 
@@ -1091,6 +1633,7 @@
                 <p>The Net Operating Income is computed as:</p>
                 $$\text{NOI} = \text{GSR} - \text{OpEx} = \$137{,}100 - \$50{,}404 = \$86{,}696 \approx \boxed{\$86{,}700}$$
             </div>
+            <p style="font-size: 13px; color: var(--text2);">All interactive metrics and valuation tables below use the rounded stabilized NOI of <strong>$86,700</strong> for consistency.</p>
 
             <div class="grid-3">
                 <div class="metric-card">
@@ -1124,12 +1667,13 @@
         <p>Value is determined via direct capitalization, where the capitalization rate \(\kappa\) represents the required yield:</p>
 
         <div class="math-block">
-            $$V = \frac{\text{NOI}}{\kappa} \implies V(\kappa) = \frac{\$86{,}000}{\kappa}$$
+            $$V = \frac{\text{NOI}}{\kappa} \implies V(\kappa) = \frac{\$86{,}700}{\kappa}$$
         </div>
 
         <div class="grid-2">
             <div>
                 <h3>Cap Rate Sensitivity</h3>
+                <div class="table-scroll">
                 <table class="sensitivity-table">
                     <thead>
                         <tr>
@@ -1140,26 +1684,28 @@
                     <tbody>
                         <tr>
                             <td>8.0%</td>
-                            <td class="text-right currency">$1,075,000</td>
+                            <td class="text-right currency">$1,084,000</td>
                         </tr>
                         <tr>
                             <td>7.5%</td>
-                            <td class="text-right currency highlight-cell">$1,147,000</td>
+                            <td class="text-right currency highlight-cell">$1,156,000</td>
                         </tr>
                         <tr>
                             <td>7.0%</td>
-                            <td class="text-right currency">$1,229,000</td>
+                            <td class="text-right currency">$1,239,000</td>
                         </tr>
                         <tr>
                             <td>6.5%</td>
-                            <td class="text-right currency">$1,323,000</td>
+                            <td class="text-right currency">$1,334,000</td>
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
 
             <div>
                 <h3>GRM Cross-Check</h3>
+                <div class="table-scroll">
                 <table class="sensitivity-table">
                     <thead>
                         <tr>
@@ -1170,27 +1716,28 @@
                     <tbody>
                         <tr>
                             <td>7.9×</td>
-                            <td class="text-right currency">$1,078,000</td>
+                            <td class="text-right currency">$1,083,000</td>
                         </tr>
                         <tr>
                             <td>8.3×</td>
-                            <td class="text-right currency highlight-cell">$1,132,000</td>
+                            <td class="text-right currency highlight-cell">$1,138,000</td>
                         </tr>
                         <tr>
                             <td>8.7×</td>
-                            <td class="text-right currency">$1,187,000</td>
+                            <td class="text-right currency">$1,193,000</td>
                         </tr>
                         <tr>
                             <td>8.8×</td>
-                            <td class="text-right currency">$1,201,000</td>
+                            <td class="text-right currency">$1,206,000</td>
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 
         <div class="chart-wrapper">
-            <h3>Valuation Curve: \(V(\kappa) = \frac{86{,}000}{\kappa}\)</h3>
+            <h3>Valuation Curve: \(V(\kappa) = \frac{86{,}700}{\kappa}\)</h3>
             <div class="chart-container">
                 <canvas id="capRateChart"></canvas>
             </div>
@@ -1198,11 +1745,10 @@
 
         <div class="value-box value-box-secondary">
             <div class="value-box-label">Final Value Conclusion (As-Is, Off-Market)</div>
-            <div class="value-box-value">$1,075,000 – $1,200,000</div>
-            <div style="margin-top: 15px; font-size: 14px;">
-                <strong>Floor:</strong> Defensive buyer @ 8.0% cap &nbsp;|&nbsp;
-                <strong>Core:</strong> $1.12M–$1.15M &nbsp;|&nbsp;
-                <strong>Ceiling:</strong> 7.0% cap
+            <div class="value-box-value" id="finalValueConclusion">$1,150,000</div>
+            <div id="finalValueNote" style="margin-top: 15px; font-size: 14px;">
+                Matches scenario purchase price at <strong id="finalCapNote">7.54%</strong> acquisition cap
+                (<span id="finalNoiNote">$86,700</span> NOI). Cap-rate sensitivity table above shows other returns.
             </div>
         </div>
     </section>
@@ -1232,33 +1778,33 @@
             <div class="math-block">
                 $$DS = P \cdot \frac{r(1+r)^n}{(1+r)^n - 1}$$
                 <p style="margin-top: 10px;">where \(P = \$862{,}500\), \(r = 0.075/12 = 0.00625\), \(n = 360\)</p>
-                $$DS_{\text{monthly}} = \$862{,}500 \cdot \frac{0.00625 \cdot (1.00625)^{360}}{(1.00625)^{360} - 1} \approx \$6{,}030$$
-                $$DS_{\text{annual}} = \$6{,}030 \times 12 = \boxed{\$72{,}360 \approx \$72{,}400}$$
+                $$DS_{\text{monthly}} = \$862{,}500 \cdot \frac{0.00625 \cdot (1.00625)^{360}}{(1.00625)^{360} - 1} \approx \$6{,}031$$
+                $$DS_{\text{annual}} = \$6{,}031 \times 12 = \boxed{\$72{,}369}$$
             </div>
 
             <h3>Debt Service Coverage Ratio</h3>
             <div class="math-block">
-                $$\text{DSCR} = \frac{\text{NOI}}{DS} = \frac{\$86{,}000}{\$72{,}400} = \boxed{1.19\times}$$
+                $$\text{DSCR} = \frac{\text{NOI}}{DS} = \frac{\$86{,}700}{\$72{,}369} = \boxed{1.20\times}$$
             </div>
 
             <div class="callout callout-success">
                 <div class="callout-title">✓ Lender Minimum Satisfied</div>
-                <p>DSCR of 1.19× meets or exceeds most lender minimums (typically 1.15–1.25×) for small-balance multifamily.</p>
+                <p>DSCR of 1.20× meets or exceeds most lender minimums (typically 1.15–1.25×) for small-balance multifamily.</p>
             </div>
 
             <h3>Year 1 Cash Flow</h3>
             <div class="grid-3">
                 <div class="metric-card">
                     <div class="metric-label">NOI</div>
-                    <div class="metric-value">$86,000</div>
+                    <div class="metric-value">$86,700</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-label">Debt Service</div>
-                    <div class="metric-value" style="color: var(--warning);">($72,400)</div>
+                    <div class="metric-value" style="color: var(--warning);">($72,369)</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-label">Cash Flow After Debt</div>
-                    <div class="metric-value success">$13,600</div>
+                    <div class="metric-value success">$14,331</div>
                 </div>
             </div>
 
@@ -1284,15 +1830,15 @@
                     </div>
                     <div class="paydown-stat">
                         <div class="paydown-stat-label">Ending Balance</div>
-                        <div class="paydown-stat-value" id="endingBalance">$808,000</div>
+                        <div class="paydown-stat-value" id="endingBalance">$816,075</div>
                     </div>
                     <div class="paydown-stat">
                         <div class="paydown-stat-label">Principal Paid</div>
-                        <div class="paydown-stat-value" id="principalPaid" style="color: var(--success);">$54,500</div>
+                        <div class="paydown-stat-value" id="principalPaid" style="color: var(--success);">$46,425</div>
                     </div>
                     <div class="paydown-stat">
                         <div class="paydown-stat-label">Equity Built</div>
-                        <div class="paydown-stat-value" id="equityBuilt" style="color: var(--success);">$342,000</div>
+                        <div class="paydown-stat-value" id="equityBuilt" style="color: var(--success);">$333,925</div>
                     </div>
                 </div>
                 <div class="chart-wrapper" style="margin-top: 15px; margin-bottom: 0;">
@@ -1304,6 +1850,7 @@
 
             <!-- Year-by-Year Cash Flow Table -->
             <h3>Year-by-Year Cash Flow Projection</h3>
+            <div class="table-scroll">
             <table class="yearly-table" id="yearlyTable">
                 <thead>
                     <tr>
@@ -1319,6 +1866,7 @@
                     <!-- Populated by JavaScript -->
                 </tbody>
             </table>
+            </div>
         </div>
     </section>
 
@@ -1326,6 +1874,7 @@
         <h2 data-num="7">IRR Analysis (5-Year Hold)</h2>
 
         <h3>Projection Assumptions</h3>
+        <div class="table-scroll">
         <table>
             <thead>
                 <tr>
@@ -1341,6 +1890,7 @@
                 <tr><td>Selling Costs</td><td class="text-right">2.0%</td></tr>
             </tbody>
         </table>
+        </div>
 
         <h3>IRR Derivation</h3>
         <p>The internal rate of return \(\rho\) solves the NPV equation:</p>
@@ -1359,66 +1909,32 @@
         <div class="grid-2">
             <div class="metric-card">
                 <div class="metric-label">Unlevered IRR</div>
-                <div class="metric-value">~7.5%</div>
+                <div class="metric-value" id="unleveredIrrDisplay">~8.4%</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Levered IRR</div>
-                <div class="metric-value success">~10.0%</div>
+                <div class="metric-value success" id="leveredIrrDisplay">~10.8%</div>
             </div>
         </div>
 
-        <h3>Sensitivity Matrix: Levered IRR by Cap Rate × NOI Growth</h3>
-        <div class="sensitivity-matrix">
-            <table>
+        <h3>Sensitivity Matrix: Levered IRR by Exit Cap Rate × NOI Growth</h3>
+        <div class="sensitivity-matrix table-scroll">
+            <table id="irrSensitivityTable">
                 <thead>
                     <tr>
-                        <th class="corner-cell">Cap Rate ↓ / Growth →</th>
+                        <th class="corner-cell">Exit Cap ↓ / Growth →</th>
                         <th>0%</th>
                         <th>1%</th>
                         <th>2%</th>
                         <th>3%</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="row-header">8.50%</td>
-                        <td>6.2%</td>
-                        <td>7.1%</td>
-                        <td>8.0%</td>
-                        <td>8.9%</td>
-                    </tr>
-                    <tr>
-                        <td class="row-header">8.00%</td>
-                        <td>7.5%</td>
-                        <td>8.4%</td>
-                        <td>9.3%</td>
-                        <td>10.2%</td>
-                    </tr>
-                    <tr>
-                        <td class="row-header">7.75%</td>
-                        <td>8.2%</td>
-                        <td>9.1%</td>
-                        <td class="matrix-highlight">10.0%</td>
-                        <td>10.9%</td>
-                    </tr>
-                    <tr>
-                        <td class="row-header">7.50%</td>
-                        <td>8.9%</td>
-                        <td>9.8%</td>
-                        <td>10.7%</td>
-                        <td>11.7%</td>
-                    </tr>
-                    <tr>
-                        <td class="row-header">7.00%</td>
-                        <td>10.4%</td>
-                        <td>11.3%</td>
-                        <td>12.2%</td>
-                        <td>13.2%</td>
-                    </tr>
+                <tbody id="irrSensitivityBody">
+                    <!-- Populated by JavaScript from the same IRR engine as live metrics -->
                 </tbody>
             </table>
         </div>
-        <p><em>Base case highlighted (7.75% exit cap, 2% NOI growth). Returns assume 5-year hold, 75% LTV, 7.5% interest rate.</em></p>
+        <p><em>Base case highlighted (7.75% exit cap, 2% NOI growth). Matrix uses current purchase price, LTV, rate, hold period, and NOI from the scenario controls above.</em></p>
 
         <p style="margin-top: 15px;"><em>Returns are generated without assuming rent spikes, redevelopment, or operational overhaul.</em></p>
 
@@ -1471,8 +1987,8 @@
             palette: ['#c9a96e', '#6b5d52', '#1a1a1a', '#f5f1e8', '#ede5d9']
         };
 
-        // Rent Distribution Chart
-        new Chart(document.getElementById('rentChart'), {
+        // Rent Distribution Chart (updated when rent roll changes)
+        const rentChart = new Chart(document.getElementById('rentChart'), {
             type: 'bar',
             data: {
                 labels: ['2553 Napier', '2525 Napier', '2511 Napier', '2534 Napier', '1045 Patterson'],
@@ -1543,12 +2059,13 @@
             }
         });
 
-        // Cap Rate Valuation Curve (6.0% to 8.75%)
+        // Cap Rate Valuation Curve (6.0% to 8.75%) — uses stabilized NOI
+        const valuationNOI = 86700;
         const capRates = [];
         const values = [];
         for (let cap = 6.0; cap <= 8.75; cap += 0.25) {
             capRates.push(cap);
-            values.push(86000 / (cap / 100));
+            values.push(valuationNOI / (cap / 100));
         }
 
         new Chart(document.getElementById('capRateChart'), {
@@ -1595,36 +2112,15 @@
             }
         });
 
-        // Cash Flow Projection Chart (initial example values)
-        // Note: This chart is illustrative. Live updates use the main scenario controls.
-        const noi = 86000;
-        const debt = 72400;
-        const growth = 0.02;
-        const years = ['Year 0', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'];
-
-        // Calculate Year 5 exit value
-        const year5NOI = noi * Math.pow(1 + growth, 4);
-        const exitValue = (year5NOI / 0.0775) * 0.98; // 7.75% cap, 2% selling costs
-        const remainingLoan = 808000; // Approximate after 5 years
-        const exitProceeds = exitValue - remainingLoan;
-
-        const cashFlows = [
-            -287500, // Year 0: Equity
-            noi - debt,
-            noi * Math.pow(1 + growth, 1) - debt,
-            noi * Math.pow(1 + growth, 2) - debt,
-            noi * Math.pow(1 + growth, 3) - debt,
-            noi * Math.pow(1 + growth, 4) - debt + exitProceeds
-        ];
-
-        new Chart(document.getElementById('cashFlowChart'), {
+        // Cash Flow Projection Chart — updated live by updateMetrics()
+        const cashFlowChart = new Chart(document.getElementById('cashFlowChart'), {
             type: 'bar',
             data: {
-                labels: years,
+                labels: ['Year 0', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
                 datasets: [{
                     label: 'Cash Flow',
-                    data: cashFlows,
-                    backgroundColor: cashFlows.map(v => v >= 0 ? colors.success : colors.warning),
+                    data: [],
+                    backgroundColor: [],
                     borderRadius: 4
                 }]
             },
@@ -1650,11 +2146,38 @@
         });
 
         // ========== INTERACTIVE SCENARIO ANALYSIS ==========
-        // These are now variables so users can input their own deal numbers.
-        // This makes the tools useful for anyone (drives organic SEO traffic to the calculators).
+        const STORAGE_KEY = 'gn-invest-scenario-v1';
+        const DEFAULT_RENTS = [3000, 3150, 1750, 1925, 1600];
+        const RENT_LABELS = ['2553 Napier', '2525 Napier', '2511 Napier', '2534 Napier', '1045 Patterson'];
+
         let currentGSR = 137100;
         let currentOPEX = 50404;
         let currentNOI = 86700;
+        let rentRollMonthly = DEFAULT_RENTS.slice();
+        let syncingPriceCap = false;
+        let urlWriteTimer = null;
+        let lastSnapshot = null;
+
+        function setToolStatus(msg, ms) {
+            const el = document.getElementById('toolStatus');
+            if (!el) return;
+            el.textContent = msg || '';
+            if (ms) {
+                clearTimeout(setToolStatus._t);
+                setToolStatus._t = setTimeout(() => { el.textContent = ''; }, ms);
+            }
+        }
+
+        function clampPrice(price) {
+            const min = parseFloat(priceSlider.min);
+            const max = parseFloat(priceSlider.max);
+            return Math.min(max, Math.max(min, price));
+        }
+
+        function snapPrice(price) {
+            const step = parseFloat(priceSlider.step) || 5000;
+            return Math.round(price / step) * step;
+        }
 
         function applyCustomBaseNumbers() {
             const gsrVal = parseFloat(document.getElementById('customGSR').value) || 0;
@@ -1670,36 +2193,46 @@
                 currentNOI = Math.max(0, currentGSR - currentOPEX);
             }
 
-            // Sync the NOI field
             document.getElementById('customNOI').value = Math.round(currentNOI);
-
+            // Keep price ↔ target-cap linkage when NOI changes
+            syncPriceFromAcqCap();
             updateAllCalculations();
+            persistScenarioSoon();
         }
 
         function resetToExamplePortfolio() {
             currentGSR = 137100;
             currentOPEX = 50404;
             currentNOI = 86700;
+            rentRollMonthly = DEFAULT_RENTS.slice();
 
             document.getElementById('customGSR').value = currentGSR;
             document.getElementById('customOPEX').value = currentOPEX;
             document.getElementById('customNOI').value = currentNOI;
 
+            priceSlider.value = 1150000;
+            ltvSlider.value = 75;
+            rateSlider.value = 7.5;
+            exitCapSlider.value = 7.75;
+            noiGrowthSlider.value = 2;
+            if (holdPeriodSelect) holdPeriodSelect.value = '5';
+            if (acqCapSlider) acqCapSlider.value = (currentNOI / 1150000 * 100).toFixed(2);
+
+            renderRentRollInputs();
             updateAllCalculations();
+            persistScenarioSoon();
+            setToolStatus('Reset to Napier portfolio example', 2500);
         }
 
         function updateAllCalculations() {
-            // Re-run the main metrics (this will also update charts/tables that depend on it)
-            if (typeof updateMetrics === 'function') {
-                updateMetrics();
-            }
-            // Force refresh paydown/yearly if they exist
+            if (typeof updateMetrics === 'function') updateMetrics();
             if (typeof updatePaydownChart === 'function') updatePaydownChart();
             if (typeof updateYearlyTable === 'function') updateYearlyTable();
         }
 
         // Get slider elements
         const priceSlider = document.getElementById('priceSlider');
+        const acqCapSlider = document.getElementById('acqCapSlider');
         const ltvSlider = document.getElementById('ltvSlider');
         const rateSlider = document.getElementById('rateSlider');
         const exitCapSlider = document.getElementById('exitCapSlider');
@@ -1708,6 +2241,7 @@
 
         // Get display elements
         const priceValue = document.getElementById('priceValue');
+        const acqCapValue = document.getElementById('acqCapValue');
         const ltvValue = document.getElementById('ltvValue');
         const rateValue = document.getElementById('rateValue');
         const exitCapValue = document.getElementById('exitCapValue');
@@ -1727,17 +2261,77 @@
         const principalPaidEl = document.getElementById('principalPaid');
         const equityBuiltEl = document.getElementById('equityBuilt');
 
-        // Calculate monthly payment
+        // Vacancy allowance in OpEx model — matches example line item $10,915 / $137,100 GSR (~8%)
+        const VACANCY_RATE = 10915 / 137100;
+
+        // Calculate monthly payment (standard amortizing mortgage)
         function calcMonthlyPayment(principal, annualRate, months) {
+            if (!principal || principal <= 0) return 0;
+            if (!annualRate || annualRate <= 0) return principal / months;
             const r = annualRate / 12;
-            return principal * (r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+            const factor = Math.pow(1 + r, months);
+            return principal * (r * factor) / (factor - 1);
         }
 
         // Calculate remaining loan balance after n months
         function calcRemainingBalance(principal, annualRate, totalMonths, elapsedMonths) {
+            if (!principal || principal <= 0) return 0;
+            if (elapsedMonths <= 0) return principal;
+            if (!annualRate || annualRate <= 0) {
+                const pmt = principal / totalMonths;
+                return Math.max(0, principal - pmt * elapsedMonths);
+            }
             const r = annualRate / 12;
             const payment = calcMonthlyPayment(principal, annualRate, totalMonths);
             return principal * Math.pow(1 + r, elapsedMonths) - payment * ((Math.pow(1 + r, elapsedMonths) - 1) / r);
+        }
+
+        // Newton / bisection IRR on annual cash flows (index 0 = t0)
+        function calcIRR(cashFlows) {
+            let lo = -0.99;
+            let hi = 5.0;
+            for (let i = 0; i < 200; i++) {
+                const mid = (lo + hi) / 2;
+                let npv = 0;
+                for (let t = 0; t < cashFlows.length; t++) {
+                    npv += cashFlows[t] / Math.pow(1 + mid, t);
+                }
+                if (Math.abs(npv) < 0.01) return mid;
+                if (npv > 0) lo = mid;
+                else hi = mid;
+            }
+            return (lo + hi) / 2;
+        }
+
+        // Build levered cash-flow series for IRR (same economics as equity multiple)
+        function buildLeveredCashFlows(equity, loanAmount, interestRate, noiGrowth, exitCap, holdYears) {
+            const annualDebt = calcMonthlyPayment(loanAmount, interestRate, 360) * 12;
+            const cfs = [-equity];
+            for (let yr = 1; yr <= holdYears; yr++) {
+                const yrNOI = currentNOI * Math.pow(1 + noiGrowth, yr - 1);
+                let cf = yrNOI - annualDebt;
+                if (yr === holdYears) {
+                    const exitNOI = currentNOI * Math.pow(1 + noiGrowth, holdYears - 1);
+                    const exitValue = (exitNOI / exitCap) * 0.98; // 2% selling costs
+                    const remainingLoan = calcRemainingBalance(loanAmount, interestRate, 360, holdYears * 12);
+                    cf += exitValue - remainingLoan;
+                }
+                cfs.push(cf);
+            }
+            return cfs;
+        }
+
+        function buildUnleveredCashFlows(price, noiGrowth, exitCap, holdYears) {
+            const cfs = [-price];
+            for (let yr = 1; yr <= holdYears; yr++) {
+                let cf = currentNOI * Math.pow(1 + noiGrowth, yr - 1);
+                if (yr === holdYears) {
+                    const exitNOI = currentNOI * Math.pow(1 + noiGrowth, holdYears - 1);
+                    cf += (exitNOI / exitCap) * 0.98;
+                }
+                cfs.push(cf);
+            }
+            return cfs;
         }
 
         // Calculate equity multiple for given hold period
@@ -1791,7 +2385,7 @@
                 labels: ['Gross Rent', 'Vacancy', 'Taxes', 'Insurance', 'Repairs', 'Reserves', 'NOI', 'Debt Svc', 'Cash Flow'],
                 datasets: [{
                     label: 'Amount',
-                    data: [137100, -10915, -9497, -6800, -16370, -6822, 86696, -72400, 14296],
+                    data: [137100, -10915, -9497, -6800, -16370, -6822, 86700, -72369, 14331],
                     backgroundColor: [
                         colors.success, colors.warning, colors.warning, colors.warning,
                         colors.warning, colors.warning, colors.accent, colors.warning, colors.success
@@ -1942,6 +2536,52 @@
             }
         }
 
+        // Update IRR summary cards + sensitivity matrix from the same engine
+        function updateIrrAnalysis(price, loanAmount, equity, rate, exitCap, noiGrowth, holdYears) {
+            const leveredCfs = buildLeveredCashFlows(equity, loanAmount, rate, noiGrowth, exitCap, holdYears);
+            const unleveredCfs = buildUnleveredCashFlows(price, noiGrowth, exitCap, holdYears);
+            const leveredIrr = calcIRR(leveredCfs);
+            const unleveredIrr = calcIRR(unleveredCfs);
+
+            const unEl = document.getElementById('unleveredIrrDisplay');
+            const levEl = document.getElementById('leveredIrrDisplay');
+            if (unEl) unEl.textContent = '~' + (unleveredIrr * 100).toFixed(1) + '%';
+            if (levEl) levEl.textContent = '~' + (leveredIrr * 100).toFixed(1) + '%';
+
+            // Sensitivity: exit caps × growth rates (5-year economics at current financing)
+            const exitCaps = [0.085, 0.08, 0.0775, 0.075, 0.07];
+            const growths = [0.0, 0.01, 0.02, 0.03];
+            const tbody = document.getElementById('irrSensitivityBody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                exitCaps.forEach(cap => {
+                    const tr = document.createElement('tr');
+                    const th = document.createElement('td');
+                    th.className = 'row-header';
+                    th.textContent = (cap * 100).toFixed(2) + '%';
+                    tr.appendChild(th);
+                    growths.forEach(g => {
+                        const td = document.createElement('td');
+                        const irr = calcIRR(buildLeveredCashFlows(equity, loanAmount, rate, g, cap, holdYears));
+                        td.textContent = (irr * 100).toFixed(1) + '%';
+                        // Highlight cell nearest to current exit cap & growth
+                        if (Math.abs(cap - exitCap) < 0.001 && Math.abs(g - noiGrowth) < 0.001) {
+                            td.className = 'matrix-highlight';
+                        }
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Projected cash-flow bar chart (matches levered series)
+            const labels = leveredCfs.map((_, i) => 'Year ' + i);
+            cashFlowChart.data.labels = labels;
+            cashFlowChart.data.datasets[0].data = leveredCfs;
+            cashFlowChart.data.datasets[0].backgroundColor = leveredCfs.map(v => v >= 0 ? colors.success : colors.warning);
+            cashFlowChart.update();
+        }
+
         // Update all metrics
         function updateMetrics() {
             const price = parseFloat(priceSlider.value);
@@ -1952,10 +2592,19 @@
             const holdYears = parseInt(holdPeriodSelect.value);
 
             // Calculate cap rate from price (Cap Rate = currentNOI / Price)
-            const cap = currentNOI / price;
+            const cap = price > 0 ? currentNOI / price : 0;
+
+            // Keep target-cap slider display in sync (without feedback loop)
+            if (!syncingPriceCap && acqCapSlider) {
+                const capPct = +(cap * 100).toFixed(2);
+                const minC = parseFloat(acqCapSlider.min);
+                const maxC = parseFloat(acqCapSlider.max);
+                acqCapSlider.value = Math.min(maxC, Math.max(minC, capPct));
+            }
 
             // Update slider displays
             priceValue.textContent = '$' + price.toLocaleString();
+            if (acqCapValue) acqCapValue.textContent = (cap * 100).toFixed(2) + '%';
             ltvValue.textContent = (ltv * 100).toFixed(0) + '%';
             rateValue.textContent = (rate * 100).toFixed(2) + '%';
             exitCapValue.textContent = (exitCap * 100).toFixed(2) + '%';
@@ -1967,17 +2616,24 @@
             const monthlyPayment = calcMonthlyPayment(loanAmount, rate, 360);
             const annualDebtService = monthlyPayment * 12;
             const cashFlowAfterDebt = currentNOI - annualDebtService;
-            const coc = (cashFlowAfterDebt / equity) * 100;
-            const dscr = currentNOI / annualDebtService;
+            const coc = equity > 0 ? (cashFlowAfterDebt / equity) * 100 : 0;
+            const dscr = annualDebtService > 0 ? currentNOI / annualDebtService : 0;
 
             // Debt Yield = currentNOI / Loan Amount
-            const debtYield = (currentNOI / loanAmount) * 100;
+            const debtYield = loanAmount > 0 ? (currentNOI / loanAmount) * 100 : 0;
 
-            // Break-even occupancy: (OpEx + Debt Service) / GSR
-            const breakEven = ((currentOPEX + annualDebtService) / currentGSR) * 100;
+            // Break-even occupancy: cash OpEx (ex vacancy allowance) + DS / GSR
+            // Vacancy is the dependent variable, so strip the 8% vacancy line from OpEx.
+            const vacancyAllowance = Math.min(currentOPEX, currentGSR * VACANCY_RATE);
+            const cashOpex = currentOPEX - vacancyAllowance;
+            const breakEven = currentGSR > 0
+                ? ((cashOpex + annualDebtService) / currentGSR) * 100
+                : 0;
 
             // Equity multiple using slider values
-            const em = calcEquityMultiple(equity, loanAmount, rate, noiGrowth, exitCap, holdYears);
+            const em = equity > 0
+                ? calcEquityMultiple(equity, loanAmount, rate, noiGrowth, exitCap, holdYears)
+                : 0;
 
             // Update live displays
             liveCap.textContent = (cap * 100).toFixed(2) + '%';
@@ -1987,6 +2643,21 @@
             liveEM.textContent = em.toFixed(2) + '×';
             liveBE.textContent = breakEven.toFixed(1) + '%';
 
+            // Single indicated value = scenario price at the selected acquisition cap
+            // (V = NOI / κ, and κ = NOI / price ⇒ V equals the purchase-price slider)
+            const priceLabel = '$' + Math.round(price).toLocaleString();
+            const capLabel = (cap * 100).toFixed(2) + '%';
+            const indicatedEl = document.getElementById('indicatedValue');
+            const indicatedCapEl = document.getElementById('indicatedCapNote');
+            const finalEl = document.getElementById('finalValueConclusion');
+            const finalCapEl = document.getElementById('finalCapNote');
+            const finalNoiEl = document.getElementById('finalNoiNote');
+            if (indicatedEl) indicatedEl.textContent = priceLabel;
+            if (indicatedCapEl) indicatedCapEl.textContent = capLabel;
+            if (finalEl) finalEl.textContent = priceLabel;
+            if (finalCapEl) finalCapEl.textContent = capLabel;
+            if (finalNoiEl) finalNoiEl.textContent = '$' + Math.round(currentNOI).toLocaleString();
+
             // Update styling based on values
             liveCap.className = 'live-metric-value' + (cap >= 0.07 ? ' positive' : '');
             liveCoc.className = 'live-metric-value' + (coc > 0 ? ' positive' : '');
@@ -1995,14 +2666,28 @@
             liveEM.className = 'live-metric-value' + (em > 1 ? ' positive' : '');
             liveBE.className = 'live-metric-value' + (breakEven < 90 ? ' positive' : '');
 
-            // Update waterfall chart with current debt service
+            // Update waterfall chart with current debt service & NOI
+            waterfallChart.data.datasets[0].data[6] = currentNOI;
             waterfallChart.data.datasets[0].data[7] = -annualDebtService;
             waterfallChart.data.datasets[0].data[8] = currentNOI - annualDebtService;
             waterfallChart.update();
 
-            // Update paydown chart and yearly table
+            // Update paydown chart, yearly table, IRR analysis
             updatePaydownChart();
             updateYearlyTable();
+            updateIrrAnalysis(price, loanAmount, equity, rate, exitCap, noiGrowth, holdYears);
+
+            // Snapshot for share/copy/print
+            lastSnapshot = {
+                price, ltv, rate, exitCap, noiGrowth, holdYears,
+                loanAmount, equity, annualDebtService, cashFlowAfterDebt,
+                cap, coc, dscr, debtYield, em, breakEven,
+                gsr: currentGSR, opex: currentOPEX, noi: currentNOI,
+                leveredIrr: document.getElementById('leveredIrrDisplay')?.textContent || '',
+                unleveredIrr: document.getElementById('unleveredIrrDisplay')?.textContent || '',
+                rents: rentRollMonthly.slice()
+            };
+            updatePrintSummary(lastSnapshot);
 
             // Add updating animation
             document.querySelectorAll('.live-metric').forEach(el => {
@@ -2011,13 +2696,340 @@
             });
         }
 
+        function syncPriceFromAcqCap() {
+            if (!acqCapSlider || !currentNOI) return;
+            syncingPriceCap = true;
+            const capPct = parseFloat(acqCapSlider.value);
+            const cap = capPct / 100;
+            if (cap > 0) {
+                let price = snapPrice(currentNOI / cap);
+                price = clampPrice(price);
+                priceSlider.value = price;
+                // Re-derive displayed cap from snapped price
+                const actualCap = (currentNOI / price) * 100;
+                if (acqCapValue) acqCapValue.textContent = actualCap.toFixed(2) + '%';
+            }
+            syncingPriceCap = false;
+        }
+
+        function syncAcqCapFromPrice() {
+            if (!acqCapSlider) return;
+            syncingPriceCap = true;
+            const price = parseFloat(priceSlider.value);
+            if (price > 0 && currentNOI > 0) {
+                const capPct = (currentNOI / price) * 100;
+                const minC = parseFloat(acqCapSlider.min);
+                const maxC = parseFloat(acqCapSlider.max);
+                acqCapSlider.value = Math.min(maxC, Math.max(minC, +capPct.toFixed(2)));
+                if (acqCapValue) acqCapValue.textContent = capPct.toFixed(2) + '%';
+            }
+            syncingPriceCap = false;
+        }
+
+        function getScenarioState() {
+            return {
+                gsr: currentGSR,
+                opex: currentOPEX,
+                noi: currentNOI,
+                price: parseFloat(priceSlider.value),
+                ltv: parseFloat(ltvSlider.value),
+                rate: parseFloat(rateSlider.value),
+                exitCap: parseFloat(exitCapSlider.value),
+                growth: parseFloat(noiGrowthSlider.value),
+                hold: parseInt(holdPeriodSelect?.value || '5', 10),
+                rents: rentRollMonthly.slice()
+            };
+        }
+
+        function applyScenarioState(state, opts) {
+            if (!state) return;
+            const silent = opts && opts.silent;
+            if (state.gsr != null) currentGSR = +state.gsr;
+            if (state.opex != null) currentOPEX = +state.opex;
+            if (state.noi != null) currentNOI = +state.noi;
+            document.getElementById('customGSR').value = Math.round(currentGSR);
+            document.getElementById('customOPEX').value = Math.round(currentOPEX);
+            document.getElementById('customNOI').value = Math.round(currentNOI);
+
+            if (state.price != null) priceSlider.value = clampPrice(+state.price);
+            if (state.ltv != null) ltvSlider.value = state.ltv;
+            if (state.rate != null) rateSlider.value = state.rate;
+            if (state.exitCap != null) exitCapSlider.value = state.exitCap;
+            if (state.growth != null) noiGrowthSlider.value = state.growth;
+            if (state.hold != null && holdPeriodSelect) holdPeriodSelect.value = String(state.hold);
+            if (Array.isArray(state.rents) && state.rents.length) {
+                rentRollMonthly = state.rents.map(n => Math.max(0, +n || 0));
+                while (rentRollMonthly.length < DEFAULT_RENTS.length) {
+                    rentRollMonthly.push(DEFAULT_RENTS[rentRollMonthly.length]);
+                }
+                renderRentRollInputs();
+            }
+            syncAcqCapFromPrice();
+            updateAllCalculations();
+            if (!silent) setToolStatus('Scenario loaded', 2000);
+        }
+
+        function scenarioToQuery(state) {
+            const p = new URLSearchParams();
+            p.set('gsr', String(Math.round(state.gsr)));
+            p.set('opex', String(Math.round(state.opex)));
+            p.set('noi', String(Math.round(state.noi)));
+            p.set('price', String(Math.round(state.price)));
+            p.set('ltv', String(state.ltv));
+            p.set('rate', String(state.rate));
+            p.set('exitCap', String(state.exitCap));
+            p.set('growth', String(state.growth));
+            p.set('hold', String(state.hold));
+            p.set('rents', state.rents.map(r => Math.round(r)).join(','));
+            return p.toString();
+        }
+
+        function scenarioFromQuery(search) {
+            const p = new URLSearchParams(search || window.location.search);
+            if (![...p.keys()].length) return null;
+            const rentsRaw = p.get('rents');
+            return {
+                gsr: p.has('gsr') ? +p.get('gsr') : undefined,
+                opex: p.has('opex') ? +p.get('opex') : undefined,
+                noi: p.has('noi') ? +p.get('noi') : undefined,
+                price: p.has('price') ? +p.get('price') : undefined,
+                ltv: p.has('ltv') ? +p.get('ltv') : undefined,
+                rate: p.has('rate') ? +p.get('rate') : undefined,
+                exitCap: p.has('exitCap') ? +p.get('exitCap') : undefined,
+                growth: p.has('growth') ? +p.get('growth') : undefined,
+                hold: p.has('hold') ? +p.get('hold') : undefined,
+                rents: rentsRaw ? rentsRaw.split(',').map(Number) : undefined
+            };
+        }
+
+        function buildShareUrl() {
+            const qs = scenarioToQuery(getScenarioState());
+            const url = new URL(window.location.href);
+            url.search = qs;
+            // Prefer production host in copied links when served locally
+            if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
+                return 'https://gnpropertygroup.com/rent.html?' + qs;
+            }
+            return url.toString();
+        }
+
+        function persistScenarioSoon() {
+            clearTimeout(urlWriteTimer);
+            urlWriteTimer = setTimeout(() => {
+                try {
+                    const qs = scenarioToQuery(getScenarioState());
+                    const next = window.location.pathname + '?' + qs + window.location.hash;
+                    history.replaceState(null, '', next);
+                } catch (e) { /* ignore */ }
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(getScenarioState()));
+                } catch (e) { /* ignore */ }
+            }, 250);
+        }
+
+        function updatePrintSummary(s) {
+            const el = document.getElementById('printScenarioSummary');
+            if (!el || !s) return;
+            el.innerHTML = '<strong>Scenario snapshot</strong><br>' +
+                'Price: $' + Math.round(s.price).toLocaleString() +
+                ' · Acq cap: ' + (s.cap * 100).toFixed(2) + '%' +
+                ' · LTV: ' + (s.ltv * 100).toFixed(0) + '%' +
+                ' · Rate: ' + (s.rate * 100).toFixed(2) + '%' +
+                ' · Exit cap: ' + (s.exitCap * 100).toFixed(2) + '%' +
+                ' · NOI growth: ' + (s.noiGrowth * 100).toFixed(1) + '%' +
+                ' · Hold: ' + s.holdYears + ' yrs<br>' +
+                'NOI: $' + Math.round(s.noi).toLocaleString() +
+                ' · CoC: ' + s.coc.toFixed(1) + '%' +
+                ' · DSCR: ' + s.dscr.toFixed(2) + '×' +
+                ' · EM: ' + s.em.toFixed(2) + '×' +
+                ' · Levered IRR: ' + s.leveredIrr;
+        }
+
+        function buildSummaryText() {
+            const s = lastSnapshot;
+            if (!s) return '';
+            return [
+                'GN Property Group — Investment Scenario Summary',
+                '==============================================',
+                'Purchase price: $' + Math.round(s.price).toLocaleString(),
+                'Acquisition cap: ' + (s.cap * 100).toFixed(2) + '%',
+                'NOI: $' + Math.round(s.noi).toLocaleString() + '  |  GSR: $' + Math.round(s.gsr).toLocaleString() + '  |  OpEx: $' + Math.round(s.opex).toLocaleString(),
+                'LTV: ' + (s.ltv * 100).toFixed(0) + '%  |  Loan: $' + Math.round(s.loanAmount).toLocaleString() + '  |  Equity: $' + Math.round(s.equity).toLocaleString(),
+                'Interest rate: ' + (s.rate * 100).toFixed(2) + '%  |  Annual debt service: $' + Math.round(s.annualDebtService).toLocaleString(),
+                'Cash-on-cash: ' + s.coc.toFixed(1) + '%  |  DSCR: ' + s.dscr.toFixed(2) + '×  |  Debt yield: ' + s.debtYield.toFixed(2) + '%',
+                'Equity multiple: ' + s.em.toFixed(2) + '×  |  Break-even occ.: ' + s.breakEven.toFixed(1) + '%',
+                'Exit cap: ' + (s.exitCap * 100).toFixed(2) + '%  |  NOI growth: ' + (s.noiGrowth * 100).toFixed(1) + '%  |  Hold: ' + s.holdYears + ' years',
+                'Unlevered IRR: ' + s.unleveredIrr + '  |  Levered IRR: ' + s.leveredIrr,
+                '',
+                'Share link: ' + buildShareUrl(),
+                '',
+                'Illustrative only — not an offer or investment advice. Verify independently.',
+                'https://gnpropertygroup.com'
+            ].join('\n');
+        }
+
+        async function copyText(text, okMsg) {
+            try {
+                await navigator.clipboard.writeText(text);
+                setToolStatus(okMsg || 'Copied', 2500);
+            } catch (e) {
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    setToolStatus(okMsg || 'Copied', 2500);
+                } catch (e2) {
+                    setToolStatus('Copy failed — select text manually', 4000);
+                }
+                document.body.removeChild(ta);
+            }
+        }
+
+        function exportCsv() {
+            const s = lastSnapshot;
+            if (!s) return;
+            const price = s.price;
+            const ltv = s.ltv;
+            const rate = s.rate;
+            const holdYears = s.holdYears;
+            const loanAmount = s.loanAmount;
+            const annualDebt = s.annualDebtService;
+            const lines = [];
+            lines.push('GN Property Group Investment Model Export');
+            lines.push('Generated,' + new Date().toISOString());
+            lines.push('');
+            lines.push('Assumptions');
+            lines.push('Purchase Price,' + Math.round(price));
+            lines.push('NOI,' + Math.round(s.noi));
+            lines.push('GSR,' + Math.round(s.gsr));
+            lines.push('OpEx,' + Math.round(s.opex));
+            lines.push('LTV,' + (ltv * 100).toFixed(1) + '%');
+            lines.push('Interest Rate,' + (rate * 100).toFixed(2) + '%');
+            lines.push('Exit Cap,' + (s.exitCap * 100).toFixed(2) + '%');
+            lines.push('NOI Growth,' + (s.noiGrowth * 100).toFixed(1) + '%');
+            lines.push('Hold Years,' + holdYears);
+            lines.push('');
+            lines.push('Rent Roll (Monthly)');
+            RENT_LABELS.forEach((label, i) => {
+                lines.push('"' + label + '",' + Math.round(rentRollMonthly[i] || 0));
+            });
+            lines.push('');
+            lines.push('Year,NOI,Debt Service,Cash Flow,Principal Paid,Ending Loan Balance,Cumulative Equity');
+            let cumulativeEquity = s.equity;
+            for (let yr = 1; yr <= holdYears; yr++) {
+                const yrNOI = currentNOI * Math.pow(1 + s.noiGrowth, yr - 1);
+                const cashFlow = yrNOI - annualDebt;
+                const startBal = calcRemainingBalance(loanAmount, rate, 360, (yr - 1) * 12);
+                const endBal = calcRemainingBalance(loanAmount, rate, 360, yr * 12);
+                const principal = startBal - endBal;
+                cumulativeEquity += principal;
+                lines.push([
+                    yr,
+                    Math.round(yrNOI),
+                    Math.round(annualDebt),
+                    Math.round(cashFlow),
+                    Math.round(principal),
+                    Math.round(endBal),
+                    Math.round(cumulativeEquity)
+                ].join(','));
+            }
+            lines.push('');
+            lines.push('Amortization (Year-End Balance)');
+            lines.push('Year,Loan Balance,Principal Paid Cumulative');
+            const schedule = getAmortizationSchedule(loanAmount, rate, holdYears);
+            schedule.forEach(row => {
+                lines.push([row.year, Math.round(row.balance), Math.round(row.principalPaid)].join(','));
+            });
+
+            const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'gn-property-scenario.csv';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                URL.revokeObjectURL(a.href);
+                a.remove();
+            }, 500);
+            setToolStatus('CSV downloaded', 2500);
+        }
+
+        function renderRentRollInputs() {
+            document.querySelectorAll('.rent-input').forEach(input => {
+                const idx = parseInt(input.getAttribute('data-rent-idx'), 10);
+                input.value = Math.round(rentRollMonthly[idx] || 0);
+            });
+            updateRentRollTotals();
+        }
+
+        function updateRentRollTotals() {
+            let monthly = 0;
+            rentRollMonthly.forEach((m, i) => {
+                monthly += m;
+                const annualEl = document.querySelector('[data-rent-annual="' + i + '"]');
+                if (annualEl) annualEl.textContent = '$' + Math.round(m * 12).toLocaleString();
+            });
+            const annual = monthly * 12;
+            const mEl = document.getElementById('rentRollMonthlyTotal');
+            const aEl = document.getElementById('rentRollAnnualTotal');
+            if (mEl) mEl.textContent = '$' + Math.round(monthly).toLocaleString();
+            if (aEl) aEl.textContent = '$' + Math.round(annual).toLocaleString();
+            if (rentChart) {
+                rentChart.data.datasets[0].data = rentRollMonthly.map(m => m * 12);
+                rentChart.update('none');
+            }
+            return { monthly, annual };
+        }
+
+        function onRentInputChange(e) {
+            const input = e.target;
+            if (!input.classList.contains('rent-input')) return;
+            const idx = parseInt(input.getAttribute('data-rent-idx'), 10);
+            rentRollMonthly[idx] = Math.max(0, parseFloat(input.value) || 0);
+            updateRentRollTotals();
+            persistScenarioSoon();
+        }
+
+        function applyRentRollToGsr() {
+            const { annual } = updateRentRollTotals();
+            currentGSR = annual;
+            document.getElementById('customGSR').value = Math.round(currentGSR);
+            // Recompute NOI from GSR - OpEx unless user wants manual NOI
+            currentNOI = Math.max(0, currentGSR - currentOPEX);
+            document.getElementById('customNOI').value = Math.round(currentNOI);
+            syncPriceFromAcqCap();
+            updateAllCalculations();
+            persistScenarioSoon();
+            const st = document.getElementById('rentRollStatus');
+            if (st) {
+                st.textContent = 'GSR set to $' + Math.round(annual).toLocaleString();
+                setTimeout(() => { st.textContent = ''; }, 2500);
+            }
+        }
+
         // Add event listeners for all sliders
-        priceSlider.addEventListener('input', updateMetrics);
-        ltvSlider.addEventListener('input', updateMetrics);
-        rateSlider.addEventListener('input', updateMetrics);
-        exitCapSlider.addEventListener('input', updateMetrics);
-        noiGrowthSlider.addEventListener('input', updateMetrics);
-        holdPeriodSelect.addEventListener('change', updateMetrics);
+        priceSlider.addEventListener('input', () => {
+            syncAcqCapFromPrice();
+            updateMetrics();
+            persistScenarioSoon();
+        });
+        if (acqCapSlider) {
+            acqCapSlider.addEventListener('input', () => {
+                syncPriceFromAcqCap();
+                updateMetrics();
+                persistScenarioSoon();
+            });
+        }
+        ltvSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
+        rateSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
+        exitCapSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
+        noiGrowthSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
+        holdPeriodSelect.addEventListener('change', () => { updateMetrics(); persistScenarioSoon(); });
 
         // ========== COLLAPSIBLE SECTIONS ==========
         document.querySelectorAll('.section-header').forEach(header => {
@@ -2037,8 +3049,11 @@
                 const targetId = link.getAttribute('href').substring(1);
                 const target = document.getElementById(targetId);
                 if (target) {
-                    const navHeight = document.querySelector('.sticky-nav').offsetHeight;
-                    const targetPosition = target.offsetTop - navHeight - 20;
+                    const siteHeader = document.querySelector('.site-header');
+                    const stickyNav = document.querySelector('.sticky-nav');
+                    const navHeight = (siteHeader ? siteHeader.offsetHeight : 0)
+                        + (stickyNav ? stickyNav.offsetHeight : 0);
+                    const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
                     window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             });
@@ -2075,13 +3090,79 @@
         if (applyBtn) applyBtn.addEventListener('click', applyCustomBaseNumbers);
         if (resetBtn) resetBtn.addEventListener('click', resetToExamplePortfolio);
 
+        document.getElementById('copySummaryBtn')?.addEventListener('click', () => {
+            copyText(buildSummaryText(), 'Summary copied');
+        });
+        document.getElementById('copyLinkBtn')?.addEventListener('click', () => {
+            copyText(buildShareUrl(), 'Share link copied');
+        });
+        document.getElementById('saveScenarioBtn')?.addEventListener('click', () => {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(getScenarioState()));
+                setToolStatus('Scenario saved in this browser', 2500);
+            } catch (e) {
+                setToolStatus('Could not save (storage blocked)', 3000);
+            }
+        });
+        document.getElementById('loadScenarioBtn')?.addEventListener('click', () => {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) {
+                    setToolStatus('No saved scenario found', 2500);
+                    return;
+                }
+                applyScenarioState(JSON.parse(raw));
+                persistScenarioSoon();
+            } catch (e) {
+                setToolStatus('Could not load saved scenario', 3000);
+            }
+        });
+        document.getElementById('exportCsvBtn')?.addEventListener('click', exportCsv);
+        document.getElementById('applyRentRollBtn')?.addEventListener('click', applyRentRollToGsr);
+        document.getElementById('rentRollBody')?.addEventListener('input', onRentInputChange);
+
+        // Mobile site-nav hamburger
+        const navToggle = document.getElementById('navToggle');
+        const siteNavLinks = document.getElementById('siteNavLinks');
+        if (navToggle && siteNavLinks) {
+            navToggle.addEventListener('click', () => {
+                const open = siteNavLinks.classList.toggle('open');
+                navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            });
+            siteNavLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    siteNavLinks.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    navToggle.setAttribute('aria-label', 'Open menu');
+                });
+            });
+        }
+
         // Initialize custom inputs with current values
         document.getElementById('customGSR').value = currentGSR;
         document.getElementById('customOPEX').value = currentOPEX;
         document.getElementById('customNOI').value = currentNOI;
 
-        // Initialize
-        updateMetrics();
+        // Load scenario: URL query wins, else localStorage
+        const fromUrl = scenarioFromQuery(window.location.search);
+        const hasUrlParams = fromUrl && Object.values(fromUrl).some(v => v !== undefined);
+        if (hasUrlParams) {
+            applyScenarioState(fromUrl, { silent: true });
+            setToolStatus('Loaded scenario from share link', 3000);
+        } else {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    applyScenarioState(JSON.parse(raw), { silent: true });
+                } else {
+                    updateMetrics();
+                }
+            } catch (e) {
+                updateMetrics();
+            }
+        }
+        renderRentRollInputs();
         updateActiveNav();
     </script>
 </body>
