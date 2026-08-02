@@ -187,6 +187,29 @@ price the implied acquisition cap moves from 7.54% to 8.07%.
 
 ---
 
+## Financing
+
+All six financed properties are **residential and conventionally financeable**.
+Commercial/DSCR is an alternative, not a requirement for any of them.
+
+| Loan | Property | Units |
+|------|----------|-------|
+| 1 | 1045 Patterson | 1 (R3 residential; warehouse is an outbuilding, not a commercial use) |
+| 2 | 2511 Napier | 2 |
+| 3 | 2525 Napier + 2525½ cottage | 1 parcel, financed together |
+| 4 | 2529 Napier | 1 |
+| 5 | 2534 Napier | 2 |
+| 6 | 2553 Napier | 1 |
+
+**Six financed properties** against the Fannie Mae cap of 10.
+
+**Rate range:** 6.0% – 8.5%. Model default 7.5%.
+
+**Hold period:** the 5-year default is deliberate — it matches the point where a
+DSCR 5/4/3/2/1 prepayment step-down burns to zero. Do not treat it as arbitrary.
+
+---
+
 ## Still Need From User
 
 1. **2511 Napier:** per-unit bed/bath/sq ft split
