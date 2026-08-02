@@ -18,6 +18,23 @@
     <meta name="twitter:card" content="summary_large_image">
     <link rel="canonical" href="https://gnpropertygroup.com/npv.html">
 
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "NPV & Value Creation Model | Real Estate Discounted Cash Flow",
+      "url": "https://gnpropertygroup.com/npv.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Organization",
+        "name": "GN Property Group"
+      },
+      "description": "Discounted cash flow model for small rental portfolios. NPV, equity multiple, profitability index, MIRR and full sensitivity Greeks, comparing conventional vs DSCR financing."
+    }
+    </script>
+
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,6 +93,59 @@
 
         /* ---------- Page head ---------- */
         .page-head { margin-bottom: 2.25rem; }
+        .head-row {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            gap: 1.5rem; flex-wrap: wrap;
+        }
+
+        /* ---------- Upload button ----------
+           Restrained: hairline rule, quiet elevation, gold only on intent.   */
+        .upload-btn {
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            padding: 0.62rem 1.05rem;
+            border-radius: 4px; cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.82rem; font-weight: 500; letter-spacing: 0.01em;
+            color: var(--text);
+            background: var(--bg-card);
+            border: 1px solid var(--border2);
+            box-shadow: var(--shadow-sm);
+            transition: border-color 160ms ease, color 160ms ease,
+                        box-shadow 160ms ease, transform 90ms ease;
+        }
+        .upload-btn:hover, .upload-btn:focus-visible {
+            outline: none;
+            color: var(--accent-dim);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+        .upload-btn:focus-visible { box-shadow: 0 0 0 3px var(--accent-faint); }
+        .upload-btn:active { transform: translateY(1px); box-shadow: var(--shadow-sm); }
+        .upload-btn .u-icon { display: block; width: 15px; height: 15px; flex: none; }
+        .upload-btn .u-formats {
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--text3); padding-left: 0.55rem; margin-left: 0.1rem;
+            border-left: 1px solid var(--border);
+        }
+        .upload-btn:hover .u-formats, .upload-btn:focus-visible .u-formats { color: var(--text2); }
+
+        /* upload status + drop overlay */
+        .upload-status {
+            margin-top: 0.7rem; font-size: 0.8rem; min-height: 1.2em;
+            font-family: var(--font-mono, monospace); color: var(--text2);
+        }
+        .upload-status.ok { color: var(--success); }
+        .upload-status.err { color: var(--danger); }
+        .drop-veil {
+            position: fixed; inset: 0; z-index: 2000; display: none;
+            align-items: center; justify-content: center;
+            background: color-mix(in srgb, var(--bg) 82%, transparent);
+            border: 3px dashed var(--accent);
+            font-family: var(--font-mono, monospace); font-size: 0.95rem;
+            letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-dim);
+        }
+        .drop-veil.on { display: flex; }
         .eyebrow {
             font-family: var(--font-mono, monospace);
             font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -271,9 +341,29 @@
 </header>
 
 <div class="page-head">
-    <div class="eyebrow">Napier Portfolio · Discounted Cash Flow</div>
-    <h1>NPV &amp; Value Creation</h1>
+    <div class="head-row">
+        <div>
+            <div class="eyebrow">Napier Portfolio · Discounted Cash Flow</div>
+            <h1>NPV &amp; Value Creation</h1>
+        </div>
+
+        <button type="button" class="upload-btn" id="uploadBtn" aria-describedby="uploadStatus">
+            <svg class="u-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 15.5V4"/>
+                <path d="M7.5 8.5 12 4l4.5 4.5"/>
+                <path d="M3.5 15.5v2.75A2.25 2.25 0 0 0 5.75 20.5h12.5a2.25 2.25 0 0 0 2.25-2.25V15.5"/>
+            </svg>
+            <span>Upload deal</span>
+            <span class="u-formats">json · csv · pdf</span>
+        </button>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json,.csv,.pdf,application/json,text/csv,application/pdf" hidden>
+    <div class="upload-status" id="uploadStatus" role="status" aria-live="polite"></div>
 </div>
+
+<div class="drop-veil" id="dropVeil">Drop deal file — json · csv · pdf</div>
 
 <h2>Financing</h2>
 
@@ -1087,6 +1177,205 @@ document.getElementById('modeRow').addEventListener('click', e => {
 
 let rt;
 window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 140); });
+
+/* ============================================================
+   Deal ingest — JSON / CSV / PDF
+   ============================================================ */
+const FIELD_ALIASES = {
+    price:    ['price', 'purchaseprice', 'purchase_price', 'acquisitionprice', 'saleprice', 'askingprice'],
+    noi:      ['noi', 'netoperatingincome', 'net_operating_income', 'stabilizednoi'],
+    ltv:      ['ltv', 'loantovalue', 'loan_to_value'],
+    rate:     ['rate', 'interestrate', 'interest_rate', 'couponrate'],
+    hold:     ['hold', 'holdperiod', 'hold_period', 'holdyears', 'term'],
+    growth:   ['growth', 'noigrowth', 'noi_growth', 'rentgrowth'],
+    exitCap:  ['exitcap', 'exit_cap', 'exitcaprate', 'terminalcap', 'reversioncap'],
+    sellCost: ['sellcost', 'sellingcosts', 'selling_costs', 'dispositioncosts'],
+    hurdle:   ['hurdle', 'hurdlerate', 'costofequity', 'discountrate', 'requiredreturn']
+};
+const norm = s => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
+const numOf = v => {
+    const n = parseFloat(String(v).replace(/[$,%\s]/g, '').replace(/[()]/g, ''));
+    return isFinite(n) ? n : null;
+};
+
+function setStatus(msg, kind) {
+    const s = document.getElementById('uploadStatus');
+    s.textContent = msg;
+    s.className = 'upload-status' + (kind ? ' ' + kind : '');
+}
+
+// Map loose key/value pairs onto the sliders. Returns list of applied labels.
+function applyFields(pairs) {
+    const applied = [];
+    Object.entries(FIELD_ALIASES).forEach(([id, aliases]) => {
+        for (const [k, v] of pairs) {
+            if (!aliases.includes(norm(k))) continue;
+            let n = numOf(v);
+            if (n === null) continue;
+            // percentages may arrive as 0.0675 or 6.75 — normalise to slider units
+            if (['ltv', 'rate', 'growth', 'exitCap', 'sellCost', 'hurdle'].includes(id) && n > 0 && n < 1) n *= 100;
+            const inp = el[id];
+            const lo = parseFloat(inp.min), hi = parseFloat(inp.max);
+            inp.value = Math.min(hi, Math.max(lo, n));
+            // read back: the control snaps to its own step/min/max, so report
+            // what was actually applied rather than what the file asked for
+            const actual = parseFloat(inp.value);
+            applied.push(id + '=' + actual + (actual !== n ? ' (from ' + n + ')' : ''));
+            break;
+        }
+    });
+    return applied;
+}
+
+function ingestJson(text) {
+    const obj = JSON.parse(text);
+    const pairs = [];
+    const walk = (o, depth) => {
+        if (depth > 4 || o === null || typeof o !== 'object') return;
+        Object.entries(o).forEach(([k, v]) => {
+            if (v !== null && typeof v === 'object') walk(v, depth + 1);
+            else pairs.push([k, v]);
+        });
+    };
+    walk(obj, 0);
+
+    // optional rent roll -> gross scheduled rent
+    let gsr = null;
+    const roll = obj.rentRoll || obj.rent_roll || obj.units || obj.properties;
+    if (Array.isArray(roll)) {
+        let monthly = 0, hits = 0;
+        roll.forEach(r => {
+            const key = Object.keys(r || {}).find(k => /rent/i.test(k));
+            const n = key ? numOf(r[key]) : null;
+            if (n !== null) { monthly += n; hits++; }
+        });
+        if (hits) gsr = monthly * 12;
+    }
+    return { pairs, gsr, rollCount: Array.isArray(roll) ? roll.length : 0 };
+}
+
+function ingestCsv(text) {
+    const rows = text.split(/\r?\n/).filter(l => l.trim())
+        .map(l => l.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(c => c.trim().replace(/^"|"$/g, '')));
+    if (!rows.length) return { pairs: [], gsr: null, rollCount: 0 };
+
+    const header = rows[0].map(norm);
+    const rentCol = header.findIndex(h => /rent/.test(h));
+    const pairs = [];
+    let gsr = null, rollCount = 0;
+
+    if (rentCol >= 0 && rows.length > 1) {
+        // rent-roll shaped
+        let monthly = 0;
+        rows.slice(1).forEach(r => {
+            const n = numOf(r[rentCol]);
+            if (n !== null) { monthly += n; rollCount++; }
+        });
+        if (rollCount) gsr = monthly * 12;
+        // a header row may still carry scalar deal fields in other columns
+        rows.slice(1).forEach(r => header.forEach((h, i) => pairs.push([h, r[i]])));
+    } else {
+        // key,value shaped
+        rows.forEach(r => { if (r.length >= 2) pairs.push([r[0], r[1]]); });
+    }
+    return { pairs, gsr, rollCount };
+}
+
+function loadPdfJs() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+        s.onload = () => {
+            if (!window.pdfjsLib) return reject(new Error('pdf.js failed to initialise'));
+            window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            resolve(window.pdfjsLib);
+        };
+        s.onerror = () => reject(new Error('could not load pdf.js'));
+        document.head.appendChild(s);
+    });
+}
+
+async function ingestPdf(file) {
+    const lib = await loadPdfJs();
+    const buf = await file.arrayBuffer();
+    const doc = await lib.getDocument({ data: buf }).promise;
+    let text = '';
+    for (let i = 1; i <= Math.min(doc.numPages, 25); i++) {
+        const page = await doc.getPage(i);
+        const c = await page.getTextContent();
+        text += c.items.map(it => it.str).join(' ') + '\n';
+    }
+    if (!text.trim()) throw new Error('no text layer — PDF is likely a scan');
+
+    // pull "Label ..... $value" pairs for any label we recognise
+    const pairs = [];
+    Object.values(FIELD_ALIASES).flat().forEach(alias => {
+        const re = new RegExp(alias.replace(/[a-z]/gi, ch => ch + '[\\s._-]*') +
+                              '[^0-9$(-]{0,24}(\\(?\\$?-?[\\d,]+(?:\\.\\d+)?%?\\)?)', 'i');
+        const m = text.match(re);
+        if (m) pairs.push([alias, m[1]]);
+    });
+    return { pairs, gsr: null, rollCount: 0, chars: text.length };
+}
+
+async function handleFile(file) {
+    if (!file) return;
+    const name = file.name;
+    const ext = (name.split('.').pop() || '').toLowerCase();
+    setStatus('Reading ' + name + ' …');
+    try {
+        let res;
+        if (ext === 'json') res = ingestJson(await file.text());
+        else if (ext === 'csv') res = ingestCsv(await file.text());
+        else if (ext === 'pdf') res = await ingestPdf(file);
+        else throw new Error('unsupported type .' + ext + ' — use json, csv or pdf');
+
+        const applied = applyFields(res.pairs);
+
+        // rent roll present but no explicit NOI -> derive using the documented expense ratio
+        let derived = '';
+        if (res.gsr && !applied.some(a => a.startsWith('noi'))) {
+            const EXPENSE_RATIO = 0.3544;   // rent.html base case: $50,929 / $143,700
+            const noiVal = Math.round(res.gsr * (1 - EXPENSE_RATIO));
+            const lo = parseFloat(el.noi.min), hi = parseFloat(el.noi.max);
+            el.noi.value = Math.min(hi, Math.max(lo, noiVal));
+            derived = ' · NOI ' + fUsd.format(parseFloat(el.noi.value)) + ' derived from ' +
+                      fUsd.format(res.gsr) + ' GSR at the 35.4% expense ratio (not from the file)';
+        }
+
+        render();
+
+        if (!applied.length && !derived) {
+            setStatus(name + ': no recognisable deal fields found. ' +
+                      'Expected keys like price, noi, ltv, rate, hold, growth, exitCap.', 'err');
+        } else {
+            setStatus('Loaded ' + name + ' — applied ' + applied.length + ' field' +
+                      (applied.length === 1 ? '' : 's') +
+                      (res.rollCount ? ' · ' + res.rollCount + ' rent-roll rows' : '') +
+                      derived, 'ok');
+        }
+    } catch (err) {
+        setStatus(name + ': ' + err.message, 'err');
+    }
+}
+
+document.getElementById('uploadBtn').addEventListener('click', () => document.getElementById('fileInput').click());
+document.getElementById('fileInput').addEventListener('change', e => {
+    handleFile(e.target.files[0]);
+    e.target.value = '';   // allow re-selecting the same file
+});
+
+const veil = document.getElementById('dropVeil');
+let dragDepth = 0;
+window.addEventListener('dragenter', e => { e.preventDefault(); if (++dragDepth === 1) veil.classList.add('on'); });
+window.addEventListener('dragover', e => e.preventDefault());
+window.addEventListener('dragleave', () => { if (--dragDepth <= 0) { dragDepth = 0; veil.classList.remove('on'); } });
+window.addEventListener('drop', e => {
+    e.preventDefault(); dragDepth = 0; veil.classList.remove('on');
+    handleFile(e.dataTransfer.files[0]);
+});
 
 el.ltv.max = MODES[mode].maxLtv;
 render();
