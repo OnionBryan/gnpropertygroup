@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPV &amp; Value Creation Model | GN Property Group</title>
+
+    <meta name="description" content="Net present value model for small rental portfolios. NPV, equity multiple, profitability index, MIRR and full sensitivity Greeks, with conventional vs DSCR financing comparison.">
+    <meta name="keywords" content="real estate NPV calculator, net present value model, equity multiple, profitability index, MIRR, DSCR vs conventional financing, discounted cash flow real estate">
+    <meta name="author" content="GN Property Group">
+
+    <meta property="og:title" content="NPV & Value Creation Model | GN Property Group">
+    <meta property="og:description" content="Discounted cash flow model with NPV, equity multiple, profitability index, MIRR and sensitivity Greeks. Conventional vs DSCR financing compared.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gnpropertygroup.com/npv.html">
+    <meta property="og:site_name" content="GN Property Group">
+    <meta property="og:image" content="https://gnpropertygroup.com/images/2525-napier-ave/2525%20Napier%20Ave.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://gnpropertygroup.com/npv.html">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.65;
+            color: var(--text);
+            background: var(--bg-body);
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 96px 24px 64px;
+        }
+
+        /* ---------- Site header (matches rent.html) ---------- */
+        .site-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            z-index: 1002; padding: 0.75rem 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .site-nav-container {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .site-nav-logo {
+            font-size: 1.25rem; font-weight: 700; color: var(--text);
+            text-decoration: none; letter-spacing: -0.02em;
+            font-family: var(--font-display);
+        }
+        .site-nav-links { display: flex; gap: 0.5rem; align-items: center; }
+        .site-nav-link {
+            color: var(--text); text-decoration: none; font-size: 0.9rem;
+            font-weight: 500; padding: 0.5rem 1rem; border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .site-nav-link:hover { color: var(--accent); background: var(--border); }
+        .site-nav-link.active { color: var(--accent-text); background: var(--accent); }
+        .site-nav-contact {
+            color: var(--text); text-decoration: none; font-size: 0.9rem;
+            font-weight: 500; padding: 0.5rem 1rem;
+            border: 1px solid var(--border2); border-radius: 6px;
+        }
+        .site-nav-contact:hover { border-color: var(--accent); color: var(--accent); }
+        .nav-toggle { display: none; background: none; border: none; color: var(--text); cursor: pointer; }
+
+        /* ---------- Page head ---------- */
+        .page-head { margin-bottom: 2.25rem; }
+        .eyebrow {
+            font-family: var(--font-mono, monospace);
+            font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--accent-dim); font-weight: 700; margin-bottom: 0.6rem;
+        }
+        h1 {
+            font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, 2.7rem);
+            font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+            margin-bottom: 0.7rem;
+        }
+        .lede { color: var(--text2); font-size: 1.02rem; max-width: 62ch; }
+
+        h2 {
+            font-family: var(--font-display); font-size: 1.35rem; font-weight: 600;
+            letter-spacing: -0.02em; margin: 2.75rem 0 0.35rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent);
+        }
+        h2 .h2-sub {
+            display: block; font-family: var(--font-body); font-size: 0.85rem;
+            font-weight: 400; color: var(--text2); letter-spacing: 0;
+            margin-top: 0.3rem; border: 0;
+        }
+        h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.7rem; }
+
+        /* ---------- Financing toggle ---------- */
+        .mode-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1.25rem 0 0.75rem; }
+        .mode-btn {
+            font-family: var(--font-body); font-size: 0.88rem; font-weight: 500;
+            padding: 0.55rem 1.15rem; border-radius: 8px; cursor: pointer;
+            background: var(--bg-card); color: var(--text);
+            border: 1px solid var(--border2); transition: all 0.15s ease;
+        }
+        .mode-btn:hover { border-color: var(--accent); }
+        .mode-btn.active {
+            background: var(--accent); color: var(--accent-text);
+            border-color: var(--accent); font-weight: 700;
+        }
+        .mode-note {
+            font-size: 0.82rem; color: var(--text2);
+            background: var(--surface2); border-left: 3px solid var(--accent);
+            padding: 0.7rem 0.95rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;
+        }
+
+        /* ---------- Controls ---------- */
+        .controls {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+            gap: 1.15rem 1.6rem;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-sm);
+        }
+        .ctl label {
+            display: flex; justify-content: space-between; align-items: baseline;
+            font-size: 0.8rem; font-weight: 500; color: var(--text2); margin-bottom: 0.45rem;
+        }
+        .ctl .val {
+            font-family: var(--font-mono, monospace); font-size: 0.92rem;
+            font-weight: 700; color: var(--text);
+        }
+        .ctl .val.hero { color: var(--accent-dim); }
+        input[type=range] {
+            width: 100%; height: 5px; border-radius: 3px; -webkit-appearance: none;
+            appearance: none; background: var(--surface3); outline: none; cursor: pointer;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 17px; height: 17px;
+            border-radius: 50%; background: var(--accent); cursor: pointer;
+            border: 2px solid var(--bg-card); box-shadow: var(--shadow-sm);
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 17px; height: 17px; border-radius: 50%; background: var(--accent);
+            cursor: pointer; border: 2px solid var(--bg-card);
+        }
+        input[type=range].hero::-webkit-slider-thumb { background: var(--accent2); }
+        input[type=range].hero::-moz-range-thumb { background: var(--accent2); }
+
+        /* ---------- Metric cards ---------- */
+        .metrics {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
+            gap: 0.85rem; margin: 1.35rem 0;
+        }
+        .metric {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 10px; padding: 1.05rem 1rem; box-shadow: var(--shadow-sm);
+        }
+        .metric.feature { border-color: var(--accent); border-width: 2px; }
+        .metric-label {
+            font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase;
+            color: var(--text3); font-weight: 700; margin-bottom: 0.3rem;
+        }
+        .metric-value {
+            font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
+            letter-spacing: -0.02em; line-height: 1.15;
+        }
+        .metric-sub { font-size: 0.74rem; color: var(--text2); margin-top: 0.2rem; }
+        .pos { color: var(--success); }
+        .neg { color: var(--danger); }
+
+        /* ---------- Charts ---------- */
+        .chart-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1.35rem; margin-top: 1.15rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .chart-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+        .chart-note { font-size: 0.79rem; color: var(--text2); margin-bottom: 0.9rem; }
+        .chart-host { width: 100%; overflow: visible; }
+        .chart-host svg { display: block; width: 100%; height: auto; }
+
+        .axis path, .axis line { stroke: var(--border2); }
+        .axis text { fill: var(--text3); font-size: 11px; font-family: var(--font-body); }
+        .grid line { stroke: var(--border); stroke-dasharray: 2 3; }
+        .grid path { stroke: none; }
+
+        /* ---------- Tables ---------- */
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table {
+            width: 100%; border-collapse: collapse; margin-top: 1rem;
+            font-size: 0.88rem; background: var(--bg-card);
+            border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+        }
+        th {
+            text-align: left; padding: 0.7rem 0.9rem; background: var(--surface2);
+            font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+            color: var(--text2); font-weight: 700; white-space: nowrap;
+        }
+        td { padding: 0.7rem 0.9rem; border-top: 1px solid var(--border); }
+        .num { text-align: right; font-family: var(--font-mono, monospace); white-space: nowrap; }
+        tr.total-row td { font-weight: 700; background: var(--surface2); border-top: 2px solid var(--border2); }
+        .win { color: var(--success); font-weight: 700; }
+
+        .callout {
+            background: var(--surface2); border-left: 4px solid var(--accent);
+            padding: 1rem 1.15rem; border-radius: 0 8px 8px 0; margin-top: 1.15rem;
+            font-size: 0.88rem; color: var(--text2);
+        }
+        .callout strong { color: var(--text); }
+        .callout.warn { border-left-color: var(--warning); }
+
+        .formula {
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 8px; padding: 0.9rem 1.05rem; margin: 0.8rem 0;
+            font-family: var(--font-mono, monospace); font-size: 0.82rem;
+            color: var(--text2); overflow-x: auto; white-space: pre;
+        }
+
+        footer {
+            margin-top: 3.5rem; padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem; color: var(--text3);
+        }
+        footer a { color: var(--accent-dim); }
+
+        @media (max-width: 820px) {
+            body { padding: 84px 16px 48px; }
+            .site-header { padding: 0.65rem 1rem; }
+            .nav-toggle { display: block; }
+            .site-nav-links {
+                display: none; position: absolute; top: 100%; right: 0;
+                flex-direction: column; align-items: stretch; gap: 0.15rem;
+                background: var(--bg-card); border: 1px solid var(--border);
+                border-radius: 8px; padding: 0.5rem; min-width: 190px;
+                box-shadow: var(--shadow-md);
+            }
+            .site-nav-links.open { display: flex; }
+            .site-nav-container { position: relative; }
+            .controls { padding: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="site-nav-container">
+        <a href="index.html" class="site-nav-logo">Napier Properties</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="siteNavLinks">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M3 6h18M3 12h18M3 18h18"></path>
+            </svg>
+        </button>
+        <nav class="site-nav-links" id="siteNavLinks">
+            <a href="index.html#portfolio" class="site-nav-link">Portfolio</a>
+            <a href="macon.html" class="site-nav-link">Macon</a>
+            <a href="rent.html" class="site-nav-link">Investment</a>
+            <a href="npv.html" class="site-nav-link active">NPV</a>
+            <button class="site-nav-link" id="themeToggleBtn" aria-label="Toggle Theme" style="background:none;border:none;cursor:pointer;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <a href="mailto:gnpropertygroup@gmail.com" class="site-nav-contact">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<div class="page-head">
+    <div class="eyebrow">Napier Portfolio · Discounted Cash Flow</div>
+    <h1>NPV &amp; Value Creation</h1>
+</div>
+
+<h2>Financing</h2>
+
+<div class="mode-row" id="modeRow">
+    <button class="mode-btn active" data-mode="conv">Conventional 30yr fixed</button>
+    <button class="mode-btn" data-mode="comm">Commercial — balloon</button>
+    <button class="mode-btn" data-mode="dscr">DSCR 5/25</button>
+</div>
+<div class="mode-note" id="modeNote"></div>
+
+<div class="controls" id="controls">
+    <div class="ctl">
+        <label for="hurdle">Hurdle rate (cost of equity) <span class="val hero" id="hurdleVal">12.0%</span></label>
+        <input type="range" class="hero" id="hurdle" min="6" max="20" step="0.25" value="12">
+    </div>
+    <div class="ctl">
+        <label for="price">Purchase price <span class="val" id="priceVal">$1,150,000</span></label>
+        <input type="range" id="price" min="800000" max="1600000" step="5000" value="1150000">
+    </div>
+    <div class="ctl">
+        <label for="noi">Stabilized NOI <span class="val" id="noiVal">$92,800</span></label>
+        <input type="range" id="noi" min="60000" max="140000" step="100" value="92800">
+    </div>
+    <div class="ctl">
+        <label for="ltv">Loan-to-value <span class="val" id="ltvVal">75%</span></label>
+        <input type="range" id="ltv" min="55" max="85" step="1" value="75">
+    </div>
+    <div class="ctl">
+        <label for="rate">Interest rate <span class="val" id="rateVal">6.75%</span></label>
+        <input type="range" id="rate" min="6" max="8.5" step="0.125" value="6.75">
+    </div>
+    <div class="ctl">
+        <label for="hold">Hold period <span class="val" id="holdVal">5 yrs</span></label>
+        <input type="range" id="hold" min="3" max="15" step="1" value="5">
+    </div>
+    <div class="ctl">
+        <label for="growth">NOI growth <span class="val" id="growthVal">2.0%</span></label>
+        <input type="range" id="growth" min="0" max="5" step="0.25" value="2">
+    </div>
+    <div class="ctl">
+        <label for="exitCap">Exit cap rate <span class="val" id="exitCapVal">8.50%</span></label>
+        <input type="range" id="exitCap" min="6.5" max="10" step="0.05" value="8.5">
+    </div>
+    <div class="ctl">
+        <label for="sellCost">Selling costs <span class="val" id="sellCostVal">2.0%</span></label>
+        <input type="range" id="sellCost" min="0" max="6" step="0.25" value="2">
+    </div>
+</div>
+
+<div class="callout warn" id="capWarn" style="display:none;"></div>
+<div class="callout warn" id="balloonWarn" style="display:none;"></div>
+
+<h2>Results</h2>
+
+<div class="metrics">
+    <div class="metric feature">
+        <div class="metric-label">NPV — levered</div>
+        <div class="metric-value" id="mNpv">—</div>
+        <div class="metric-sub" id="mNpvSub"></div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">NPV — unlevered</div>
+        <div class="metric-value" id="mNpvU">—</div>
+        <div class="metric-sub" id="mNpvUSub"></div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">Profitability index</div>
+        <div class="metric-value" id="mPi">—</div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">Equity multiple</div>
+        <div class="metric-value" id="mEm">—</div>
+        <div class="metric-sub" id="mEmSub"></div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">Levered IRR</div>
+        <div class="metric-value" id="mIrr">—</div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">MIRR</div>
+        <div class="metric-value" id="mMirr">—</div>
+    </div>
+</div>
+
+<div class="metrics">
+    <div class="metric">
+        <div class="metric-label">Equity in</div>
+        <div class="metric-value" id="mEquity" style="font-size:1.2rem;">—</div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">Annual debt service</div>
+        <div class="metric-value" id="mDs" style="font-size:1.2rem;">—</div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">Year-1 DSCR</div>
+        <div class="metric-value" id="mDscr" style="font-size:1.2rem;">—</div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">Year-1 cash flow</div>
+        <div class="metric-value" id="mCf1" style="font-size:1.2rem;">—</div>
+    </div>
+    <div class="metric">
+        <div class="metric-label">Net sale proceeds</div>
+        <div class="metric-value" id="mExit" style="font-size:1.2rem;">—</div>
+        <div class="metric-sub" id="mExitSub"></div>
+    </div>
+</div>
+
+<div class="chart-card">
+    <div class="chart-title">NPV across every discount rate</div>
+    <div class="chart-host" id="chartNpv"></div>
+</div>
+
+<div class="chart-card">
+    <div class="chart-title">Cash flows by year</div>
+    <div class="chart-host" id="chartCf"></div>
+</div>
+
+<h2>Sensitivity</h2>
+
+<div class="chart-card">
+    <div class="chart-title">Tornado — NPV swing by input</div>
+    <div class="chart-host" id="chartTornado"></div>
+</div>
+
+<div class="table-scroll">
+    <table id="greeksTable">
+        <thead>
+            <tr>
+                <th>Greek</th>
+                <th class="num">Value</th>
+            </tr>
+        </thead>
+        <tbody id="greeksBody"></tbody>
+    </table>
+</div>
+
+<h2>Financing comparison</h2>
+
+<div class="table-scroll">
+    <table id="cmpTable">
+        <thead>
+            <tr>
+                <th>Structure</th>
+                <th class="num">Rate</th>
+                <th class="num">Amort</th>
+                <th class="num">LTV</th>
+                <th class="num">Debt service</th>
+                <th class="num">Prepay at exit</th>
+                <th class="num">NPV</th>
+                <th class="num">IRR</th>
+                <th class="num">Equity mult.</th>
+            </tr>
+        </thead>
+        <tbody id="cmpBody"></tbody>
+    </table>
+</div>
+
+<div class="callout">
+    Unpriced: prepayment option, blanket vs. separable exits, 1045 Patterson land
+    optionality (~1.13 acres, R-3).
+</div>
+
+<h2>Method</h2>
+
+<div class="formula" id="formulaBlock"></div>
+
+<div class="callout">
+    Not modeled: tax shield, depreciation, refinance, balloon rollover risk.
+</div>
+
+<footer>
+    Illustrative model only — not an offer to sell, a solicitation, or investment advice.
+    Verify all figures independently. Portfolio figures default to the
+    <a href="rent.html">Napier rent roll</a>.
+</footer>
+
+<script>
+/* ============================================================
+   Theme + nav
+   ============================================================ */
+(function () {
+    const btn = document.getElementById('themeToggleBtn');
+    if (btn) {
+        let theme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        btn.addEventListener('click', () => {
+            theme = theme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            render();
+        });
+    }
+    const nt = document.getElementById('navToggle');
+    const nl = document.getElementById('siteNavLinks');
+    if (nt && nl) {
+        nt.addEventListener('click', () => {
+            const open = nl.classList.toggle('open');
+            nt.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    }
+})();
+
+/* ============================================================
+   Finance primitives
+   ============================================================ */
+function monthlyPayment(principal, annualRate, nMonths) {
+    const i = annualRate / 12;
+    if (i === 0) return principal / nMonths;
+    return principal * (i * Math.pow(1 + i, nMonths)) / (Math.pow(1 + i, nMonths) - 1);
+}
+
+function remainingBalance(principal, annualRate, nMonths, monthsPaid) {
+    const i = annualRate / 12;
+    const pmt = monthlyPayment(principal, annualRate, nMonths);
+    if (i === 0) return Math.max(0, principal - pmt * monthsPaid);
+    const g = Math.pow(1 + i, monthsPaid);
+    return Math.max(0, principal * g - pmt * (g - 1) / i);
+}
+
+function npv(rate, cfs) {
+    // cfs[0] is time 0
+    return cfs.reduce((s, cf, t) => s + cf / Math.pow(1 + rate, t), 0);
+}
+
+function irr(cfs) {
+    // Bisection. Requires a sign change; returns null if none in range.
+    let lo = -0.9499, hi = 5.0;
+    let fLo = npv(lo, cfs), fHi = npv(hi, cfs);
+    if (isNaN(fLo) || isNaN(fHi) || fLo * fHi > 0) return null;
+    for (let k = 0; k < 200; k++) {
+        const mid = (lo + hi) / 2;
+        const fMid = npv(mid, cfs);
+        if (Math.abs(fMid) < 1e-7) return mid;
+        if (fLo * fMid < 0) { hi = mid; fHi = fMid; }
+        else { lo = mid; fLo = fMid; }
+    }
+    return (lo + hi) / 2;
+}
+
+function mirr(cfs, financeRate, reinvestRate) {
+    const n = cfs.length - 1;
+    if (n <= 0) return null;
+    let fvPos = 0, pvNeg = 0;
+    cfs.forEach((cf, t) => {
+        if (cf > 0) fvPos += cf * Math.pow(1 + reinvestRate, n - t);
+        else if (cf < 0) pvNeg += cf / Math.pow(1 + financeRate, t);
+    });
+    if (pvNeg === 0 || fvPos <= 0) return null;
+    return Math.pow(fvPos / -pvNeg, 1 / n) - 1;
+}
+
+/* ============================================================
+   Financing modes
+   ============================================================ */
+const MODES = {
+    conv: {
+        label: 'Conventional 30yr fixed',
+        rate: 6.75, ltv: 75, maxLtv: 80,
+        amort: 360, balloon: null,
+        prepay: [0, 0, 0, 0, 0],
+        note: '5 conforming loans · 30yr fixed · full amort · no prepay penalty · no balloon · personal name · recourse'
+    },
+    comm: {
+        label: 'Commercial — balloon',
+        rate: 7.00, ltv: 70, maxLtv: 75,
+        amort: 300, balloon: 5,
+        prepay: [0.03, 0.02, 0.01, 0, 0],
+        note: 'Bank portfolio loan · 25yr amort · 5yr balloon · blanket lien · entity · 3/2/1 step-down'
+    },
+    dscr: {
+        label: 'DSCR 5/25',
+        rate: 7.25, ltv: 75, maxLtv: 75,
+        amort: 300, balloon: 5,
+        prepay: [0.05, 0.04, 0.03, 0.02, 0.01],
+        note: '5yr fixed · 25yr amort · balloon at month 60 · DSCR-underwritten · LLC · 5/4/3/2/1 step-down · no property cap'
+    }
+};
+let mode = 'conv';
+
+/* ============================================================
+   Model
+   ============================================================ */
+function buildModel(p) {
+    const amort = p.amort || 360;
+    const loan = p.price * p.ltv;
+    const equity = p.price - loan;
+    const ds = monthlyPayment(loan, p.rate, amort) * 12;
+
+    // Operating cash flows, years 1..T
+    const noiSeries = [];
+    for (let t = 1; t <= p.hold; t++) {
+        noiSeries.push(p.noi * Math.pow(1 + p.growth, t - 1));
+    }
+
+    // Terminal value — N+1 rule: capitalize year T+1 NOI
+    const exitNOI = p.noi * Math.pow(1 + p.growth, p.hold);
+    const grossExit = exitNOI / p.exitCap;
+    const netExit = grossExit * (1 - p.sellCost);
+    const balance = remainingBalance(loan, p.rate, amort, p.hold * 12);
+    const balloonBreach = p.balloon != null && p.hold > p.balloon;
+
+    // Prepayment penalty (step-down, zero after the schedule runs out)
+    const penRate = p.hold <= p.prepay.length ? p.prepay[p.hold - 1] : 0;
+    const penalty = balance * penRate;
+
+    const saleProceeds = netExit - balance - penalty;
+
+    // Levered equity cash flows
+    const lev = [-equity];
+    noiSeries.forEach((n, idx) => {
+        let cf = n - ds;
+        if (idx === p.hold - 1) cf += saleProceeds;
+        lev.push(cf);
+    });
+
+    // Unlevered property cash flows
+    const unlev = [-p.price];
+    noiSeries.forEach((n, idx) => {
+        let cf = n;
+        if (idx === p.hold - 1) cf += netExit;
+        unlev.push(cf);
+    });
+
+    // WACC for the unlevered discount rate
+    const wacc = p.ltv * p.rate + (1 - p.ltv) * p.hurdle;
+
+    const npvLev = npv(p.hurdle, lev);
+    const npvUn = npv(wacc, unlev);
+    const rIrr = irr(lev);
+    const rMirr = mirr(lev, p.rate, p.hurdle);
+
+    const inflow = lev.slice(1).reduce((s, c) => s + Math.max(0, c), 0);
+    const em = inflow / equity;
+    const pi = 1 + npvLev / equity;
+
+    return {
+        amort, loan, equity, ds, noiSeries, exitNOI, grossExit, netExit, balance,
+        penalty, penRate, saleProceeds, lev, unlev, wacc, balloonBreach,
+        npvLev, npvUn, irr: rIrr, mirr: rMirr, em, pi,
+        principalYr1: loan - remainingBalance(loan, p.rate, amort, 12),
+        dscr: noiSeries[0] / ds,
+        cf1: noiSeries[0] - ds,
+        goingInCap: p.noi / p.price
+    };
+}
+
+/* ============================================================
+   Inputs
+   ============================================================ */
+const IDS = ['hurdle', 'price', 'noi', 'ltv', 'rate', 'hold', 'growth', 'exitCap', 'sellCost'];
+const el = {};
+IDS.forEach(id => {
+    el[id] = document.getElementById(id);
+    el[id + 'Val'] = document.getElementById(id + 'Val');
+});
+
+function readParams() {
+    return {
+        hurdle: +el.hurdle.value / 100,
+        price: +el.price.value,
+        noi: +el.noi.value,
+        ltv: +el.ltv.value / 100,
+        rate: +el.rate.value / 100,
+        hold: +el.hold.value,
+        growth: +el.growth.value / 100,
+        exitCap: +el.exitCap.value / 100,
+        sellCost: +el.sellCost.value / 100,
+        prepay: MODES[mode].prepay,
+        amort: MODES[mode].amort,
+        balloon: MODES[mode].balloon
+    };
+}
+
+/* ============================================================
+   Formatting
+   ============================================================ */
+const fUsd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+const fUsdS = n => (n < 0 ? '−' : '') + fUsd.format(Math.abs(n));
+const fPct = (n, d = 1) => (n * 100).toFixed(d) + '%';
+const fK = n => {
+    const a = Math.abs(n);
+    const s = n < 0 ? '−' : '';
+    if (a >= 1e6) return s + '$' + (a / 1e6).toFixed(2) + 'M';
+    if (a >= 1e3) return s + '$' + Math.round(a / 1e3) + 'k';
+    return s + '$' + Math.round(a);
+};
+
+function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#888';
+}
+
+/* ============================================================
+   Charts — D3
+   ============================================================ */
+function clear(sel) { d3.select(sel).selectAll('*').remove(); }
+
+function drawNpvCurve(p, m) {
+    const host = document.getElementById('chartNpv');
+    clear('#chartNpv');
+    const W = host.clientWidth || 800;
+    const H = Math.max(260, Math.min(380, W * 0.42));
+    const M = { t: 18, r: 20, b: 40, l: 74 };
+
+    const svg = d3.select('#chartNpv').append('svg')
+        .attr('viewBox', `0 0 ${W} ${H}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    const rates = d3.range(0, 30.05, 0.25).map(r => r / 100);
+    const pts = rates.map(r => ({ r, v: npv(r, m.lev) }));
+
+    const x = d3.scaleLinear().domain([0, 0.30]).range([M.l, W - M.r]);
+    const yExt = d3.extent(pts, d => d.v);
+    const pad = (yExt[1] - yExt[0]) * 0.08 || 1000;
+    const y = d3.scaleLinear().domain([yExt[0] - pad, yExt[1] + pad]).range([H - M.b, M.t]);
+
+    const accent = cssVar('--accent-dim');
+    const good = cssVar('--success');
+    const bad = cssVar('--danger');
+    const txt3 = cssVar('--text3');
+
+    svg.append('g').attr('class', 'grid')
+        .attr('transform', `translate(0,${H - M.b})`)
+        .call(d3.axisBottom(x).ticks(7).tickSize(-(H - M.t - M.b)).tickFormat(''));
+
+    // zero line
+    if (y.domain()[0] < 0 && y.domain()[1] > 0) {
+        svg.append('line')
+            .attr('x1', M.l).attr('x2', W - M.r)
+            .attr('y1', y(0)).attr('y2', y(0))
+            .attr('stroke', txt3).attr('stroke-width', 1.5).attr('stroke-dasharray', '4 3');
+    }
+
+    const area = d3.area()
+        .x(d => x(d.r)).y0(y(0)).y1(d => y(d.v))
+        .curve(d3.curveMonotoneX);
+    const line = d3.line()
+        .x(d => x(d.r)).y(d => y(d.v))
+        .curve(d3.curveMonotoneX);
+
+    const posPts = pts.filter(d => d.v >= 0);
+    const negPts = pts.filter(d => d.v <= 0);
+    if (posPts.length > 1) {
+        svg.append('path').datum(posPts).attr('d', area)
+            .attr('fill', good).attr('opacity', 0.14);
+    }
+    if (negPts.length > 1) {
+        svg.append('path').datum(negPts).attr('d', area)
+            .attr('fill', bad).attr('opacity', 0.12);
+    }
+
+    svg.append('path').datum(pts).attr('d', line)
+        .attr('fill', 'none').attr('stroke', accent).attr('stroke-width', 2.4);
+
+    // IRR crossing
+    if (m.irr != null && m.irr >= 0 && m.irr <= 0.30) {
+        svg.append('line')
+            .attr('x1', x(m.irr)).attr('x2', x(m.irr))
+            .attr('y1', M.t).attr('y2', H - M.b)
+            .attr('stroke', cssVar('--accent2')).attr('stroke-width', 1.5)
+            .attr('stroke-dasharray', '5 4');
+        svg.append('circle')
+            .attr('cx', x(m.irr)).attr('cy', y(0)).attr('r', 5)
+            .attr('fill', cssVar('--accent2'));
+        svg.append('text')
+            .attr('x', x(m.irr) + 8).attr('y', M.t + 14)
+            .attr('fill', cssVar('--accent2'))
+            .style('font-size', '11.5px').style('font-weight', 700)
+            .text('IRR ' + fPct(m.irr));
+    }
+
+    // current hurdle marker
+    svg.append('circle')
+        .attr('cx', x(p.hurdle)).attr('cy', y(m.npvLev)).attr('r', 6)
+        .attr('fill', cssVar('--bg-card')).attr('stroke', accent).attr('stroke-width', 3);
+    svg.append('text')
+        .attr('x', x(p.hurdle))
+        .attr('y', y(m.npvLev) + (m.npvLev > 0 ? -14 : 22))
+        .attr('text-anchor', 'middle')
+        .attr('fill', cssVar('--text'))
+        .style('font-size', '11.5px').style('font-weight', 700)
+        .text(fUsdS(m.npvLev) + ' @ ' + fPct(p.hurdle));
+
+    svg.append('g').attr('class', 'axis')
+        .attr('transform', `translate(0,${H - M.b})`)
+        .call(d3.axisBottom(x).ticks(7).tickFormat(d => (d * 100).toFixed(0) + '%'));
+    svg.append('g').attr('class', 'axis')
+        .attr('transform', `translate(${M.l},0)`)
+        .call(d3.axisLeft(y).ticks(6).tickFormat(fK));
+
+    svg.append('text')
+        .attr('x', (W + M.l - M.r) / 2).attr('y', H - 6)
+        .attr('text-anchor', 'middle').attr('fill', txt3)
+        .style('font-size', '11px').text('Discount rate');
+}
+
+function drawCashFlows(p, m) {
+    const host = document.getElementById('chartCf');
+    clear('#chartCf');
+    const W = host.clientWidth || 800;
+    const H = Math.max(250, Math.min(360, W * 0.40));
+    const M = { t: 18, r: 20, b: 42, l: 74 };
+
+    const svg = d3.select('#chartCf').append('svg')
+        .attr('viewBox', `0 0 ${W} ${H}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    // split final year into operating vs sale so the exit reads clearly
+    const rows = m.lev.map((cf, t) => {
+        if (t === 0) return { t, op: cf, sale: 0 };
+        const isExit = t === p.hold;
+        const op = m.noiSeries[t - 1] - m.ds;
+        return { t, op, sale: isExit ? m.saleProceeds : 0 };
+    });
+
+    const x = d3.scaleBand()
+        .domain(rows.map(d => d.t))
+        .range([M.l, W - M.r]).padding(0.28);
+    const lo = d3.min(rows, d => Math.min(0, d.op, d.op + d.sale));
+    const hi = d3.max(rows, d => Math.max(0, d.op, d.op + d.sale));
+    const y = d3.scaleLinear().domain([lo * 1.1, hi * 1.1]).range([H - M.b, M.t]);
+
+    const good = cssVar('--success');
+    const bad = cssVar('--danger');
+    const gold = cssVar('--accent');
+
+    svg.append('g').attr('class', 'grid')
+        .attr('transform', `translate(${M.l},0)`)
+        .call(d3.axisLeft(y).ticks(6).tickSize(-(W - M.l - M.r)).tickFormat(''));
+
+    const g = svg.selectAll('.bar').data(rows).join('g');
+
+    g.append('rect')
+        .attr('x', d => x(d.t)).attr('width', x.bandwidth())
+        .attr('y', d => d.op >= 0 ? y(d.op) : y(0))
+        .attr('height', d => Math.abs(y(d.op) - y(0)))
+        .attr('rx', 3)
+        .attr('fill', d => d.op >= 0 ? good : bad);
+
+    g.filter(d => d.sale !== 0).append('rect')
+        .attr('x', d => x(d.t)).attr('width', x.bandwidth())
+        .attr('y', d => y(Math.max(d.op, 0) + d.sale))
+        .attr('height', d => Math.abs(y(d.sale) - y(0)))
+        .attr('rx', 3)
+        .attr('fill', gold);
+
+    g.append('title').text(d =>
+        d.t === 0 ? 'Year 0 — equity in: ' + fUsdS(d.op)
+                  : 'Year ' + d.t + ' — operating ' + fUsdS(d.op) +
+                    (d.sale ? '\nSale proceeds ' + fUsdS(d.sale) : ''));
+
+    svg.append('line')
+        .attr('x1', M.l).attr('x2', W - M.r)
+        .attr('y1', y(0)).attr('y2', y(0))
+        .attr('stroke', cssVar('--text3')).attr('stroke-width', 1);
+
+    svg.append('g').attr('class', 'axis')
+        .attr('transform', `translate(0,${H - M.b})`)
+        .call(d3.axisBottom(x).tickFormat(d => 'Y' + d));
+    svg.append('g').attr('class', 'axis')
+        .attr('transform', `translate(${M.l},0)`)
+        .call(d3.axisLeft(y).ticks(6).tickFormat(fK));
+}
+
+function drawTornado(p, m) {
+    const host = document.getElementById('chartTornado');
+    clear('#chartTornado');
+
+    const base = m.npvLev;
+    const vary = (key, lo, hi) => {
+        const a = { ...p }; a[key] = lo;
+        const b = { ...p }; b[key] = hi;
+        return { lo: buildModel(a).npvLev, hi: buildModel(b).npvLev };
+    };
+
+    const specs = [
+        { name: 'Exit cap rate', unit: '±50 bps', ...vary('exitCap', p.exitCap - 0.005, p.exitCap + 0.005) },
+        { name: 'Purchase price', unit: '±5%', ...vary('price', p.price * 0.95, p.price * 1.05) },
+        { name: 'NOI level', unit: '±5%', ...vary('noi', p.noi * 0.95, p.noi * 1.05) },
+        { name: 'Hurdle rate', unit: '±100 bps', ...vary('hurdle', p.hurdle - 0.01, p.hurdle + 0.01) },
+        { name: 'NOI growth', unit: '±100 bps', ...vary('growth', Math.max(0, p.growth - 0.01), p.growth + 0.01) },
+        { name: 'Interest rate', unit: '±50 bps', ...vary('rate', Math.max(0.01, p.rate - 0.005), p.rate + 0.005) },
+        { name: 'Leverage (LTV)', unit: '±5 pts', ...vary('ltv', Math.max(0.3, p.ltv - 0.05), Math.min(0.9, p.ltv + 0.05)) }
+    ].map(s => ({
+        ...s,
+        min: Math.min(s.lo, s.hi),
+        max: Math.max(s.lo, s.hi),
+        span: Math.abs(s.hi - s.lo)
+    })).sort((a, b) => b.span - a.span);
+
+    const W = host.clientWidth || 800;
+    const rowH = 34;
+    const M = { t: 26, r: 24, b: 34, l: 128 };
+    const H = M.t + M.b + specs.length * rowH;
+
+    const svg = d3.select('#chartTornado').append('svg')
+        .attr('viewBox', `0 0 ${W} ${H}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    const lo = d3.min(specs, d => d.min), hi = d3.max(specs, d => d.max);
+    const padX = (hi - lo) * 0.1 || 1000;
+    const x = d3.scaleLinear().domain([Math.min(lo - padX, base), Math.max(hi + padX, base)])
+        .range([M.l, W - M.r]);
+    const y = d3.scaleBand().domain(specs.map(d => d.name))
+        .range([M.t, H - M.b]).padding(0.32);
+
+    svg.append('g').attr('class', 'grid')
+        .attr('transform', `translate(0,${H - M.b})`)
+        .call(d3.axisBottom(x).ticks(5).tickSize(-(H - M.t - M.b)).tickFormat(''));
+
+    svg.selectAll('.tb').data(specs).join('rect')
+        .attr('y', d => y(d.name)).attr('height', y.bandwidth())
+        .attr('x', d => x(d.min)).attr('width', d => Math.max(2, x(d.max) - x(d.min)))
+        .attr('rx', 4)
+        .attr('fill', cssVar('--accent')).attr('opacity', 0.82)
+        .append('title').text(d => `${d.name} (${d.unit})\n${fUsdS(d.min)} … ${fUsdS(d.max)}\nSwing ${fUsdS(d.span)}`);
+
+    svg.append('line')
+        .attr('x1', x(base)).attr('x2', x(base))
+        .attr('y1', M.t - 6).attr('y2', H - M.b)
+        .attr('stroke', cssVar('--accent2')).attr('stroke-width', 2);
+    svg.append('text')
+        .attr('x', x(base)).attr('y', M.t - 12).attr('text-anchor', 'middle')
+        .attr('fill', cssVar('--accent2')).style('font-size', '11px').style('font-weight', 700)
+        .text('base ' + fUsdS(base));
+
+    svg.append('g').attr('class', 'axis')
+        .attr('transform', `translate(0,${H - M.b})`)
+        .call(d3.axisBottom(x).ticks(5).tickFormat(fK));
+
+    svg.selectAll('.tl').data(specs).join('text')
+        .attr('x', M.l - 10).attr('y', d => y(d.name) + y.bandwidth() / 2 + 4)
+        .attr('text-anchor', 'end')
+        .attr('fill', cssVar('--text2'))
+        .style('font-size', '11.5px')
+        .text(d => d.name);
+}
+
+/* ============================================================
+   Greeks + comparison tables
+   ============================================================ */
+function fillGreeks(p, m) {
+    const d = (key, delta) => {
+        const a = { ...p }; a[key] = p[key] + delta;
+        return buildModel(a).npvLev - m.npvLev;
+    };
+
+    const rows = [
+        ['∂NPV / ∂κ_exit', fUsdS(d('exitCap', 0.0025)) + ' / +25bps'],
+        ['∂NPV / ∂g', fUsdS(d('growth', 0.01)) + ' / +100bps'],
+        ['∂NPV / ∂rₑ  (ρ)', fUsdS(d('hurdle', 0.01)) + ' / +100bps'],
+        ['∂NPV / ∂rate', fUsdS(d('rate', 0.0025)) + ' / +25bps'],
+        ['Λ  elasticity', (1 / (1 - p.ltv)).toFixed(2) + '×'],
+        ['Θ  yr-1 amortization', fUsdS(m.principalYr1)],
+        ['Strike  L_T', fUsdS(m.balance)],
+        ['Moneyness  V_T / L_T', (m.netExit / m.balance).toFixed(2) + '×']
+    ];
+
+    d3.select('#greeksBody').selectAll('tr').data(rows).join('tr').html(r =>
+        `<td><strong>${r[0]}</strong></td><td class="num">${r[1]}</td>`
+    );
+}
+
+function fillComparison(p) {
+    const rows = Object.keys(MODES).map(key => {
+        const cfg = MODES[key];
+        // clamp to each structure's own max LTV — a mode can't be shown at leverage it doesn't offer
+        const q = { ...p, rate: cfg.rate / 100, prepay: cfg.prepay, amort: cfg.amort,
+                    balloon: cfg.balloon, ltv: Math.min(p.ltv, cfg.maxLtv / 100) };
+        const mm = buildModel(q);
+        return { key, cfg, mm, ltv: q.ltv };
+    });
+    const bestNpv = d3.max(rows, r => r.mm.npvLev);
+
+    d3.select('#cmpBody').selectAll('tr').data(rows).join('tr').html(r => {
+        const win = r.mm.npvLev === bestNpv ? ' class="win"' : '';
+        return `<td><strong>${r.cfg.label}</strong>${r.key === mode ? ' <span style="color:var(--accent-dim);font-size:0.78rem;">· active</span>' : ''}</td>
+                <td class="num">${r.cfg.rate.toFixed(2)}%</td>
+                <td class="num">${r.cfg.amort / 12}yr${r.cfg.balloon ? ' · ' + r.cfg.balloon + 'yr bal' : ''}</td>
+                <td class="num">${(r.ltv * 100).toFixed(0)}%</td>
+                <td class="num">${fUsdS(r.mm.ds)}</td>
+                <td class="num">${r.mm.penalty > 0 ? fUsdS(-r.mm.penalty) : '—'}</td>
+                <td class="num"${win}>${fUsdS(r.mm.npvLev)}</td>
+                <td class="num">${r.mm.irr != null ? fPct(r.mm.irr) : '—'}</td>
+                <td class="num">${r.mm.em.toFixed(2)}×</td>`;
+    });
+}
+
+function fillFormula(p, m) {
+    const T = p.hold;
+    document.getElementById('formulaBlock').textContent =
+`NPV_equity = −E₀ + Σ (NOI_t − DS) / (1+rₑ)^t  +  (V_T − L_T − penalty) / (1+rₑ)^T
+                 t=1..${T}
+
+  E₀   equity in            ${fUsdS(m.equity)}
+  DS   annual debt service  ${fUsdS(m.ds)}
+  rₑ   cost of equity       ${fPct(p.hurdle)}
+  NOI_t = NOI₁ × (1+g)^(t−1),  g = ${fPct(p.growth)}
+
+  V_T  = [ NOI₁ × (1+g)^${T} / κ_exit ] × (1 − c)          ← N+1 rule
+       = [ ${fUsdS(m.exitNOI)} / ${fPct(p.exitCap, 2)} ] × ${(1 - p.sellCost).toFixed(3)}
+       = ${fUsdS(m.netExit)}
+  L_T  loan balance at exit ${fUsdS(m.balance)}  (${m.amort / 12}yr amort)
+  penalty                   ${fUsdS(m.penalty)}${m.penRate > 0 ? '  (' + (m.penRate * 100).toFixed(0) + '% step-down)' : ''}
+
+NPV_property = −P₀ + Σ NOI_t / (1+WACC)^t + V_T / (1+WACC)^T
+  WACC = ${fPct(p.ltv)}×${fPct(p.rate, 2)} + ${fPct(1 - p.ltv)}×${fPct(p.hurdle)} = ${fPct(m.wacc, 2)}`;
+}
+
+/* ============================================================
+   Render
+   ============================================================ */
+function render() {
+    const p = readParams();
+    const m = buildModel(p);
+
+    // control readouts
+    el.hurdleVal.textContent = fPct(p.hurdle);
+    el.priceVal.textContent = fUsd.format(p.price);
+    el.noiVal.textContent = fUsd.format(p.noi);
+    el.ltvVal.textContent = (p.ltv * 100).toFixed(0) + '%';
+    el.rateVal.textContent = (p.rate * 100).toFixed(3).replace(/0+$/, '').replace(/\.$/, '') + '%';
+    el.holdVal.textContent = p.hold + ' yrs';
+    el.growthVal.textContent = fPct(p.growth);
+    el.exitCapVal.textContent = fPct(p.exitCap, 2);
+    el.sellCostVal.textContent = fPct(p.sellCost);
+
+    // metrics
+    const npvEl = document.getElementById('mNpv');
+    npvEl.textContent = fUsdS(m.npvLev);
+    npvEl.className = 'metric-value ' + (m.npvLev >= 0 ? 'pos' : 'neg');
+    document.getElementById('mNpvSub').textContent = '@ ' + fPct(p.hurdle);
+
+    const npvUEl = document.getElementById('mNpvU');
+    npvUEl.textContent = fUsdS(m.npvUn);
+    npvUEl.className = 'metric-value ' + (m.npvUn >= 0 ? 'pos' : 'neg');
+    document.getElementById('mNpvUSub').textContent = 'WACC ' + fPct(m.wacc, 2);
+
+    document.getElementById('mPi').textContent = m.pi.toFixed(2) + '×';
+    document.getElementById('mEm').textContent = m.em.toFixed(2) + '×';
+    document.getElementById('mEmSub').textContent = fUsdS(m.em * m.equity) + ' / ' + fUsdS(m.equity);
+    document.getElementById('mIrr').textContent = m.irr != null ? fPct(m.irr) : '—';
+    document.getElementById('mMirr').textContent = m.mirr != null ? fPct(m.mirr) : '—';
+
+    document.getElementById('mEquity').textContent = fUsdS(m.equity);
+    document.getElementById('mDs').textContent = fUsdS(m.ds);
+    const dscrEl = document.getElementById('mDscr');
+    dscrEl.textContent = m.dscr.toFixed(2) + '×';
+    dscrEl.className = 'metric-value ' + (m.dscr >= 1.25 ? 'pos' : m.dscr >= 1.15 ? '' : 'neg');
+    const cf1El = document.getElementById('mCf1');
+    cf1El.textContent = fUsdS(m.cf1);
+    cf1El.className = 'metric-value ' + (m.cf1 >= 0 ? 'pos' : 'neg');
+    document.getElementById('mExit').textContent = fUsdS(m.saleProceeds);
+    document.getElementById('mExitSub').textContent =
+        fUsdS(m.netExit) + ' sale − ' + fUsdS(m.balance) + ' loan' +
+        (m.penalty > 0 ? ' − ' + fUsdS(m.penalty) + ' prepay' : '');
+
+    // exit cap vs going-in warning
+    const warn = document.getElementById('capWarn');
+    const spread = (p.exitCap - m.goingInCap) * 10000;
+    if (spread < 0) {
+        warn.style.display = 'block';
+        warn.innerHTML = `Exit cap ${Math.abs(spread).toFixed(0)} bps <strong>below</strong> going-in ` +
+            `(${fPct(m.goingInCap, 2)}). Convention is 25–75 bps above.`;
+    } else if (spread < 25) {
+        warn.style.display = 'block';
+        warn.innerHTML = `Exit cap ${spread.toFixed(0)} bps above going-in ` +
+            `(${fPct(m.goingInCap, 2)}). Convention is 25–75 bps.`;
+    } else {
+        warn.style.display = 'none';
+    }
+
+    // balloon breach
+    const bwarn = document.getElementById('balloonWarn');
+    if (m.balloonBreach) {
+        bwarn.style.display = 'block';
+        bwarn.innerHTML = `${p.hold}yr hold past ${p.balloon}yr balloon — ` +
+            `${fUsdS(remainingBalance(m.loan, p.rate, m.amort, p.balloon * 12))} due at month ${p.balloon * 12}. ` +
+            `Rate carried past maturity; rollover not priced.`;
+    } else {
+        bwarn.style.display = 'none';
+    }
+
+    // mode note
+    document.getElementById('modeNote').innerHTML = MODES[mode].note;
+
+    drawNpvCurve(p, m);
+    drawCashFlows(p, m);
+    drawTornado(p, m);
+    fillGreeks(p, m);
+    fillComparison(p);
+    fillFormula(p, m);
+}
+
+/* ============================================================
+   Wiring
+   ============================================================ */
+IDS.forEach(id => el[id].addEventListener('input', render));
+
+document.getElementById('modeRow').addEventListener('click', e => {
+    const btn = e.target.closest('.mode-btn');
+    if (!btn) return;
+    mode = btn.dataset.mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+    const cfg = MODES[mode];
+    el.rate.value = cfg.rate;
+    el.ltv.value = Math.min(+el.ltv.value, cfg.maxLtv);
+    el.ltv.max = cfg.maxLtv;
+    render();
+});
+
+let rt;
+window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(render, 140); });
+
+el.ltv.max = MODES[mode].maxLtv;
+render();
+</script>
+</body>
+</html>

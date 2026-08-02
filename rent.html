@@ -1283,6 +1283,49 @@
                 text-decoration: none;
             }
         }
+
+        /* Financing structure pills (matches npv.html) */
+        .mode-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 0 0 10px;
+        }
+        .mode-btn {
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid var(--border2);
+            transition: all 0.15s ease;
+        }
+        .mode-btn:hover { border-color: var(--accent); }
+        .mode-btn.active {
+            background: var(--accent);
+            color: var(--accent-text);
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+        .mode-note {
+            font-size: 12px;
+            color: var(--text2);
+            background: var(--surface2);
+            border-left: 3px solid var(--accent);
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 14px;
+        }
+        .callout-warn { border-color: var(--warning); }
+        .callout-warn .callout-title { color: var(--warning); }
+        .live-metric-value.negative { color: var(--danger); }
+        .control-group input[type="range"]:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -1299,6 +1342,7 @@
                 <a href="index.html#portfolio" class="site-nav-link">Portfolio</a>
                 <a href="macon.html" class="site-nav-link">Macon</a>
                 <a href="rent.html" class="site-nav-link active">Investment</a>
+                <a href="npv.html" class="site-nav-link">NPV</a>
                 <button class="site-nav-link" id="themeToggleBtn" aria-label="Toggle Theme" style="background: none; border: none; cursor: pointer;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -1385,6 +1429,12 @@
         <div class="controls-panel">
             <h3 style="margin-top: 0; margin-bottom: 20px;">Scenario Analysis (Financing &amp; Returns)</h3>
             <div id="printScenarioSummary" aria-hidden="true"></div>
+            <div class="mode-row" id="finModeRow">
+                <button type="button" class="mode-btn active" data-mode="conv">Conventional 30yr fixed</button>
+                <button type="button" class="mode-btn" data-mode="comm">Commercial — balloon</button>
+                <button type="button" class="mode-btn" data-mode="dscr">DSCR 5/25</button>
+            </div>
+            <div class="mode-note" id="finModeNote"></div>
             <div class="controls-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="control-group">
                     <label for="priceSlider">Purchase Price</label>
@@ -1416,10 +1466,25 @@
                     <input type="range" id="noiGrowthSlider" min="0" max="4" step="0.5" value="2">
                     <div class="control-value" id="noiGrowthValue">2.0%</div>
                 </div>
+                <div class="control-group">
+                    <label for="sellCostSlider">Selling Costs (at exit)</label>
+                    <input type="range" id="sellCostSlider" min="0" max="6" step="0.25" value="2">
+                    <div class="control-value" id="sellCostValue">2.0%</div>
+                </div>
+                <div class="control-group">
+                    <label for="closingSlider">Closing Costs (at purchase)
+                        <button type="button" class="mode-btn" id="closingToggle" aria-pressed="false"
+                            style="float: right; padding: 2px 10px; font-size: 11px;">Off</button>
+                    </label>
+                    <input type="range" id="closingSlider" min="2" max="5" step="0.25" value="2" disabled>
+                    <div class="control-value" id="closingValue">—</div>
+                </div>
             </div>
             <p style="font-size: 12px; color: var(--text2); margin: 8px 0 0;">
                 Price and target cap stay linked: \(V = \text{NOI}/\kappa\). Move either control.
             </p>
+            <div class="callout callout-warn" id="capWarnBox" style="display: none; margin-top: 12px;"></div>
+            <div class="callout callout-warn" id="balloonWarnBox" style="display: none; margin-top: 12px;"></div>
 
             <!-- Live Calculated Metrics -->
             <div class="live-metrics" style="grid-template-columns: repeat(6, 1fr);">
@@ -2149,6 +2214,36 @@
         const STORAGE_KEY = 'gn-invest-scenario-v1';
         const DEFAULT_RENTS = [3000, 3150, 1750, 2475, 1600];
         const RENT_LABELS = ['2553 Napier', '2525 Napier', '2511 Napier', '2534 Napier', '1045 Patterson'];
+
+        // Financing structures (matches npv.html)
+        const FIN_MODES = {
+            conv: {
+                label: 'Conventional 30yr fixed',
+                rate: 6.75, maxLtv: 80,
+                amort: 360, balloon: null,
+                prepay: [0, 0, 0, 0, 0],
+                note: 'Five conforming loans, 30-year fixed, fully amortizing. No prepayment penalty, ' +
+                      'no balloon. Personal name, fully recourse, five against the ten-property cap.'
+            },
+            comm: {
+                label: 'Commercial — balloon',
+                rate: 7.00, maxLtv: 75,
+                amort: 300, balloon: 5,
+                prepay: [0.03, 0.02, 0.01, 0, 0],
+                note: 'Bank portfolio loan, 25-year amortization with a 5-year balloon. Blanket lien, ' +
+                      'closes in the entity, 3/2/1 step-down. Refinance risk sits at the balloon.'
+            },
+            dscr: {
+                label: 'DSCR 5/25',
+                rate: 7.25, maxLtv: 75,
+                amort: 300, balloon: 5,
+                prepay: [0.05, 0.04, 0.03, 0.02, 0.01],
+                note: 'Five-year fixed on a 25-year amortization, balloon at 60 months. DSCR-underwritten, ' +
+                      'closes in the LLC, 5/4/3/2/1 step-down. No property-count cap.'
+            }
+        };
+        let finMode = 'conv';
+        let closingOn = false;
 
         let currentGSR = 143700;
         let currentOPEX = 50929;
