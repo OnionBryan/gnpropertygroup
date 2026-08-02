@@ -157,7 +157,7 @@ const App = (function() {
             // Keyboard accessibility
             card.setAttribute('tabindex', '0');
             card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', `View ${card.querySelector('.card-title')?.textContent || 'property'} gallery`);
+            card.setAttribute('aria-label', `View ${card.querySelector('.card-title')?.textContent || 'property'} flyer`);
 
             card.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
@@ -168,17 +168,33 @@ const App = (function() {
         });
     }
 
+    // Selling flyer URL per property (card photo → this page, full navigation)
+    const FLYER_URLS = {
+        '1045-patterson': 'flyers/1045-patterson.html',
+        '2511-napier': 'flyers/2511-napier.html',
+        '2525-napier-cottage': 'flyers/2525-napier.html',
+        '2525-napier-ave': 'flyers/2525-napier.html',
+        '2529-napier-ave': 'flyers/2529-napier.html',
+        '2534-napier': 'flyers/2534-napier.html',
+        '2553-napier-ave': 'flyers/2553-napier.html'
+    };
+
     /**
-     * Handle property card click
+     * Handle property card click — go to that house's selling flyer. Full page.
      * @param {Event} event - Click event
      */
     function handleCardClick(event) {
         const card = event.currentTarget;
-        const propertyId = card.dataset.propertyId;
+        const propertyId = card && card.dataset ? card.dataset.propertyId : null;
+        if (!propertyId) return;
 
-        if (propertyId && window.Gallery) {
-            window.Gallery.open(propertyId);
+        const url = FLYER_URLS[propertyId];
+        if (url) {
+            window.location.assign(url);
+            return;
         }
+
+        console.error('[App] No flyer mapped for property:', propertyId);
     }
 
     /**

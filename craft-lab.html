@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Craft Lab · Property modal · Flyer</title>
+    <meta name="description" content="Design lab: property photo opens a craft modal on the selling flyer — Danish office bevel joinery, not a button zoo.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/craft.css">
+    <style>
+        /* ============================================================
+           CRAFT LAB — modal prototype only
+           Desk is quiet. Interaction lives in the modal.
+           Photo click → modal flies open on the selling flyer.
+           ============================================================ */
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg2);
+            color: var(--text);
+            min-height: 100vh;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .page {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 36px 28px 80px;
+        }
+
+        .page-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 0 var(--craft-bevel-hi, transparent);
+        }
+
+        .page-head .eyebrow {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent-dim);
+            margin-bottom: 8px;
+        }
+
+        .page-head h1 {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        .page-head p {
+            margin-top: 8px;
+            max-width: 40ch;
+            font-size: 14px;
+            color: var(--text2);
+            line-height: 1.6;
+        }
+
+        .page-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-readout {
+            font-size: 12px;
+            color: var(--text3);
+        }
+
+        /* Quiet desk grid — cards, not a control zoo */
+        .desk-note {
+            font-size: 13px;
+            color: var(--text3);
+            margin-bottom: 18px;
+            max-width: 56ch;
+            line-height: 1.55;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .card-grid { grid-template-columns: repeat(2, 1fr); }
+            .page { padding: 24px 16px 64px; }
+        }
+
+        @media (max-width: 520px) {
+            .card-grid { grid-template-columns: 1fr; }
+        }
+
+        .prop-card {
+            appearance: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--craft-radius, 2px);
+            background: var(--craft-face, var(--bg-card));
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow:
+                inset 0 1px 0 var(--craft-bevel-hi, transparent),
+                inset 0 -1px 0 var(--craft-bevel-lo, transparent),
+                var(--shadow-sm);
+            transition:
+                border-color var(--transition-fast),
+                box-shadow var(--transition-fast),
+                transform var(--craft-press, 90ms ease);
+        }
+
+        .prop-card:hover {
+            border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+            box-shadow:
+                inset 0 1px 0 var(--craft-bevel-hi, transparent),
+                var(--shadow-md);
+        }
+
+        .prop-card:active {
+            transform: translateY(1px);
+        }
+
+        .prop-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .prop-card .thumb {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: var(--craft-well, var(--surface2));
+        }
+
+        .prop-card .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 280ms ease;
+        }
+
+        .prop-card:hover .thumb img {
+            transform: scale(1.03);
+        }
+
+        .prop-card .thumb .mark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-text);
+            background: var(--accent);
+            border: 1px solid color-mix(in srgb, var(--accent-dim) 70%, var(--border));
+            border-radius: 1px;
+            box-shadow:
+                inset 0 1px 0 color-mix(in srgb, var(--white) 30%, transparent),
+                0 1px 2px color-mix(in srgb, var(--black) 12%, transparent);
+        }
+
+        .prop-card .body {
+            padding: 14px 14px 16px;
+            border-top: 1px solid color-mix(in srgb, var(--border) 80%, var(--bg));
+        }
+
+        .prop-card .name {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .prop-card .addr {
+            font-size: 12.5px;
+            color: var(--text3);
+            margin-bottom: 8px;
+        }
+
+        .prop-card .meta {
+            font-size: 12px;
+            color: var(--text2);
+            font-weight: 500;
+        }
+
+        /* ---------- Modal shell ---------- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: color-mix(in srgb, var(--black) 52%, transparent);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 200ms ease, visibility 200ms ease;
+        }
+
+        .modal-overlay.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-shell {
+            width: min(1080px, 100%);
+            height: min(88vh, 860px);
+            display: flex;
+            flex-direction: column;
+            background: var(--craft-face, var(--bg-card));
+            border: 1px solid var(--border);
+            border-radius: var(--craft-radius, 2px);
+            box-shadow:
+                inset 0 1px 0 var(--craft-bevel-hi, transparent),
+                inset 0 -1px 0 var(--craft-bevel-lo, transparent),
+                var(--shadow-xl);
+            overflow: hidden;
+            transform: translateY(18px) scale(0.985);
+            opacity: 0;
+            transition:
+                transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 200ms ease;
+        }
+
+        .modal-overlay.is-open .modal-shell {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 14px 16px;
+            background: var(--craft-well, var(--surface2));
+            border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, var(--bg));
+            box-shadow: inset 0 1px 0 var(--craft-bevel-hi, transparent);
+            flex-shrink: 0;
+        }
+
+        .modal-bar .titles {
+            min-width: 0;
+        }
+
+        .modal-bar .titles h2 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .modal-bar .titles p {
+            font-size: 12.5px;
+            color: var(--text3);
+            margin-top: 2px;
+        }
+
+        .modal-bar .actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .modal-stage {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+            background: var(--bg2);
+        }
+
+        .modal-stage iframe,
+        .modal-stage .photo-stage {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .photo-stage {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: var(--craft-well, var(--surface2));
+        }
+
+        .photo-stage.is-on {
+            display: flex;
+        }
+
+        .photo-stage img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border: 1px solid var(--border);
+            border-radius: 1px;
+            box-shadow:
+                inset 0 1px 0 var(--craft-bevel-hi, transparent),
+                var(--shadow-md);
+            background: var(--craft-face, var(--bg-card));
+        }
+
+        .flyer-frame {
+            display: none;
+            background: var(--bg);
+        }
+
+        .flyer-frame.is-on {
+            display: block;
+        }
+
+        .modal-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 10px 16px;
+            border-top: 1px solid color-mix(in srgb, var(--border) 80%, var(--bg));
+            background: var(--craft-face, var(--bg-card));
+            box-shadow: inset 0 1px 0 var(--craft-bevel-hi, transparent);
+            flex-shrink: 0;
+        }
+
+        .modal-foot .hint {
+            font-size: 12px;
+            color: var(--text3);
+        }
+
+        .modal-foot .hint strong {
+            color: var(--text2);
+            font-weight: 600;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-head">
+            <div>
+                <div class="eyebrow">Craft lab · modal prototype</div>
+                <h1>Photo → flyer modal</h1>
+                <p>Quiet desk. Click a property photo; the modal flies open on the selling flyer. Not a button zoo.</p>
+            </div>
+            <div class="page-actions">
+                <span class="theme-readout" id="themeLabel">light</span>
+                <button type="button" class="tool-btn" id="themeToggleBtn">Toggle theme</button>
+                <a href="index.html" class="tool-btn">Portfolio</a>
+            </div>
+        </header>
+
+        <p class="desk-note">
+            Same craft faces as the live tools (<code>css/craft.css</code>).
+            This page only prototypes the property modal: raised shell, warm wells, mode rail, flyer stage.
+        </p>
+
+        <div class="card-grid" id="cardGrid" aria-label="Properties">
+            <!-- Cards rendered from PropertyStore when available -->
+        </div>
+    </div>
+
+    <!-- Property modal -->
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal-shell" id="modalShell">
+            <div class="modal-bar">
+                <div class="titles">
+                    <h2 id="modalTitle">Property</h2>
+                    <p id="modalAddress">Address</p>
+                </div>
+                <div class="actions">
+                    <div class="mode-row" role="group" aria-label="Modal view">
+                        <button type="button" class="mode-btn" id="viewPhotosBtn" data-view="photos" aria-pressed="false">Photos</button>
+                        <button type="button" class="mode-btn active" id="viewFlyerBtn" data-view="flyer" aria-pressed="true">Selling flyer</button>
+                    </div>
+                    <button type="button" class="tool-btn" id="openStandaloneBtn">Open flyer page</button>
+                    <button type="button" class="tool-btn" id="modalClose" aria-label="Close">Close</button>
+                </div>
+            </div>
+
+            <div class="modal-stage">
+                <iframe class="flyer-frame is-on" id="flyerFrame" title="Selling flyer" src="about:blank"></iframe>
+                <div class="photo-stage" id="photoStage" aria-hidden="true">
+                    <img id="photoImg" src="" alt="">
+                </div>
+            </div>
+
+            <div class="modal-foot">
+                <span class="hint" id="modalHint"><strong>Flyer</strong> · click Photo to preview hero image</span>
+                <span class="hint" id="modalMeta"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            const FLYER_MAP = {
+                '1045-patterson': 'flyers/1045-patterson.html',
+                '2511-napier': 'flyers/2511-napier.html',
+                '2525-napier-cottage': 'flyers/2525-napier.html',
+                '2525-napier-ave': 'flyers/2525-napier.html',
+                '2529-napier-ave': 'flyers/2529-napier.html',
+                '2534-napier': 'flyers/2534-napier.html',
+                '2553-napier-ave': 'flyers/2553-napier.html'
+            };
+
+            const root = document.documentElement;
+            const themeLabel = document.getElementById('themeLabel');
+            const themeBtn = document.getElementById('themeToggleBtn');
+            const grid = document.getElementById('cardGrid');
+
+            const overlay = document.getElementById('modalOverlay');
+            const titleEl = document.getElementById('modalTitle');
+            const addressEl = document.getElementById('modalAddress');
+            const flyerFrame = document.getElementById('flyerFrame');
+            const photoStage = document.getElementById('photoStage');
+            const photoImg = document.getElementById('photoImg');
+            const photosBtn = document.getElementById('viewPhotosBtn');
+            const flyerBtn = document.getElementById('viewFlyerBtn');
+            const closeBtn = document.getElementById('modalClose');
+            const openStandaloneBtn = document.getElementById('openStandaloneBtn');
+            const modalHint = document.getElementById('modalHint');
+            const modalMeta = document.getElementById('modalMeta');
+
+            let active = null;
+            let view = 'flyer';
+
+            function syncThemeLabel() {
+                themeLabel.textContent = root.getAttribute('data-theme') || 'light';
+            }
+
+            const stored = localStorage.getItem('theme');
+            if (stored === 'dark' || stored === 'light') {
+                root.setAttribute('data-theme', stored);
+            }
+            syncThemeLabel();
+
+            themeBtn.addEventListener('click', function () {
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+                syncThemeLabel();
+            });
+
+            function properties() {
+                if (window.PropertyStore && typeof window.PropertyStore.getAllProperties === 'function') {
+                    return window.PropertyStore.getAllProperties();
+                }
+                return [];
+            }
+
+            function flyerUrl(id) {
+                return FLYER_MAP[id] || null;
+            }
+
+            function renderCards() {
+                const list = properties();
+                if (!list.length) {
+                    grid.innerHTML = '<p class="desk-note">No properties found. Ensure <code>js/data.js</code> loads.</p>';
+                    return;
+                }
+
+                grid.innerHTML = list.map(function (p) {
+                    const rent = p.details && p.details.rent
+                        ? '$' + Number(p.details.rent).toLocaleString() + '/mo'
+                        : '';
+                    const type = p.details && p.details.type ? p.details.type : '';
+                    const meta = [type, rent].filter(Boolean).join(' · ');
+                    const hasFlyer = !!flyerUrl(p.id);
+
+                    return (
+                        '<button type="button" class="prop-card" data-id="' + p.id + '" aria-label="Open flyer for ' + escapeAttr(p.name) + '">' +
+                            '<div class="thumb">' +
+                                '<img src="' + escapeAttr(p.thumbnail) + '" alt="" loading="lazy">' +
+                                (hasFlyer ? '<span class="mark">Flyer</span>' : '') +
+                            '</div>' +
+                            '<div class="body">' +
+                                '<div class="name">' + escapeHtml(p.name) + '</div>' +
+                                '<div class="addr">' + escapeHtml(p.address || '') + '</div>' +
+                                '<div class="meta">' + escapeHtml(meta) + '</div>' +
+                            '</div>' +
+                        '</button>'
+                    );
+                }).join('');
+            }
+
+            function escapeHtml(s) {
+                return String(s)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+            }
+
+            function escapeAttr(s) {
+                return escapeHtml(s).replace(/'/g, '&#39;');
+            }
+
+            function setView(next) {
+                view = next;
+                const isFlyer = view === 'flyer';
+
+                flyerFrame.classList.toggle('is-on', isFlyer);
+                photoStage.classList.toggle('is-on', !isFlyer);
+                photoStage.setAttribute('aria-hidden', isFlyer ? 'true' : 'false');
+
+                flyerBtn.classList.toggle('active', isFlyer);
+                photosBtn.classList.toggle('active', !isFlyer);
+                flyerBtn.setAttribute('aria-pressed', isFlyer ? 'true' : 'false');
+                photosBtn.setAttribute('aria-pressed', isFlyer ? 'false' : 'true');
+
+                modalHint.innerHTML = isFlyer
+                    ? '<strong>Flyer</strong> · selling memorandum'
+                    : '<strong>Photos</strong> · hero preview (full gallery on portfolio)';
+            }
+
+            function openModal(property) {
+                active = property;
+                const url = flyerUrl(property.id);
+
+                titleEl.textContent = property.name;
+                addressEl.textContent = property.address || '';
+                photoImg.src = property.thumbnail || '';
+                photoImg.alt = property.name + ' — hero photo';
+
+                const d = property.details || {};
+                const bits = [];
+                if (d.bedrooms != null) bits.push(d.bedrooms + ' bed');
+                if (d.bathrooms != null) bits.push(d.bathrooms + ' bath');
+                if (d.sqft != null) bits.push(Number(d.sqft).toLocaleString() + ' sq ft');
+                if (d.rent != null) bits.push('$' + Number(d.rent).toLocaleString() + '/mo');
+                modalMeta.textContent = bits.join(' · ');
+
+                // Always land on flyer when photo is clicked
+                if (url) {
+                    flyerFrame.src = url;
+                    openStandaloneBtn.disabled = false;
+                    openStandaloneBtn.onclick = function () {
+                        window.location.href = url;
+                    };
+                } else {
+                    flyerFrame.src = 'about:blank';
+                    openStandaloneBtn.disabled = true;
+                    openStandaloneBtn.onclick = null;
+                }
+
+                setView('flyer');
+
+                overlay.hidden = false;
+                // next frame so transition runs
+                requestAnimationFrame(function () {
+                    overlay.classList.add('is-open');
+                });
+                document.body.classList.add('modal-open');
+                closeBtn.focus();
+            }
+
+            function closeModal() {
+                overlay.classList.remove('is-open');
+                document.body.classList.remove('modal-open');
+                setTimeout(function () {
+                    if (!overlay.classList.contains('is-open')) {
+                        overlay.hidden = true;
+                        flyerFrame.src = 'about:blank';
+                        active = null;
+                    }
+                }, 220);
+            }
+
+            grid.addEventListener('click', function (e) {
+                const card = e.target.closest('.prop-card');
+                if (!card) return;
+                const id = card.getAttribute('data-id');
+                // Photo click → selling flyer page (same as portfolio)
+                const url = flyerUrl(id);
+                if (url) {
+                    window.location.assign(url);
+                    return;
+                }
+                const list = properties();
+                const property = list.find(function (p) { return p.id === id; });
+                if (property) openModal(property);
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+
+            overlay.addEventListener('click', function (e) {
+                if (e.target === overlay) closeModal();
+            });
+
+            photosBtn.addEventListener('click', function () { setView('photos'); });
+            flyerBtn.addEventListener('click', function () { setView('flyer'); });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+                    closeModal();
+                }
+            });
+
+            renderCards();
+        })();
+    </script>
+</body>
+</html>

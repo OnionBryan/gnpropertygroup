@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /rent.html
+Allow: /npv.html
+Allow: /macon.html
+Allow: /portfolio.html
+Allow: /flyers/
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Exclude repository utility scripts, notebooks, and markdown docs
+Disallow: /*.sh$
+Disallow: /*.ipynb$
+Disallow: /*.md$
+Disallow: /~*
+
+# XML Sitemap location for search crawlers
+Sitemap: https://gnpropertygroup.com/sitemap.xml

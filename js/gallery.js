@@ -34,7 +34,20 @@ const Gallery = (function() {
         isOpen: false,
         currentProperty: null,
         touchStartX: 0,
-        touchEndX: 0
+        touchEndX: 0,
+        viewMode: 'photos',
+        isFullscreen: false,
+        isRingInverted: false
+    };
+
+    const flyerMap = {
+        '1045-patterson': 'flyers/1045-patterson.html',
+        '2511-napier': 'flyers/2511-napier.html',
+        '2525-napier-cottage': 'flyers/2525-napier.html',
+        '2525-napier-ave': 'flyers/2525-napier.html',
+        '2529-napier-ave': 'flyers/2553-napier.html',
+        '2534-napier': 'flyers/2534-napier.html',
+        '2553-napier-ave': 'flyers/2553-napier.html'
     };
 
     let isInitialized = false;
@@ -64,8 +77,9 @@ const Gallery = (function() {
     /**
      * Open the modal with a specific property
      * @param {string} propertyId - ID of the property to display
+     * @param {{ view?: 'photos' | 'flyer' }} [options]
      */
-    function openModal(propertyId) {
+    function openModal(propertyId, options) {
         // Get property data from store
         const property = window.PropertyStore.getProperty(propertyId);
         if (!property) {
@@ -73,11 +87,14 @@ const Gallery = (function() {
             return;
         }
 
+        const initialView = (options && options.view === 'photos') ? 'photos' : 'flyer';
+
         // Update state
         state.activePropertyId = propertyId;
         state.activeImageIndex = 0;
         state.isOpen = true;
         state.currentProperty = property;
+        state.viewMode = initialView;
 
         // Populate modal content
         populateModalContent(property);
@@ -88,6 +105,9 @@ const Gallery = (function() {
         // Set first image as active
         setActiveImage(0);
 
+        // Photo click path lands on selling flyer; Photos remains a toggle
+        setViewMode(initialView);
+
         // Show modal
         elements.overlay.classList.add('active');
         document.body.classList.add('modal-open');
@@ -95,7 +115,7 @@ const Gallery = (function() {
         // Add event listeners
         document.addEventListener('keydown', handleKeyDown);
 
-        console.log(`[Gallery] Opened modal for: ${property.name}`);
+        console.log(`[Gallery] Opened modal for: ${property.name} (${initialView})`);
     }
 
     /**
@@ -535,9 +555,10 @@ const Gallery = (function() {
     /**
      * Open modal for a property (public method)
      * @param {string} propertyId - Property ID
+     * @param {{ view?: 'photos' | 'flyer' }} [options] - defaults to flyer
      */
-    function open(propertyId) {
-        openModal(propertyId);
+    function open(propertyId, options) {
+        openModal(propertyId, options);
     }
 
     /**
@@ -561,6 +582,96 @@ const Gallery = (function() {
         prevImage();
     }
 
+    function setViewMode(mode) {
+        state.viewMode = mode;
+        const mainImgEl = document.getElementById('modalMainImage');
+        const descPanelEl = document.getElementById('modalDescription');
+        const thumbStripEl = document.getElementById('thumbnailStrip');
+        const flyerContainerEl = document.getElementById('modalFlyerContainer');
+        const flyerFrameEl = document.getElementById('modalFlyerFrame');
+        const photosBtn = document.getElementById('viewPhotosBtn');
+        const flyerBtn = document.getElementById('viewFlyerBtn');
+
+        if (mode === 'flyer') {
+            if (mainImgEl) mainImgEl.style.display = 'none';
+            if (descPanelEl) descPanelEl.style.display = 'none';
+            if (thumbStripEl) thumbStripEl.style.display = 'none';
+            if (flyerContainerEl) {
+                flyerContainerEl.classList.add('active');
+                flyerContainerEl.style.display = 'flex';
+            }
+            if (photosBtn) photosBtn.classList.remove('active');
+            if (flyerBtn) flyerBtn.classList.add('active');
+
+            if (flyerFrameEl && state.activePropertyId) {
+                const flyerUrl = flyerMap[state.activePropertyId];
+                if (flyerUrl) {
+                    // Bust cache so a prior blank/failed load doesn't stick
+                    flyerFrameEl.src = flyerUrl + (flyerUrl.indexOf('?') >= 0 ? '&' : '?') + 'v=' + Date.now();
+                } else {
+                    console.error('[Gallery] No flyer for', state.activePropertyId);
+                    flyerFrameEl.src = 'about:blank';
+                }
+            }
+        } else {
+            if (mainImgEl) mainImgEl.style.display = 'flex';
+            if (descPanelEl) descPanelEl.style.display = 'block';
+            if (thumbStripEl) thumbStripEl.style.display = 'flex';
+            if (flyerContainerEl) {
+                flyerContainerEl.classList.remove('active');
+                flyerContainerEl.style.display = 'none';
+            }
+            if (photosBtn) photosBtn.classList.add('active');
+            if (flyerBtn) flyerBtn.classList.remove('active');
+            if (flyerFrameEl) flyerFrameEl.src = 'about:blank';
+        }
+    }
+
+    function toggleFullscreen() {
+        const container = document.getElementById('modalContainer');
+        const fullscreenBtn = document.getElementById('fullscreenToggleBtn');
+        if (!container) return;
+
+        state.isFullscreen = !state.isFullscreen;
+        if (state.isFullscreen) {
+            container.classList.add('fullscreen');
+            if (fullscreenBtn) fullscreenBtn.textContent = 'Exit fullscreen';
+        } else {
+            container.classList.remove('fullscreen');
+            if (fullscreenBtn) fullscreenBtn.textContent = 'Fullscreen';
+        }
+    }
+
+    function toggleRingInvert() {
+        state.isRingInverted = !state.isRingInverted;
+        const btn = document.getElementById('invertRingBtn');
+        if (btn) {
+            btn.textContent = state.isRingInverted ? 'Inverted' : 'Normal';
+            btn.classList.toggle('active', state.isRingInverted);
+        }
+    }
+
+    function stepRing(delta) {
+        if (!window.PropertyStore) return;
+        const properties = window.PropertyStore.getAllProperties();
+        if (!properties || !properties.length) return;
+
+        const currentIdx = properties.findIndex(p => p.id === state.activePropertyId);
+        if (currentIdx === -1) return;
+
+        const effectiveDelta = state.isRingInverted ? -delta : delta;
+        let nextIdx = (currentIdx + effectiveDelta) % properties.length;
+        if (nextIdx < 0) nextIdx += properties.length;
+
+        const targetProperty = properties[nextIdx];
+        if (targetProperty) {
+            openModal(targetProperty.id);
+            if (state.viewMode === 'flyer') {
+                setViewMode('flyer');
+            }
+        }
+    }
+
     /**
      * Check if modal is currently open
      * @returns {boolean} True if open
@@ -576,7 +687,11 @@ const Gallery = (function() {
         close,
         next,
         prev,
-        isOpen: getIsOpen
+        isOpen: getIsOpen,
+        setViewMode,
+        toggleFullscreen,
+        toggleRingInvert,
+        stepRing
     };
 })();
 

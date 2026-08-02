@@ -178,8 +178,16 @@ maintenance, or capital reserves.
 | Value @ 8.0% cap | $1,084,000 | $1,160,000 |
 | DSCR @ $862,500 / 7.5% | 1.20× | 1.28× |
 | Year 1 cash flow after debt | $14,331 | $20,431 |
-| Levered IRR (5-yr, 7.75% exit) | ~10.8% | ~16.6% |
-| Unlevered IRR | ~8.4% | ~10.1% |
+| Levered IRR (5-yr, 7.75% exit) | ~10.8% | ~17.6% |
+| Unlevered IRR | ~8.4% | ~10.4% |
+
+**Convention note (2026-08-02):** rent.html now follows npv.html — terminal value
+capitalizes year T+1 NOI (N+1 rule), selling costs are a slider (default 2%),
+and financing is selectable: Conventional 30yr fixed / Commercial balloon
+(25-yr am, 5-yr balloon, 3/2/1) / DSCR 5/25 (25-yr am, 5-yr balloon, 5/4/3/2/1).
+Optional closing-cost toggle (2–5% of price) adds to cash-in equity.
+IRR rows above reflect the N+1 exit at the unchanged 7.75% exit cap
+(prior trailing-NOI figures were ~16.6% / ~10.1%).
 
 Purchase price ($1,150,000), LTV, rate, exit cap, and hold period are unchanged —
 they are acquisition assumptions, not rent-derived. At the unchanged $1,150,000
@@ -189,19 +197,23 @@ price the implied acquisition cap moves from 7.54% to 8.07%.
 
 ## Financing
 
-All six financed properties are **residential and conventionally financeable**.
-Commercial/DSCR is an alternative, not a requirement for any of them.
+All five parcels are **R-2/R-3 residential and conventionally financeable**,
+1045 Patterson included — the warehouse is an outbuilding on a residential
+parcel with a 588 sq ft dwelling on site, not a commercial use.
+Commercial balloon and DSCR 5/25 are alternatives, not requirements.
 
-| Loan | Property | Units |
-|------|----------|-------|
-| 1 | 1045 Patterson | 1 (R3 residential; warehouse is an outbuilding, not a commercial use) |
-| 2 | 2511 Napier | 2 |
-| 3 | 2525 Napier + 2525½ cottage | 1 parcel, financed together |
-| 4 | 2529 Napier | 1 |
-| 5 | 2534 Napier | 2 |
-| 6 | 2553 Napier | 1 |
+| Parcel | Contains |
+|--------|----------|
+| 1 | 1045 Patterson |
+| 2 | 2511 Napier |
+| 3 | 2525 Napier + 2525½ cottage |
+| 4 | 2534 Napier |
+| 5 | 2553 Napier + 2529 Napier |
 
-**Six financed properties** against the Fannie Mae cap of 10.
+**Five parcels** against the Fannie Mae cap of 10 financed properties.
+The parcel grouping matches rent.html's five rent-roll rows exactly.
+Note the gallery on index.html shows **seven** properties — parcels and
+marketed units are different counts; both are correct.
 
 **Rate range:** 6.0% – 8.5%. Model default 7.5%.
 

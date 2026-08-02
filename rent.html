@@ -24,6 +24,23 @@
     <meta name="twitter:image" content="https://gnpropertygroup.com/images/2525-napier-ave/2525%20Napier%20Ave.jpg">
     <link rel="canonical" href="https://gnpropertygroup.com/rent.html">
 
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Real Estate Investment & Multifamily Cash Flow Calculator",
+      "url": "https://gnpropertygroup.com/rent.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Organization",
+        "name": "GN Property Group"
+      },
+      "description": "Free interactive real estate investment calculator. Analyze cash-on-cash return, DSCR, equity multiple, IRR sensitivity, and pro formas for small rental portfolios."
+    }
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
@@ -32,8 +49,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Main CSS for Theme Variables -->
+    <!-- Main CSS for Theme Variables + craft joinery -->
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/craft.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
@@ -395,15 +413,8 @@
             font-weight: 700;
         }
 
-        /* Interactive Controls */
-        .controls-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 25px 30px;
-            margin: 25px 0;
-        }
-
+        /* Interactive Controls — faces/wells live in css/craft.css
+           Page owns layout only. */
         .controls-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -415,93 +426,12 @@
             flex-direction: column;
         }
 
-        .control-group label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text2);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .control-group input[type="range"] {
-            width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: var(--border);
-            outline: none;
-            -webkit-appearance: none;
-            margin-bottom: 8px;
-        }
-
-        /* Number inputs for custom deal base (versatile tool mode) */
-        .control-group input[type="number"] {
-            width: 100%;
-            padding: 8px 10px;
-            font-size: 14px;
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            background: var(--bg-card);
-            color: var(--text);
-        }
-
-        .control-group input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .control-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text);
-            text-align: center;
-        }
-
         .tool-actions {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             margin-top: 14px;
             align-items: center;
-        }
-
-        .tool-btn {
-            padding: 8px 14px;
-            font-size: 13px;
-            font-weight: 600;
-            font-family: var(--font-body);
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .tool-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .tool-btn.primary {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: var(--accent-text);
-        }
-
-        .tool-btn.primary:hover {
-            filter: brightness(0.95);
-            color: var(--accent-text);
-        }
-
-        .tool-btn:disabled {
-            opacity: 0.6;
-            cursor: default;
         }
 
         .tool-status {
@@ -513,29 +443,11 @@
         .disclaimer-note {
             font-size: 12px;
             color: var(--text2);
-            background: var(--light);
+            background: var(--craft-well, var(--light));
             border-left: 3px solid var(--border);
             padding: 10px 14px;
             margin: 16px 0 0;
-            border-radius: 0 6px 6px 0;
-        }
-
-        .rent-input {
-            width: 100%;
-            max-width: 110px;
-            padding: 6px 8px;
-            font-size: 13px;
-            font-family: 'SF Mono', 'Consolas', monospace;
-            text-align: right;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            background: var(--bg-card);
-            color: var(--text);
-        }
-
-        .rent-input:focus {
-            outline: none;
-            border-color: var(--accent);
+            border-radius: 0 2px 2px 0;
         }
 
         #printScenarioSummary {
@@ -576,72 +488,8 @@
             color: var(--success);
         }
 
-        /* PDF Export Button */
-        .export-btn {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--accent);
-            color: var(--accent-text);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow-md);
-            transition: all 0.2s;
-            z-index: 1003;
-        }
-
-        .export-btn:hover {
-            background: var(--text);
-            color: var(--bg-card);
-            transform: translateY(-2px);
-        }
-
-        /* Live Metrics */
-        .live-metrics {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .live-metric {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .live-metric.updating {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(201, 169, 110, 0.2);
-        }
-
-        .live-metric-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text2);
-            margin-bottom: 5px;
-        }
-
-        .live-metric-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .live-metric-value.positive {
-            color: var(--success);
-        }
+        /* Export float + live metrics: craft.css owns the faces.
+           Page keeps grid density overrides only. */
 
         /* Site Header Navigation */
         .site-header {
@@ -1284,48 +1132,9 @@
             }
         }
 
-        /* Financing structure pills (matches npv.html) */
-        .mode-row {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin: 0 0 10px;
-        }
-        .mode-btn {
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            background: var(--bg-card);
-            color: var(--text);
-            border: 1px solid var(--border2);
-            transition: all 0.15s ease;
-        }
-        .mode-btn:hover { border-color: var(--accent); }
-        .mode-btn.active {
-            background: var(--accent);
-            color: var(--accent-text);
-            border-color: var(--accent);
-            font-weight: 700;
-        }
-        .mode-note {
-            font-size: 12px;
-            color: var(--text2);
-            background: var(--surface2);
-            border-left: 3px solid var(--accent);
-            padding: 8px 12px;
-            border-radius: 0 6px 6px 0;
-            margin-bottom: 14px;
-        }
+        /* Mode rail + notes: craft.css. Page keeps callout hooks. */
         .callout-warn { border-color: var(--warning); }
         .callout-warn .callout-title { color: var(--warning); }
-        .live-metric-value.negative { color: var(--danger); }
-        .control-group input[type="range"]:disabled {
-            opacity: 0.35;
-            cursor: not-allowed;
-        }
     </style>
 </head>
 <body>
@@ -1362,7 +1171,6 @@
         <a href="#section-5">Valuation</a>
         <a href="#section-6">Financing</a>
         <a href="#section-7">IRR</a>
-        <a href="#section-8">Upside</a>
     </nav>
 
     <!-- PDF Export Button -->
@@ -1395,7 +1203,7 @@
             <div class="value-box-label">Indicated As-Is Value</div>
             <div class="value-box-value" id="indicatedValue">$1,150,000</div>
             <div id="indicatedValueNote" style="margin-top: 10px; font-size: 14px; opacity: 0.95;">
-                At <strong id="indicatedCapNote">7.54%</strong> acquisition cap (NOI ÷ value)
+                At <strong id="indicatedCapNote">8.07%</strong> acquisition cap (NOI ÷ value)
             </div>
         </div>
 
@@ -1419,6 +1227,7 @@
                 </div>
             </div>
             
+            <!-- § Base deal actions -->
             <div class="tool-actions">
                 <button type="button" id="applyCustomBtn" class="tool-btn primary">Apply Custom Numbers</button>
                 <button type="button" id="resetToExampleBtn" class="tool-btn">Reset to Napier Portfolio</button>
@@ -1429,54 +1238,71 @@
         <div class="controls-panel">
             <h3 style="margin-top: 0; margin-bottom: 20px;">Scenario Analysis (Financing &amp; Returns)</h3>
             <div id="printScenarioSummary" aria-hidden="true"></div>
-            <div class="mode-row" id="finModeRow">
+            <!-- § Financing mode rail -->
+            <div class="mode-row" id="finModeRow" role="group" aria-label="Financing mode">
                 <button type="button" class="mode-btn active" data-mode="conv">Conventional 30yr fixed</button>
                 <button type="button" class="mode-btn" data-mode="comm">Commercial — balloon</button>
                 <button type="button" class="mode-btn" data-mode="dscr">DSCR 5/25</button>
             </div>
             <div class="mode-note" id="finModeNote"></div>
+            <!-- § Scenario sliders — each in its own well -->
             <div class="controls-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="control-group">
                     <label for="priceSlider">Purchase Price</label>
-                    <input type="range" id="priceSlider" min="800000" max="1600000" step="5000" value="1150000">
+                    <div class="slider-well">
+                        <input type="range" id="priceSlider" min="800000" max="1600000" step="5000" value="1150000">
+                    </div>
                     <div class="control-value" id="priceValue">$1,150,000</div>
                 </div>
                 <div class="control-group">
                     <label for="acqCapSlider">Target Acquisition Cap</label>
-                    <input type="range" id="acqCapSlider" min="5.5" max="10" step="0.05" value="7.54">
+                    <div class="slider-well">
+                        <input type="range" id="acqCapSlider" min="5.5" max="10" step="0.05" value="7.54">
+                    </div>
                     <div class="control-value" id="acqCapValue">7.54%</div>
                 </div>
                 <div class="control-group">
                     <label for="ltvSlider">LTV Ratio</label>
-                    <input type="range" id="ltvSlider" min="60" max="80" step="5" value="75">
+                    <div class="slider-well">
+                        <input type="range" id="ltvSlider" min="60" max="80" step="5" value="75">
+                    </div>
                     <div class="control-value" id="ltvValue">75%</div>
                 </div>
                 <div class="control-group">
                     <label for="rateSlider">Interest Rate</label>
-                    <input type="range" id="rateSlider" min="6" max="8.5" step="0.25" value="7.5">
+                    <div class="slider-well">
+                        <input type="range" id="rateSlider" min="6" max="8.5" step="0.25" value="7.5">
+                    </div>
                     <div class="control-value" id="rateValue">7.50%</div>
                 </div>
                 <div class="control-group">
                     <label for="exitCapSlider">Exit Cap Rate</label>
-                    <input type="range" id="exitCapSlider" min="6.5" max="9" step="0.25" value="7.75">
+                    <div class="slider-well">
+                        <input type="range" id="exitCapSlider" min="6.5" max="9" step="0.25" value="7.75">
+                    </div>
                     <div class="control-value" id="exitCapValue">7.75%</div>
                 </div>
                 <div class="control-group">
                     <label for="noiGrowthSlider">NOI Growth</label>
-                    <input type="range" id="noiGrowthSlider" min="0" max="4" step="0.5" value="2">
+                    <div class="slider-well">
+                        <input type="range" id="noiGrowthSlider" min="0" max="4" step="0.5" value="2">
+                    </div>
                     <div class="control-value" id="noiGrowthValue">2.0%</div>
                 </div>
                 <div class="control-group">
                     <label for="sellCostSlider">Selling Costs (at exit)</label>
-                    <input type="range" id="sellCostSlider" min="0" max="6" step="0.25" value="2">
+                    <div class="slider-well">
+                        <input type="range" id="sellCostSlider" min="0" max="6" step="0.25" value="2">
+                    </div>
                     <div class="control-value" id="sellCostValue">2.0%</div>
                 </div>
                 <div class="control-group">
                     <label for="closingSlider">Closing Costs (at purchase)
-                        <button type="button" class="mode-btn" id="closingToggle" aria-pressed="false"
-                            style="float: right; padding: 2px 10px; font-size: 11px;">Off</button>
+                        <button type="button" class="mode-btn mode-btn--latch" id="closingToggle" aria-pressed="false">Off</button>
                     </label>
-                    <input type="range" id="closingSlider" min="2" max="5" step="0.25" value="2" disabled>
+                    <div class="slider-well">
+                        <input type="range" id="closingSlider" min="2" max="5" step="0.25" value="2" disabled>
+                    </div>
                     <div class="control-value" id="closingValue">—</div>
                 </div>
             </div>
@@ -1486,34 +1312,35 @@
             <div class="callout callout-warn" id="capWarnBox" style="display: none; margin-top: 12px;"></div>
             <div class="callout callout-warn" id="balloonWarnBox" style="display: none; margin-top: 12px;"></div>
 
-            <!-- Live Calculated Metrics -->
+            <!-- § Live KPI tablets -->
             <div class="live-metrics" style="grid-template-columns: repeat(6, 1fr);">
                 <div class="live-metric">
                     <div class="live-metric-label">Acquisition Cap</div>
-                    <div class="live-metric-value" id="liveCap">7.54%</div>
+                    <div class="live-metric-value positive" id="liveCap">8.07%</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Cash-on-Cash</div>
-                    <div class="live-metric-value positive" id="liveCoc">5.0%</div>
+                    <div class="live-metric-value positive" id="liveCoc">7.1%</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">DSCR</div>
-                    <div class="live-metric-value" id="liveDscr">1.20×</div>
+                    <div class="live-metric-value positive" id="liveDscr">1.28×</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Debt Yield</div>
-                    <div class="live-metric-value positive" id="liveDebtYield">10.05%</div>
+                    <div class="live-metric-value positive" id="liveDebtYield">10.76%</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Equity Multiple</div>
-                    <div class="live-metric-value positive" id="liveEM">1.60×</div>
+                    <div class="live-metric-value positive" id="liveEM">2.09×</div>
                 </div>
                 <div class="live-metric">
                     <div class="live-metric-label">Break-Even Occ.</div>
-                    <div class="live-metric-value" id="liveBE">81.6%</div>
+                    <div class="live-metric-value positive" id="liveBE">77.8%</div>
                 </div>
             </div>
 
+            <!-- § Scenario tool actions -->
             <div class="tool-actions">
                 <button type="button" id="copySummaryBtn" class="tool-btn primary">Copy Summary</button>
                 <button type="button" id="copyLinkBtn" class="tool-btn">Copy Share Link</button>
@@ -1577,6 +1404,7 @@
             </tbody>
         </table>
         </div>
+        <!-- § Rent roll apply -->
         <div class="tool-actions" style="margin-top: 8px;">
             <button type="button" id="applyRentRollBtn" class="tool-btn primary">Apply Rent Roll → GSR</button>
             <span class="tool-status" id="rentRollStatus" role="status"></span>
@@ -1698,7 +1526,7 @@
                 <p>The Net Operating Income is computed as:</p>
                 $$\text{NOI} = \text{GSR} - \text{OpEx} = \$143{,}700 - \$50{,}929 = \$92{,}771 \approx \boxed{\$92{,}800}$$
             </div>
-            <p style="font-size: 13px; color: var(--text2);">All interactive metrics and valuation tables below use the rounded stabilized NOI of <strong>$92,800</strong> for consistency.</p>
+            <p style="font-size: 13px; color: var(--text2);">All interactive metrics and valuation tables below use the rounded stabilized NOI of <strong>$92,800</strong> for consistency. Capital reserves sit inside OpEx, so this figure is lender-basis NCF — conservative for valuation; reserve-exclusive NOI would run ~$99,600.</p>
 
             <div class="grid-3">
                 <div class="metric-card">
@@ -1854,7 +1682,7 @@
 
             <div class="callout callout-success">
                 <div class="callout-title">✓ Lender Minimum Satisfied</div>
-                <p>DSCR of 1.28× comfortably exceeds most lender minimums (typically 1.15–1.25×) for small-balance multifamily.</p>
+                <p>DSCR of 1.28× clears bank and agency small-balance floors (1.20–1.25×) and DSCR-product minimums (1.0–1.25×). The structure pills above reprice it live.</p>
             </div>
 
             <h3>Year 1 Cash Flow</h3>
@@ -1974,11 +1802,11 @@
         <div class="grid-2">
             <div class="metric-card">
                 <div class="metric-label">Unlevered IRR</div>
-                <div class="metric-value" id="unleveredIrrDisplay">~10.1%</div>
+                <div class="metric-value" id="unleveredIrrDisplay">~10.4%</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Levered IRR</div>
-                <div class="metric-value success" id="leveredIrrDisplay">~16.6%</div>
+                <div class="metric-value success" id="leveredIrrDisplay">~17.6%</div>
             </div>
         </div>
 
@@ -2009,17 +1837,6 @@
                 <canvas id="cashFlowChart"></canvas>
             </div>
         </div>
-    </section>
-
-    <section id="section-8">
-        <h2 data-num="8">Upside Not Included</h2>
-        <p>The following value-add opportunities are <strong>not</strong> underwritten in the base case:</p>
-        <ul>
-            <li>Rent increases at 2511 Napier Ave (currently below market)</li>
-            <li>Mid-term rental premium at 2553 Napier Ave</li>
-            <li>Renovation or monetization of warehouse space</li>
-            <li>Portfolio operational efficiencies under consolidated ownership</li>
-        </ul>
     </section>
 
     <footer class="footer">
@@ -2107,7 +1924,8 @@
                     tooltip: {
                         callbacks: {
                             label: ctx => {
-                                const pct = (ctx.raw / 50929 * 100).toFixed(1);
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const pct = (ctx.raw / total * 100).toFixed(1);
                                 return '$' + ctx.raw.toLocaleString() + ' (' + pct + '%)';
                             }
                         }
@@ -2163,7 +1981,7 @@
                 scales: {
                     y: {
                         min: 900000,
-                        max: 1500000,
+                        max: 1600000,
                         ticks: {
                             callback: v => '$' + (v/1000000).toFixed(2) + 'M'
                         }
@@ -2289,8 +2107,8 @@
             }
 
             document.getElementById('customNOI').value = Math.round(currentNOI);
-            // Keep price ↔ target-cap linkage when NOI changes
-            syncPriceFromAcqCap();
+            // Price holds; the acquisition cap floats to reflect the new NOI
+            syncAcqCapFromPrice();
             updateAllCalculations();
             persistScenarioSoon();
         }
@@ -2305,6 +2123,8 @@
             document.getElementById('customOPEX').value = currentOPEX;
             document.getElementById('customNOI').value = currentNOI;
 
+            finMode = 'conv';
+            closingOn = false;
             priceSlider.value = 1150000;
             ltvSlider.value = 75;
             rateSlider.value = 7.5;
@@ -2312,6 +2132,10 @@
             noiGrowthSlider.value = 2;
             if (holdPeriodSelect) holdPeriodSelect.value = '5';
             if (acqCapSlider) acqCapSlider.value = (currentNOI / 1150000 * 100).toFixed(2);
+            if (sellCostSlider) sellCostSlider.value = 2;
+            if (closingSlider) closingSlider.value = 2;
+            updateFinModeUI();
+            updateClosingUI();
 
             renderRentRollInputs();
             updateAllCalculations();
@@ -2333,6 +2157,23 @@
         const exitCapSlider = document.getElementById('exitCapSlider');
         const noiGrowthSlider = document.getElementById('noiGrowthSlider');
         const holdPeriodSelect = document.getElementById('holdPeriodSelect');
+        const sellCostSlider = document.getElementById('sellCostSlider');
+        const closingSlider = document.getElementById('closingSlider');
+        const closingToggle = document.getElementById('closingToggle');
+        const finModeNote = document.getElementById('finModeNote');
+        const capWarnBox = document.getElementById('capWarnBox');
+        const balloonWarnBox = document.getElementById('balloonWarnBox');
+        const sellCostValue = document.getElementById('sellCostValue');
+        const closingValue = document.getElementById('closingValue');
+
+        function finCfg() { return FIN_MODES[finMode]; }
+        function getSellCost() { return parseFloat(sellCostSlider.value) / 100; }
+        function getClosingPct() { return closingOn ? parseFloat(closingSlider.value) / 100 : 0; }
+        // Step-down prepay penalty rate for a sale in year `holdYears`
+        function getPenaltyRate(holdYears) {
+            const sched = finCfg().prepay;
+            return holdYears <= sched.length ? sched[holdYears - 1] : 0;
+        }
 
         // Get display elements
         const priceValue = document.getElementById('priceValue');
@@ -2398,18 +2239,21 @@
             return (lo + hi) / 2;
         }
 
-        // Build levered cash-flow series for IRR (same economics as equity multiple)
+        // Build levered cash-flow series for IRR (same economics as equity multiple).
+        // Terminal value follows the N+1 rule: exit capitalizes year T+1 NOI (matches npv.html).
         function buildLeveredCashFlows(equity, loanAmount, interestRate, noiGrowth, exitCap, holdYears) {
-            const annualDebt = calcMonthlyPayment(loanAmount, interestRate, 360) * 12;
+            const amort = finCfg().amort;
+            const annualDebt = calcMonthlyPayment(loanAmount, interestRate, amort) * 12;
             const cfs = [-equity];
             for (let yr = 1; yr <= holdYears; yr++) {
                 const yrNOI = currentNOI * Math.pow(1 + noiGrowth, yr - 1);
                 let cf = yrNOI - annualDebt;
                 if (yr === holdYears) {
-                    const exitNOI = currentNOI * Math.pow(1 + noiGrowth, holdYears - 1);
-                    const exitValue = (exitNOI / exitCap) * 0.98; // 2% selling costs
-                    const remainingLoan = calcRemainingBalance(loanAmount, interestRate, 360, holdYears * 12);
-                    cf += exitValue - remainingLoan;
+                    const exitNOI = currentNOI * Math.pow(1 + noiGrowth, holdYears);
+                    const exitValue = (exitNOI / exitCap) * (1 - getSellCost());
+                    const remainingLoan = calcRemainingBalance(loanAmount, interestRate, amort, holdYears * 12);
+                    const penalty = remainingLoan * getPenaltyRate(holdYears);
+                    cf += exitValue - remainingLoan - penalty;
                 }
                 cfs.push(cf);
             }
@@ -2421,39 +2265,26 @@
             for (let yr = 1; yr <= holdYears; yr++) {
                 let cf = currentNOI * Math.pow(1 + noiGrowth, yr - 1);
                 if (yr === holdYears) {
-                    const exitNOI = currentNOI * Math.pow(1 + noiGrowth, holdYears - 1);
-                    cf += (exitNOI / exitCap) * 0.98;
+                    const exitNOI = currentNOI * Math.pow(1 + noiGrowth, holdYears);
+                    cf += (exitNOI / exitCap) * (1 - getSellCost());
                 }
                 cfs.push(cf);
             }
             return cfs;
         }
 
-        // Calculate equity multiple for given hold period
+        // Equity multiple = total dollars back / equity in (inflows only, matches npv.html)
         function calcEquityMultiple(equity, loanAmount, interestRate, noiGrowth, exitCap, holdYears) {
-            const annualDebt = calcMonthlyPayment(loanAmount, interestRate, 360) * 12;
-            let totalCashFlow = 0;
-
-            // Sum operating cash flows
-            for (let yr = 0; yr < holdYears; yr++) {
-                const yrNOI = currentNOI * Math.pow(1 + noiGrowth, yr);
-                totalCashFlow += yrNOI - annualDebt;
-            }
-
-            // Exit proceeds
-            const exitNOI = currentNOI * Math.pow(1 + noiGrowth, holdYears - 1);
-            const exitValue = (exitNOI / exitCap) * 0.98; // 2% selling costs
-            const remainingLoan = calcRemainingBalance(loanAmount, interestRate, 360, holdYears * 12);
-            const exitProceeds = exitValue - remainingLoan;
-
-            return (totalCashFlow + exitProceeds) / equity;
+            const cfs = buildLeveredCashFlows(equity, loanAmount, interestRate, noiGrowth, exitCap, holdYears);
+            const inflows = cfs.slice(1).reduce((s, c) => s + Math.max(0, c), 0);
+            return inflows / equity;
         }
 
         // Get amortization schedule for paydown chart
         function getAmortizationSchedule(principal, annualRate, holdYears) {
             const schedule = [];
             const monthlyRate = annualRate / 12;
-            const monthlyPayment = calcMonthlyPayment(principal, annualRate, 360);
+            const monthlyPayment = calcMonthlyPayment(principal, annualRate, finCfg().amort);
             let balance = principal;
 
             for (let year = 0; year <= holdYears; year++) {
@@ -2601,7 +2432,8 @@
             const holdYears = parseInt(holdPeriodSelect.value);
             const loanAmount = price * ltv;
             const equity = price - loanAmount;
-            const annualDebt = calcMonthlyPayment(loanAmount, rate, 360) * 12;
+            const amort = finCfg().amort;
+            const annualDebt = calcMonthlyPayment(loanAmount, rate, amort) * 12;
 
             const tbody = document.getElementById('yearlyTableBody');
             tbody.innerHTML = '';
@@ -2613,8 +2445,8 @@
                 const cashFlow = yrNOI - annualDebt;
 
                 // Principal paid this year
-                const startBalance = calcRemainingBalance(loanAmount, rate, 360, (yr - 1) * 12);
-                const endBalance = calcRemainingBalance(loanAmount, rate, 360, yr * 12);
+                const startBalance = calcRemainingBalance(loanAmount, rate, amort, (yr - 1) * 12);
+                const endBalance = calcRemainingBalance(loanAmount, rate, amort, yr * 12);
                 const principalThisYear = startBalance - endBalance;
                 cumulativeEquity += principalThisYear;
 
@@ -2697,6 +2529,9 @@
                 acqCapSlider.value = Math.min(maxC, Math.max(minC, capPct));
             }
 
+            // Keep craft range fills in sync when values change programmatically
+            if (typeof paintAllCraftRanges === 'function') paintAllCraftRanges();
+
             // Update slider displays
             priceValue.textContent = '$' + price.toLocaleString();
             if (acqCapValue) acqCapValue.textContent = (cap * 100).toFixed(2) + '%';
@@ -2704,11 +2539,18 @@
             rateValue.textContent = (rate * 100).toFixed(2) + '%';
             exitCapValue.textContent = (exitCap * 100).toFixed(2) + '%';
             noiGrowthValue.textContent = (noiGrowth * 100).toFixed(1) + '%';
+            if (sellCostValue) sellCostValue.textContent = (getSellCost() * 100).toFixed(1) + '%';
 
             // Calculate derived values
             const loanAmount = price * ltv;
-            const equity = price - loanAmount;
-            const monthlyPayment = calcMonthlyPayment(loanAmount, rate, 360);
+            const closingCosts = price * getClosingPct();
+            // Cash-in equity: down payment plus closing costs when toggled on.
+            // Feeds CoC, equity multiple, and the IRR's year-0 outflow.
+            const equity = (price - loanAmount) + closingCosts;
+            if (closingValue) closingValue.textContent = closingOn
+                ? parseFloat(closingSlider.value).toFixed(2).replace(/\.?0+$/, '') + '% = $' + Math.round(closingCosts).toLocaleString()
+                : '—';
+            const monthlyPayment = calcMonthlyPayment(loanAmount, rate, finCfg().amort);
             const annualDebtService = monthlyPayment * 12;
             const cashFlowAfterDebt = currentNOI - annualDebtService;
             const coc = equity > 0 ? (cashFlowAfterDebt / equity) * 100 : 0;
@@ -2756,15 +2598,34 @@
             // Update styling based on values
             liveCap.className = 'live-metric-value' + (cap >= 0.07 ? ' positive' : '');
             liveCoc.className = 'live-metric-value' + (coc > 0 ? ' positive' : '');
-            liveDscr.className = 'live-metric-value' + (dscr >= 1.15 ? ' positive' : '');
-            liveDebtYield.className = 'live-metric-value' + (debtYield >= 9 ? ' positive' : '');
+            liveDscr.className = 'live-metric-value' + (dscr >= 1.25 ? ' positive' : dscr < 1.15 ? ' negative' : '');
+            liveDebtYield.className = 'live-metric-value' + (debtYield >= 10 ? ' positive' : '');
             liveEM.className = 'live-metric-value' + (em > 1 ? ' positive' : '');
             liveBE.className = 'live-metric-value' + (breakEven < 90 ? ' positive' : '');
 
-            // Update waterfall chart with current debt service & NOI
-            waterfallChart.data.datasets[0].data[6] = currentNOI;
-            waterfallChart.data.datasets[0].data[7] = -annualDebtService;
-            waterfallChart.data.datasets[0].data[8] = currentNOI - annualDebtService;
+            // Update waterfall chart. The 9-bar expense detail is only true for the
+            // example portfolio; custom numbers get an honest 6-bar decomposition
+            // (vacancy at the ~8% allowance, remainder lumped as Other OpEx).
+            const wf = waterfallChart.data.datasets[0];
+            const isExample = Math.round(currentGSR) === 143700 && Math.round(currentOPEX) === 50929;
+            if (isExample) {
+                waterfallChart.data.labels = ['Gross Rent', 'Vacancy', 'Taxes', 'Insurance', 'Repairs', 'Reserves', 'NOI', 'Debt Svc', 'Cash Flow'];
+                wf.data = [143700, -11440, -9497, -6800, -16370, -6822,
+                    currentNOI, -annualDebtService, currentNOI - annualDebtService];
+                wf.backgroundColor = [
+                    colors.success, colors.warning, colors.warning, colors.warning,
+                    colors.warning, colors.warning, colors.accent, colors.warning, colors.success
+                ];
+            } else {
+                const wfVac = Math.min(currentOPEX, currentGSR * VACANCY_RATE);
+                waterfallChart.data.labels = ['Gross Rent', 'Vacancy', 'Other OpEx', 'NOI', 'Debt Svc', 'Cash Flow'];
+                wf.data = [currentGSR, -wfVac, -(currentOPEX - wfVac),
+                    currentNOI, -annualDebtService, currentNOI - annualDebtService];
+                wf.backgroundColor = [
+                    colors.success, colors.warning, colors.warning,
+                    colors.accent, colors.warning, colors.success
+                ];
+            }
             waterfallChart.update();
 
             // Update paydown chart, yearly table, IRR analysis
@@ -2772,11 +2633,51 @@
             updateYearlyTable();
             updateIrrAnalysis(price, loanAmount, equity, rate, exitCap, noiGrowth, holdYears);
 
+            // Exit cap vs going-in cap warning (matches npv.html)
+            if (capWarnBox) {
+                const spreadBps = (exitCap - cap) * 10000;
+                const goingIn = (cap * 100).toFixed(2) + '%';
+                if (spreadBps < 0) {
+                    capWarnBox.style.display = 'block';
+                    capWarnBox.innerHTML = '<strong>Exit cap is ' + Math.abs(spreadBps).toFixed(0) +
+                        ' bps below your going-in cap of ' + goingIn + '.</strong> That assumes the market pays more ' +
+                        'per dollar of NOI at exit than it does today. Institutional convention is 25–75 bps ' +
+                        '<em>above</em> going-in. You are borrowing return from the exit assumption.';
+                } else if (spreadBps < 25) {
+                    capWarnBox.style.display = 'block';
+                    capWarnBox.innerHTML = '<strong>Exit cap is only ' + spreadBps.toFixed(0) +
+                        ' bps above your going-in cap of ' + goingIn + '.</strong> Convention for a ' +
+                        holdYears + '-year hold is 25–75 bps of expansion.';
+                } else {
+                    capWarnBox.style.display = 'none';
+                }
+            }
+
+            // Balloon breach warning (matches npv.html)
+            const cfg = finCfg();
+            const exitBalance = calcRemainingBalance(loanAmount, rate, cfg.amort, holdYears * 12);
+            const exitPenalty = exitBalance * getPenaltyRate(holdYears);
+            if (balloonWarnBox) {
+                if (cfg.balloon != null && holdYears > cfg.balloon) {
+                    const balloonDue = calcRemainingBalance(loanAmount, rate, cfg.amort, cfg.balloon * 12);
+                    balloonWarnBox.style.display = 'block';
+                    balloonWarnBox.innerHTML = '<strong>Hold of ' + holdYears + ' years runs past the ' +
+                        cfg.balloon + '-year balloon.</strong> $' + Math.round(balloonDue).toLocaleString() +
+                        ' comes due at month ' + (cfg.balloon * 12) + '. The model carries the original rate ' +
+                        'past maturity — refinance risk is not priced.';
+                } else {
+                    balloonWarnBox.style.display = 'none';
+                }
+            }
+
             // Snapshot for share/copy/print
             lastSnapshot = {
                 price, ltv, rate, exitCap, noiGrowth, holdYears,
                 loanAmount, equity, annualDebtService, cashFlowAfterDebt,
                 cap, coc, dscr, debtYield, em, breakEven,
+                finMode, finLabel: cfg.label, amort: cfg.amort, balloon: cfg.balloon,
+                sellCost: getSellCost(), closingOn, closingPct: getClosingPct(), closingCosts,
+                exitPenalty,
                 gsr: currentGSR, opex: currentOPEX, noi: currentNOI,
                 leveredIrr: document.getElementById('leveredIrrDisplay')?.textContent || '',
                 unleveredIrr: document.getElementById('unleveredIrrDisplay')?.textContent || '',
@@ -2832,6 +2733,10 @@
                 exitCap: parseFloat(exitCapSlider.value),
                 growth: parseFloat(noiGrowthSlider.value),
                 hold: parseInt(holdPeriodSelect?.value || '5', 10),
+                fin: finMode,
+                sell: parseFloat(sellCostSlider?.value || '2'),
+                ccOn: closingOn ? 1 : 0,
+                cc: parseFloat(closingSlider?.value || '2'),
                 rents: rentRollMonthly.slice()
             };
         }
@@ -2846,12 +2751,17 @@
             document.getElementById('customOPEX').value = Math.round(currentOPEX);
             document.getElementById('customNOI').value = Math.round(currentNOI);
 
+            if (state.fin != null && FIN_MODES[state.fin]) setFinMode(state.fin, { preset: false });
             if (state.price != null) priceSlider.value = clampPrice(+state.price);
-            if (state.ltv != null) ltvSlider.value = state.ltv;
+            if (state.ltv != null) ltvSlider.value = Math.min(+state.ltv, finCfg().maxLtv);
             if (state.rate != null) rateSlider.value = state.rate;
             if (state.exitCap != null) exitCapSlider.value = state.exitCap;
             if (state.growth != null) noiGrowthSlider.value = state.growth;
             if (state.hold != null && holdPeriodSelect) holdPeriodSelect.value = String(state.hold);
+            if (state.sell != null && sellCostSlider) sellCostSlider.value = state.sell;
+            if (state.ccOn != null) closingOn = !!+state.ccOn;
+            if (state.cc != null && closingSlider) closingSlider.value = state.cc;
+            updateClosingUI();
             if (Array.isArray(state.rents) && state.rents.length) {
                 rentRollMonthly = state.rents.map(n => Math.max(0, +n || 0));
                 while (rentRollMonthly.length < DEFAULT_RENTS.length) {
@@ -2875,6 +2785,10 @@
             p.set('exitCap', String(state.exitCap));
             p.set('growth', String(state.growth));
             p.set('hold', String(state.hold));
+            p.set('fin', state.fin);
+            p.set('sell', String(state.sell));
+            p.set('ccOn', String(state.ccOn));
+            p.set('cc', String(state.cc));
             p.set('rents', state.rents.map(r => Math.round(r)).join(','));
             return p.toString();
         }
@@ -2893,6 +2807,10 @@
                 exitCap: p.has('exitCap') ? +p.get('exitCap') : undefined,
                 growth: p.has('growth') ? +p.get('growth') : undefined,
                 hold: p.has('hold') ? +p.get('hold') : undefined,
+                fin: p.has('fin') ? p.get('fin') : undefined,
+                sell: p.has('sell') ? +p.get('sell') : undefined,
+                ccOn: p.has('ccOn') ? +p.get('ccOn') : undefined,
+                cc: p.has('cc') ? +p.get('cc') : undefined,
                 rents: rentsRaw ? rentsRaw.split(',').map(Number) : undefined
             };
         }
@@ -2926,6 +2844,7 @@
             const el = document.getElementById('printScenarioSummary');
             if (!el || !s) return;
             el.innerHTML = '<strong>Scenario snapshot</strong><br>' +
+                s.finLabel + ' (' + (s.amort / 12) + 'yr am' + (s.balloon ? ', ' + s.balloon + 'yr balloon' : '') + ')<br>' +
                 'Price: $' + Math.round(s.price).toLocaleString() +
                 ' · Acq cap: ' + (s.cap * 100).toFixed(2) + '%' +
                 ' · LTV: ' + (s.ltv * 100).toFixed(0) + '%' +
@@ -2947,10 +2866,13 @@
                 'GN Property Group — Investment Scenario Summary',
                 '==============================================',
                 'Purchase price: $' + Math.round(s.price).toLocaleString(),
+                'Financing: ' + s.finLabel + '  |  ' + (s.amort / 12) + '-yr amortization' + (s.balloon ? '  |  balloon yr ' + s.balloon : ''),
                 'Acquisition cap: ' + (s.cap * 100).toFixed(2) + '%',
                 'NOI: $' + Math.round(s.noi).toLocaleString() + '  |  GSR: $' + Math.round(s.gsr).toLocaleString() + '  |  OpEx: $' + Math.round(s.opex).toLocaleString(),
-                'LTV: ' + (s.ltv * 100).toFixed(0) + '%  |  Loan: $' + Math.round(s.loanAmount).toLocaleString() + '  |  Equity: $' + Math.round(s.equity).toLocaleString(),
+                'LTV: ' + (s.ltv * 100).toFixed(0) + '%  |  Loan: $' + Math.round(s.loanAmount).toLocaleString() + '  |  Equity in: $' + Math.round(s.equity).toLocaleString() +
+                    (s.closingOn ? ' (incl. ' + (s.closingPct * 100).toFixed(2).replace(/\.?0+$/, '') + '% closing)' : ''),
                 'Interest rate: ' + (s.rate * 100).toFixed(2) + '%  |  Annual debt service: $' + Math.round(s.annualDebtService).toLocaleString(),
+                'Selling costs: ' + (s.sellCost * 100).toFixed(1) + '%' + (s.exitPenalty > 0 ? '  |  Prepay penalty at exit: $' + Math.round(s.exitPenalty).toLocaleString() : ''),
                 'Cash-on-cash: ' + s.coc.toFixed(1) + '%  |  DSCR: ' + s.dscr.toFixed(2) + '×  |  Debt yield: ' + s.debtYield.toFixed(2) + '%',
                 'Equity multiple: ' + s.em.toFixed(2) + '×  |  Break-even occ.: ' + s.breakEven.toFixed(1) + '%',
                 'Exit cap: ' + (s.exitCap * 100).toFixed(2) + '%  |  NOI growth: ' + (s.noiGrowth * 100).toFixed(1) + '%  |  Hold: ' + s.holdYears + ' years',
@@ -3004,9 +2926,15 @@
             lines.push('GSR,' + Math.round(s.gsr));
             lines.push('OpEx,' + Math.round(s.opex));
             lines.push('LTV,' + (ltv * 100).toFixed(1) + '%');
+            lines.push('Financing Structure,"' + s.finLabel + '"');
+            lines.push('Amortization,' + (s.amort / 12) + ' years');
+            lines.push('Balloon,' + (s.balloon ? s.balloon + ' years' : 'none'));
             lines.push('Interest Rate,' + (rate * 100).toFixed(2) + '%');
             lines.push('Exit Cap,' + (s.exitCap * 100).toFixed(2) + '%');
             lines.push('NOI Growth,' + (s.noiGrowth * 100).toFixed(1) + '%');
+            lines.push('Selling Costs,' + (s.sellCost * 100).toFixed(1) + '%');
+            lines.push('Closing Costs,' + (s.closingOn ? (s.closingPct * 100).toFixed(2) + '% = ' + Math.round(s.closingCosts) : 'excluded'));
+            lines.push('Prepay Penalty at Exit,' + (s.exitPenalty > 0 ? Math.round(s.exitPenalty) : 0));
             lines.push('Hold Years,' + holdYears);
             lines.push('');
             lines.push('Rent Roll (Monthly)');
@@ -3019,8 +2947,8 @@
             for (let yr = 1; yr <= holdYears; yr++) {
                 const yrNOI = currentNOI * Math.pow(1 + s.noiGrowth, yr - 1);
                 const cashFlow = yrNOI - annualDebt;
-                const startBal = calcRemainingBalance(loanAmount, rate, 360, (yr - 1) * 12);
-                const endBal = calcRemainingBalance(loanAmount, rate, 360, yr * 12);
+                const startBal = calcRemainingBalance(loanAmount, rate, s.amort, (yr - 1) * 12);
+                const endBal = calcRemainingBalance(loanAmount, rate, s.amort, yr * 12);
                 const principal = startBal - endBal;
                 cumulativeEquity += principal;
                 lines.push([
@@ -3092,12 +3020,18 @@
 
         function applyRentRollToGsr() {
             const { annual } = updateRentRollTotals();
+            // Expense treatment: fixed-dollar lines held, vacancy scales at ~8% of GSR
+            const vacancyNow = Math.min(currentOPEX, currentGSR * VACANCY_RATE);
+            const fixedOpex = currentOPEX - vacancyNow;
             currentGSR = annual;
+            currentOPEX = Math.round(fixedOpex + currentGSR * VACANCY_RATE);
             document.getElementById('customGSR').value = Math.round(currentGSR);
+            document.getElementById('customOPEX').value = Math.round(currentOPEX);
             // Recompute NOI from GSR - OpEx unless user wants manual NOI
             currentNOI = Math.max(0, currentGSR - currentOPEX);
             document.getElementById('customNOI').value = Math.round(currentNOI);
-            syncPriceFromAcqCap();
+            // Price holds; the acquisition cap floats to reflect the new NOI
+            syncAcqCapFromPrice();
             updateAllCalculations();
             persistScenarioSoon();
             const st = document.getElementById('rentRollStatus');
@@ -3107,24 +3041,96 @@
             }
         }
 
+        // Craft slider fill: --pct painted per control (hand-listed wells only)
+        function paintRangeFill(el) {
+            if (!el) return;
+            const min = parseFloat(el.min);
+            const max = parseFloat(el.max);
+            const val = parseFloat(el.value);
+            if (!isFinite(min) || !isFinite(max) || max === min) return;
+            el.style.setProperty('--pct', ((val - min) / (max - min)) * 100 + '%');
+        }
+        function paintAllCraftRanges() {
+            paintRangeFill(priceSlider);
+            paintRangeFill(acqCapSlider);
+            paintRangeFill(ltvSlider);
+            paintRangeFill(rateSlider);
+            paintRangeFill(exitCapSlider);
+            paintRangeFill(noiGrowthSlider);
+            paintRangeFill(sellCostSlider);
+            paintRangeFill(closingSlider);
+        }
+        paintAllCraftRanges();
+
         // Add event listeners for all sliders
         priceSlider.addEventListener('input', () => {
+            paintRangeFill(priceSlider);
             syncAcqCapFromPrice();
+            paintRangeFill(acqCapSlider);
             updateMetrics();
             persistScenarioSoon();
         });
         if (acqCapSlider) {
             acqCapSlider.addEventListener('input', () => {
+                paintRangeFill(acqCapSlider);
                 syncPriceFromAcqCap();
+                paintRangeFill(priceSlider);
                 updateMetrics();
                 persistScenarioSoon();
             });
         }
-        ltvSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
-        rateSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
-        exitCapSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
-        noiGrowthSlider.addEventListener('input', () => { updateMetrics(); persistScenarioSoon(); });
+        ltvSlider.addEventListener('input', () => { paintRangeFill(ltvSlider); updateMetrics(); persistScenarioSoon(); });
+        rateSlider.addEventListener('input', () => { paintRangeFill(rateSlider); updateMetrics(); persistScenarioSoon(); });
+        exitCapSlider.addEventListener('input', () => { paintRangeFill(exitCapSlider); updateMetrics(); persistScenarioSoon(); });
+        noiGrowthSlider.addEventListener('input', () => { paintRangeFill(noiGrowthSlider); updateMetrics(); persistScenarioSoon(); });
         holdPeriodSelect.addEventListener('change', () => { updateMetrics(); persistScenarioSoon(); });
+        if (sellCostSlider) sellCostSlider.addEventListener('input', () => { paintRangeFill(sellCostSlider); updateMetrics(); persistScenarioSoon(); });
+        if (closingSlider) closingSlider.addEventListener('input', () => { paintRangeFill(closingSlider); updateMetrics(); persistScenarioSoon(); });
+
+        // ========== FINANCING STRUCTURE + CLOSING COSTS ==========
+        function updateFinModeUI() {
+            document.querySelectorAll('#finModeRow .mode-btn').forEach(b =>
+                b.classList.toggle('active', b.dataset.mode === finMode));
+            if (finModeNote) finModeNote.textContent = finCfg().note;
+            // A mode can't be shown at leverage it doesn't offer
+            const maxLtv = finCfg().maxLtv;
+            ltvSlider.max = maxLtv;
+            if (parseFloat(ltvSlider.value) > maxLtv) ltvSlider.value = maxLtv;
+            paintRangeFill(ltvSlider);
+        }
+
+        function setFinMode(m, opts) {
+            if (!FIN_MODES[m]) return;
+            finMode = m;
+            // Pill click presets the structure's market rate; loading a saved scenario keeps its rate
+            if (!opts || opts.preset !== false) rateSlider.value = FIN_MODES[m].rate;
+            paintRangeFill(rateSlider);
+            updateFinModeUI();
+        }
+
+        function updateClosingUI() {
+            if (!closingToggle) return;
+            closingSlider.disabled = !closingOn;
+            closingToggle.textContent = closingOn ? 'On' : 'Off';
+            closingToggle.classList.toggle('active', closingOn);
+            closingToggle.setAttribute('aria-pressed', closingOn ? 'true' : 'false');
+            paintRangeFill(closingSlider);
+        }
+
+        document.getElementById('finModeRow')?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.mode-btn');
+            if (!btn) return;
+            setFinMode(btn.dataset.mode);
+            updateMetrics();
+            persistScenarioSoon();
+        });
+
+        closingToggle?.addEventListener('click', () => {
+            closingOn = !closingOn;
+            updateClosingUI();
+            updateMetrics();
+            persistScenarioSoon();
+        });
 
         // ========== COLLAPSIBLE SECTIONS ==========
         document.querySelectorAll('.section-header').forEach(header => {
@@ -3238,6 +3244,8 @@
         document.getElementById('customGSR').value = currentGSR;
         document.getElementById('customOPEX').value = currentOPEX;
         document.getElementById('customNOI').value = currentNOI;
+        updateFinModeUI();
+        updateClosingUI();
 
         // Load scenario: URL query wins, else localStorage
         const fromUrl = scenarioFromQuery(window.location.search);

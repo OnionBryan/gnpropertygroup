@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1045 Patterson Street · Macon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           1045 Patterson St — multipage property brochure
+           Same editorial system as 2525/2553. Plainer register:
+           this is a work parcel — residence + warehouse + acreage.
+           ============================================================ */
+        :root {
+            --ink: #14110e;
+            --ink-soft: #3d3832;
+            --muted: #6b635a;
+            --rule: #c4b8a8;
+            --paper: #f7f3ec;
+            --paper-deep: #efe8dc;
+            --gold: #9a7b4f;
+            --gold-line: #b8956a;
+            --white: #fdfbf7;
+            --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+            --sans: "DM Sans", system-ui, sans-serif;
+            --page-w: 8.5in;
+            --page-h: 11in;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { background: #2a2622; }
+
+        body {
+            font-family: var(--sans);
+            color: var(--ink);
+            background: #2a2622;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+        /* Screen chrome */
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 0.85rem 1.25rem;
+            background: rgba(20, 17, 14, 0.94);
+            border-bottom: 1px solid rgba(184, 149, 106, 0.35);
+            color: var(--paper);
+        }
+
+        .toolbar a,
+        .toolbar button {
+            font-family: var(--sans);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--paper);
+            background: transparent;
+            border: 1px solid rgba(247, 243, 236, 0.28);
+            padding: 0.55rem 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .toolbar a:hover,
+        .toolbar button:hover {
+            border-color: var(--gold-line);
+            color: #f0e2c8;
+        }
+
+        .toolbar .brand {
+            font-family: var(--serif);
+            font-size: 1rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #f0e2c8;
+            border: none;
+            padding: 0;
+        }
+
+        .stack {
+            max-width: calc(var(--page-w) + 2rem);
+            margin: 0 auto;
+            padding: 1.5rem 1rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        /* One letter-size sheet */
+        .sheet {
+            width: 100%;
+            max-width: var(--page-w);
+            min-height: var(--page-h);
+            margin: 0 auto;
+            background: var(--paper);
+            color: var(--ink);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+            break-after: page;
+        }
+
+        /* ---------- COVER ---------- */
+        .cover {
+            display: grid;
+            grid-template-rows: 1fr auto;
+            min-height: var(--page-h);
+            background: var(--ink);
+        }
+
+        .cover-hero {
+            position: relative;
+            min-height: 7.6in;
+        }
+
+        .cover-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(20, 17, 14, 0.15) 0%, rgba(20, 17, 14, 0.05) 40%, rgba(20, 17, 14, 0.72) 100%);
+            pointer-events: none;
+        }
+
+        .cover-plate {
+            background: var(--paper);
+            padding: 1.35rem 1.75rem 1.5rem;
+            border-top: 1px solid var(--gold-line);
+        }
+
+        .cover-kicker {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.55rem;
+        }
+
+        .cover-plate h1 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: clamp(2.4rem, 5vw, 3.35rem);
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+        }
+
+        .cover-plate h1 span {
+            display: block;
+            font-size: 0.42em;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.55rem;
+        }
+
+        .cover-meta {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem 1.5rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            border-top: 1px solid var(--rule);
+            padding-top: 0.85rem;
+        }
+
+        .cover-meta strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .page-mark {
+            position: absolute;
+            bottom: 0.7rem;
+            right: 1rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            z-index: 2;
+        }
+
+        .cover .page-mark { color: rgba(247, 243, 236, 0.55); bottom: auto; top: 1rem; right: 1.1rem; }
+
+        /* ---------- INTERIOR PAGES ---------- */
+        .interior {
+            padding: 0.85in 0.8in 0.75in;
+            min-height: var(--page-h);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .running {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 1px solid var(--rule);
+            padding-bottom: 0.55rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .running strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .eyebrow {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.45rem;
+        }
+
+        h2 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: 2.35rem;
+            line-height: 1.05;
+            margin-bottom: 1rem;
+        }
+
+        .spec-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--ink);
+            border-bottom: 1px solid var(--rule);
+            margin-bottom: 1.25rem;
+        }
+
+        .spec {
+            padding: 0.8rem 0.6rem 0.9rem;
+            border-right: 1px solid var(--rule);
+        }
+
+        .spec:last-child { border-right: none; }
+
+        .spec b {
+            display: block;
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: 1.7rem;
+            line-height: 1;
+        }
+
+        .spec span {
+            display: block;
+            margin-top: 0.3rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .body-copy {
+            font-size: 0.95rem;
+            color: var(--ink-soft);
+            line-height: 1.65;
+            max-width: 58ch;
+            margin-bottom: 1.25rem;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: 1.5rem;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .facts {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--ink-soft);
+        }
+
+        .facts li {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .facts li span:first-child {
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding-top: 0.15rem;
+        }
+
+        .facts li span:last-child {
+            text-align: right;
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        .inset-photo {
+            position: relative;
+            min-height: 4.6in;
+            border: 1px solid var(--rule);
+        }
+
+        /* ---------- FULL-BLEED PHOTO SHEETS ---------- */
+        .frame {
+            position: relative;
+            min-height: var(--page-h);
+            background: var(--ink);
+        }
+
+        .frame-pair {
+            position: relative;
+            min-height: var(--page-h);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: var(--ink);
+        }
+
+        .frame-pair .pane {
+            position: relative;
+            min-height: var(--page-h);
+        }
+
+        .frame-pair .pane + .pane { border-left: 1px solid var(--paper); }
+
+        /* ---------- CLOSING PAGE ---------- */
+        .close-grid {
+            display: grid;
+            grid-template-columns: 0.95fr 1fr;
+            gap: 1.5rem;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .portrait {
+            position: relative;
+            border: 1px solid var(--rule);
+            min-height: 6.5in;
+        }
+
+        .close-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .contact-block {
+            border-top: 1px solid var(--ink);
+            padding-top: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-block h3 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: 1.55rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .contact-block p {
+            font-size: 0.88rem;
+            color: var(--ink-soft);
+            line-height: 1.55;
+        }
+
+        .contact-block a {
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gold-line);
+        }
+
+        .sign-off {
+            margin-top: 1.25rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        @media (max-width: 720px) {
+            .sheet { min-height: auto; }
+            .cover-hero { min-height: 58vh; }
+            .spec-strip { grid-template-columns: 1fr 1fr; }
+            .spec:nth-child(2) { border-right: none; }
+            .spec:nth-child(1), .spec:nth-child(2) { border-bottom: 1px solid var(--rule); }
+            .two-col, .close-grid { grid-template-columns: 1fr; }
+            .frame-pair { grid-template-columns: 1fr; }
+            .frame-pair .pane { min-height: 50vh; }
+            .frame { min-height: 70vh; }
+            .interior { padding: 1.25rem 1.1rem 1.5rem; }
+        }
+
+        @media print {
+            html, body { background: #fff !important; }
+            .toolbar { display: none !important; }
+            .stack { max-width: none; padding: 0; gap: 0; }
+            .sheet {
+                max-width: none;
+                width: 100%;
+                min-height: 100vh;
+                box-shadow: none;
+                margin: 0;
+            }
+            .cover-hero { min-height: 72vh; }
+            .frame, .frame-pair, .frame-pair .pane { min-height: 100vh; }
+            @page { size: letter; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <span class="brand">GN Property Group</span>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a href="../portfolio.html">← Portfolio</a>
+            <a href="../index.html">Site</a>
+            <button type="button" onclick="window.print()">Print / PDF</button>
+        </div>
+    </div>
+
+    <div class="stack">
+
+        <!-- 01 COVER · aerial: the whole parcel is the story -->
+        <section class="sheet cover">
+            <div class="cover-hero">
+                <img src="../images/1045-patterson/1045 Patterson St.jpg" alt="" style="object-position:50% 45%;">
+                <span class="page-mark">01 / 07</span>
+            </div>
+            <div class="cover-plate">
+                <p class="cover-kicker">Macon, Georgia · 31204</p>
+                <h1>
+                    1045 Patterson Street
+                    <span>Residence + warehouse on 1.13 acres · Zoned R-3</span>
+                </h1>
+                <div class="cover-meta">
+                    <span><strong>1.13</strong> acres</span>
+                    <span><strong>588</strong> sq ft residence</span>
+                    <span><strong>2,280</strong> sq ft warehouse</span>
+                    <span><strong>$1,600</strong> / month</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 the parcel, by the numbers -->
+        <section class="sheet interior">
+            <div class="running">
+                <span><strong>1045 Patterson Street</strong></span>
+                <span>02 / 07</span>
+            </div>
+            <p class="eyebrow">The parcel</p>
+            <h2>A house, a warehouse, and an acre</h2>
+            <div class="spec-strip">
+                <div class="spec"><b>1.13</b><span>Acres</span></div>
+                <div class="spec"><b>2,280</b><span>Warehouse sq ft</span></div>
+                <div class="spec"><b>1 / 1</b><span>Bed / bath residence</span></div>
+                <div class="spec"><b>$19,200</b><span>Annual rent</span></div>
+            </div>
+            <p class="body-copy">
+                One address that works three ways: a renovated one-bedroom
+                residence, a 2,280 sq ft warehouse outbuilding, and open ground
+                for parking and staging. The obvious fit is an owner-user —
+                a mechanic, a contractor, tractor and equipment storage —
+                paying one bill for shop, yard, and housing.
+            </p>
+            <p class="body-copy">
+                The zoning does the financing work. This is an R-3 residential
+                parcel with a dwelling on site; the warehouse is an outbuilding,
+                not a commercial use, so the property finances conventionally.
+                The same R-3 acre also stands as an apartment-development
+                candidate — an option, not the plan.
+            </p>
+            <div class="two-col">
+                <ul class="facts">
+                    <li><span>Address</span><span>1045 Patterson St, Macon, GA 31204</span></li>
+                    <li><span>Zoning</span><span>R-3 residential</span></li>
+                    <li><span>Residence</span><span>1 bed · 1 bath · 588 sq ft</span></li>
+                    <li><span>Warehouse</span><span>2,280 sq ft outbuilding</span></li>
+                    <li><span>Lot</span><span>1.13 acres</span></li>
+                    <li><span>Rent</span><span>$1,600 / mo · $19,200 / yr</span></li>
+                </ul>
+                <div class="inset-photo">
+                    <img src="../images/1045-patterson/IMG_5747.jpeg" alt="" style="object-position:50% 55%;">
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 residence front — blue siding, red door -->
+        <section class="sheet frame">
+            <img src="../images/1045-patterson/IMG_5710.jpeg" alt="" style="object-position:50% 60%;">
+            <span class="page-mark">03 / 07</span>
+        </section>
+
+        <!-- 04 the warehouse -->
+        <section class="sheet frame">
+            <img src="../images/1045-patterson/IMG_5808.jpeg" alt="" style="object-position:50% 55%;">
+            <span class="page-mark">04 / 07</span>
+        </section>
+
+        <!-- 05 kitchen + bath/laundry — both portrait -->
+        <section class="sheet frame-pair">
+            <div class="pane">
+                <img src="../images/1045-patterson/IMG_5739.jpeg" alt="" style="object-position:50% 50%;">
+            </div>
+            <div class="pane">
+                <img src="../images/1045-patterson/IMG_5742.jpeg" alt="" style="object-position:50% 50%;">
+            </div>
+            <span class="page-mark">05 / 07</span>
+        </section>
+
+        <!-- 06 main room, renovated -->
+        <section class="sheet frame">
+            <img src="../images/1045-patterson/IMG_5736.jpeg" alt="" style="object-position:50% 62%;">
+            <span class="page-mark">06 / 07</span>
+        </section>
+
+        <!-- 07 close + contact -->
+        <section class="sheet interior">
+            <div class="running">
+                <span><strong>1045 Patterson Street</strong></span>
+                <span>07 / 07</span>
+            </div>
+            <p class="eyebrow">Macon, Georgia</p>
+            <h2>Utility first</h2>
+            <div class="close-grid">
+                <div class="portrait">
+                    <img src="../images/1045-patterson/IMG_5732.jpeg" alt="" style="object-position:35% 50%;">
+                </div>
+                <div class="close-copy">
+                    <div>
+                        <p class="body-copy">
+                            The residence is renovated — new floors, kitchen,
+                            and bath with laundry and tankless hot water. The
+                            warehouse and the acre around it are the working
+                            half of the parcel: storage, staging, and room to
+                            maneuver equipment off the street.
+                        </p>
+                    </div>
+                    <div class="contact-block">
+                        <h3>GN Property Group</h3>
+                        <p>
+                            Inquiries<br>
+                            <a href="mailto:gnpropertygroup@gmail.com">gnpropertygroup@gmail.com</a>
+                        </p>
+                        <p class="sign-off">1045 Patterson Street · Macon, Georgia · Private brochure</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

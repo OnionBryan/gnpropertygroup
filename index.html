@@ -27,6 +27,7 @@
     <!-- CSS Modules (per architecture: main → components → gallery → responsive) -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/craft.css">
     <link rel="stylesheet" href="css/gallery.css">
     <link rel="stylesheet" href="css/responsive.css">
 
@@ -56,7 +57,6 @@
                 <a href="#portfolio" class="nav-link active" data-section="portfolio">Portfolio</a>
                 <a href="macon.html" class="nav-link">Macon</a>
                 <a href="rent.html" class="nav-link">Investment Tools</a>
-                <a href="npv.html" class="nav-link">NPV</a>
                 
                 <button class="btn-icon" id="themeToggleBtn" aria-label="Toggle Theme" style="margin-left: 1rem;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -93,21 +93,41 @@
     <!-- ============================================
          PORTFOLIO SECTION
          - Section Header
-         - Property Card Grid (6 cards per architecture)
+         - Offering book (embedded booklet; photo opens the brochure)
          ============================================ -->
     <section class="portfolio-section" id="portfolio">
         <div class="section-container">
             <div class="section-header">
                 <h2 class="section-title">The Portfolio</h2>
-                <p class="section-subtitle">Seven distinguished historic properties. Click any to view the full gallery.</p>
+                <p class="section-subtitle">Seven historic homes across five parcels. Turn the pages — each photo opens that holding's brochure.</p>
             </div>
 
-            <!-- Property Card Grid -->
-            <div class="property-grid" id="propertyGrid">
-                <!-- Cards rendered by app.js using data from data.js -->
+            <!-- Offering book, embedded -->
+            <div class="booklet-embed">
+                <iframe src="portfolio.html" title="The Napier Portfolio offering book"
+                        loading="lazy" id="bookletFrame"></iframe>
             </div>
         </div>
     </section>
+
+    <style>
+        .booklet-embed {
+            width: 100%;
+            max-width: 1020px;
+            margin: 0 auto;
+        }
+        .booklet-embed iframe {
+            display: block;
+            width: 100%;
+            height: min(78vh, 700px);
+            border: 1px solid var(--border);
+            background: #f7f3ec;
+            box-shadow: var(--shadow-lg);
+        }
+        @media (max-width: 768px) {
+            .booklet-embed iframe { height: 82vh; }
+        }
+    </style>
 
     <!-- ============================================
          INVESTMENT SECTION
@@ -144,7 +164,10 @@
                             <span class="metric-mini-label">Cap Rate</span>
                         </div>
                     </div>
-                    <a href="rent.html" class="btn-primary">Open Investment Tools →</a>
+                    <div style="display:flex; gap:0.75rem; flex-wrap:wrap; justify-content:center;">
+                        <a href="rent.html" class="btn-primary">Open Investment Tools →</a>
+                        <a href="npv.html" class="btn-primary">NPV Model →</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,11 +191,27 @@
                     <h2 class="modal-title" id="modalTitle">Property Name</h2>
                     <span class="modal-address" id="modalAddress">Address</span>
                 </div>
-                <button class="modal-close" id="modalClose" aria-label="Close gallery">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
-                </button>
+
+                <div class="modal-actions">
+                    <div class="modal-btn-group">
+                        <button class="modal-btn" id="viewPhotosBtn" onclick="Gallery.setViewMode('photos')">Photos</button>
+                        <button class="modal-btn active" id="viewFlyerBtn" onclick="Gallery.setViewMode('flyer')">Selling flyer</button>
+                    </div>
+
+                    <div class="modal-btn-group" title="Ring Navigation">
+                        <button class="modal-btn" id="prevRingBtn" onclick="Gallery.stepRing(-1)">← Ring</button>
+                        <button class="modal-btn" id="invertRingBtn" onclick="Gallery.toggleRingInvert()" title="Invert Ring Direction">Normal</button>
+                        <button class="modal-btn" id="nextRingBtn" onclick="Gallery.stepRing(1)">Ring →</button>
+                    </div>
+
+                    <button class="modal-btn" id="fullscreenToggleBtn" onclick="Gallery.toggleFullscreen()" title="Toggle Fullscreen">Fullscreen</button>
+
+                    <button class="modal-close" id="modalClose" aria-label="Close gallery">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <!-- Description Panel (collapsible) -->
@@ -192,7 +231,7 @@
             </div>
 
             <!-- Main Image Display -->
-            <div class="modal-main-image">
+            <div class="modal-main-image" id="modalMainImage">
                 <button class="gallery-arrow gallery-arrow-prev" id="prevImage" aria-label="Previous image">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M15 18l-6-6 6-6"/>
@@ -209,6 +248,11 @@
                         <path d="M9 18l6-6-6-6"/>
                     </svg>
                 </button>
+            </div>
+
+            <!-- Selling Flyer Container (Embedded OM) -->
+            <div class="modal-flyer-container" id="modalFlyerContainer">
+                <iframe src="" class="modal-flyer-frame" id="modalFlyerFrame" title="Selling Flyer Memorandum"></iframe>
             </div>
 
             <!-- Thumbnail Strip -->

@@ -42,6 +42,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/craft.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <style>
@@ -98,29 +99,7 @@
             gap: 1.5rem; flex-wrap: wrap;
         }
 
-        /* ---------- Upload button ----------
-           Restrained: hairline rule, quiet elevation, gold only on intent.   */
-        .upload-btn {
-            display: inline-flex; align-items: center; gap: 0.55rem;
-            padding: 0.62rem 1.05rem;
-            border-radius: 4px; cursor: pointer;
-            font-family: var(--font-body);
-            font-size: 0.82rem; font-weight: 500; letter-spacing: 0.01em;
-            color: var(--text);
-            background: var(--bg-card);
-            border: 1px solid var(--border2);
-            box-shadow: var(--shadow-sm);
-            transition: border-color 160ms ease, color 160ms ease,
-                        box-shadow 160ms ease, transform 90ms ease;
-        }
-        .upload-btn:hover, .upload-btn:focus-visible {
-            outline: none;
-            color: var(--accent-dim);
-            border-color: var(--accent);
-            box-shadow: var(--shadow-md);
-        }
-        .upload-btn:focus-visible { box-shadow: 0 0 0 3px var(--accent-faint); }
-        .upload-btn:active { transform: translateY(1px); box-shadow: var(--shadow-sm); }
+        /* Upload face: craft.css. Page keeps icon/format micro-styles only. */
         .upload-btn .u-icon { display: block; width: 15px; height: 15px; flex: none; }
         .upload-btn .u-formats {
             font-family: var(--font-mono, ui-monospace, monospace);
@@ -170,78 +149,15 @@
         }
         h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.7rem; }
 
-        /* ---------- Financing toggle ---------- */
-        .mode-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1.25rem 0 0.75rem; }
-        .mode-btn {
-            font-family: var(--font-body); font-size: 0.88rem; font-weight: 500;
-            padding: 0.55rem 1.15rem; border-radius: 8px; cursor: pointer;
-            background: var(--bg-card); color: var(--text);
-            border: 1px solid var(--border2); transition: all 0.15s ease;
-        }
-        .mode-btn:hover { border-color: var(--accent); }
-        .mode-btn.active {
-            background: var(--accent); color: var(--accent-text);
-            border-color: var(--accent); font-weight: 700;
-        }
-        .mode-note {
-            font-size: 0.82rem; color: var(--text2);
-            background: var(--surface2); border-left: 3px solid var(--accent);
-            padding: 0.7rem 0.95rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem;
-        }
-
-        /* ---------- Controls ---------- */
-        .controls {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
-            gap: 1.15rem 1.6rem;
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-sm);
-        }
-        .ctl label {
-            display: flex; justify-content: space-between; align-items: baseline;
-            font-size: 0.8rem; font-weight: 500; color: var(--text2); margin-bottom: 0.45rem;
-        }
-        .ctl .val {
-            font-family: var(--font-mono, monospace); font-size: 0.92rem;
-            font-weight: 700; color: var(--text);
-        }
-        .ctl .val.hero { color: var(--accent-dim); }
-        input[type=range] {
-            width: 100%; height: 5px; border-radius: 3px; -webkit-appearance: none;
-            appearance: none; background: var(--surface3); outline: none; cursor: pointer;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; appearance: none; width: 17px; height: 17px;
-            border-radius: 50%; background: var(--accent); cursor: pointer;
-            border: 2px solid var(--bg-card); box-shadow: var(--shadow-sm);
-        }
-        input[type=range]::-moz-range-thumb {
-            width: 17px; height: 17px; border-radius: 50%; background: var(--accent);
-            cursor: pointer; border: 2px solid var(--bg-card);
-        }
-        input[type=range].hero::-webkit-slider-thumb { background: var(--accent2); }
-        input[type=range].hero::-moz-range-thumb { background: var(--accent2); }
-
-        /* ---------- Metric cards ---------- */
+        /* Mode rail, controls, ranges, metrics: craft.css.
+           Page keeps section spacing + metric grid density. */
+        .mode-row { margin: 1.25rem 0 0.75rem; }
         .metrics {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
             gap: 0.85rem; margin: 1.35rem 0;
         }
-        .metric {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 10px; padding: 1.05rem 1rem; box-shadow: var(--shadow-sm);
-        }
-        .metric.feature { border-color: var(--accent); border-width: 2px; }
-        .metric-label {
-            font-size: 0.7rem; letter-spacing: 0.07em; text-transform: uppercase;
-            color: var(--text3); font-weight: 700; margin-bottom: 0.3rem;
-        }
-        .metric-value {
-            font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
-            letter-spacing: -0.02em; line-height: 1.15;
-        }
+        .metric-value { font-size: 1.5rem; }
         .metric-sub { font-size: 0.74rem; color: var(--text2); margin-top: 0.2rem; }
-        .pos { color: var(--success); }
-        .neg { color: var(--danger); }
 
         /* ---------- Charts ---------- */
         .chart-card {
@@ -367,49 +283,69 @@
 
 <h2>Financing</h2>
 
-<div class="mode-row" id="modeRow">
-    <button class="mode-btn active" data-mode="conv">Conventional 30yr fixed</button>
-    <button class="mode-btn" data-mode="comm">Commercial — balloon</button>
-    <button class="mode-btn" data-mode="dscr">DSCR 5/25</button>
+<!-- § Financing mode rail -->
+<div class="mode-row" id="modeRow" role="group" aria-label="Financing mode">
+    <button type="button" class="mode-btn active" data-mode="conv">Conventional 30yr fixed</button>
+    <button type="button" class="mode-btn" data-mode="comm">Commercial — balloon</button>
+    <button type="button" class="mode-btn" data-mode="dscr">DSCR 5/25</button>
 </div>
 <div class="mode-note" id="modeNote"></div>
 
+<!-- § DCF inputs — each slider in its own well -->
 <div class="controls" id="controls">
     <div class="ctl">
         <label for="hurdle">Hurdle rate (cost of equity) <span class="val hero" id="hurdleVal">12.0%</span></label>
-        <input type="range" class="hero" id="hurdle" min="6" max="20" step="0.25" value="12">
+        <div class="slider-well">
+            <input type="range" class="hero" id="hurdle" min="6" max="20" step="0.25" value="12">
+        </div>
     </div>
     <div class="ctl">
         <label for="price">Purchase price <span class="val" id="priceVal">$1,150,000</span></label>
-        <input type="range" id="price" min="800000" max="1600000" step="5000" value="1150000">
+        <div class="slider-well">
+            <input type="range" id="price" min="800000" max="1600000" step="5000" value="1150000">
+        </div>
     </div>
     <div class="ctl">
         <label for="noi">Stabilized NOI <span class="val" id="noiVal">$92,800</span></label>
-        <input type="range" id="noi" min="60000" max="140000" step="100" value="92800">
+        <div class="slider-well">
+            <input type="range" id="noi" min="60000" max="140000" step="100" value="92800">
+        </div>
     </div>
     <div class="ctl">
         <label for="ltv">Loan-to-value <span class="val" id="ltvVal">75%</span></label>
-        <input type="range" id="ltv" min="55" max="85" step="1" value="75">
+        <div class="slider-well">
+            <input type="range" id="ltv" min="55" max="85" step="1" value="75">
+        </div>
     </div>
     <div class="ctl">
         <label for="rate">Interest rate <span class="val" id="rateVal">6.75%</span></label>
-        <input type="range" id="rate" min="6" max="8.5" step="0.125" value="6.75">
+        <div class="slider-well">
+            <input type="range" id="rate" min="6" max="8.5" step="0.125" value="6.75">
+        </div>
     </div>
     <div class="ctl">
         <label for="hold">Hold period <span class="val" id="holdVal">5 yrs</span></label>
-        <input type="range" id="hold" min="3" max="15" step="1" value="5">
+        <div class="slider-well">
+            <input type="range" id="hold" min="3" max="15" step="1" value="5">
+        </div>
     </div>
     <div class="ctl">
         <label for="growth">NOI growth <span class="val" id="growthVal">2.0%</span></label>
-        <input type="range" id="growth" min="0" max="5" step="0.25" value="2">
+        <div class="slider-well">
+            <input type="range" id="growth" min="0" max="5" step="0.25" value="2">
+        </div>
     </div>
     <div class="ctl">
         <label for="exitCap">Exit cap rate <span class="val" id="exitCapVal">8.50%</span></label>
-        <input type="range" id="exitCap" min="6.5" max="10" step="0.05" value="8.5">
+        <div class="slider-well">
+            <input type="range" id="exitCap" min="6.5" max="10" step="0.05" value="8.5">
+        </div>
     </div>
     <div class="ctl">
         <label for="sellCost">Selling costs <span class="val" id="sellCostVal">2.0%</span></label>
-        <input type="range" id="sellCost" min="0" max="6" step="0.25" value="2">
+        <div class="slider-well">
+            <input type="range" id="sellCost" min="0" max="6" step="0.25" value="2">
+        </div>
     </div>
 </div>
 
@@ -1076,9 +1012,33 @@ NPV_property = −P₀ + Σ NOI_t / (1+WACC)^t + V_T / (1+WACC)^T
 /* ============================================================
    Render
    ============================================================ */
+function paintRangeFill(node) {
+    if (!node) return;
+    const min = parseFloat(node.min);
+    const max = parseFloat(node.max);
+    const val = parseFloat(node.value);
+    if (!isFinite(min) || !isFinite(max) || max === min) return;
+    node.style.setProperty('--pct', ((val - min) / (max - min)) * 100 + '%');
+}
+
+function paintAllCraftRanges() {
+    // Explicit list — hurdle, price, noi, ltv, rate, hold, growth, exitCap, sellCost
+    paintRangeFill(el.hurdle);
+    paintRangeFill(el.price);
+    paintRangeFill(el.noi);
+    paintRangeFill(el.ltv);
+    paintRangeFill(el.rate);
+    paintRangeFill(el.hold);
+    paintRangeFill(el.growth);
+    paintRangeFill(el.exitCap);
+    paintRangeFill(el.sellCost);
+}
+
 function render() {
     const p = readParams();
     const m = buildModel(p);
+
+    paintAllCraftRanges();
 
     // control readouts
     el.hurdleVal.textContent = fPct(p.hurdle);

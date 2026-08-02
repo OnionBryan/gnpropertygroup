@@ -1,0 +1,680 @@
+/* ============================================
+   CRAFT.CSS — Danish office · 19th-c bevel joinery
+   Loaded after main.css. Token-native light/dark.
+
+   Vocabulary:
+     raised face  — sits proud (buttons, active rail chip, KPI tablet)
+     recessed well — mortised in (mode rail, slider channel, fields)
+     pressed      — bevel inverts on :active
+
+   No rivets, no HUD. Warm paper wells, not clinical slate.
+   ============================================ */
+
+:root {
+    --craft-bevel-hi: color-mix(in srgb, var(--white) 72%, transparent);
+    --craft-bevel-mid: color-mix(in srgb, var(--text) 6%, transparent);
+    --craft-bevel-lo: color-mix(in srgb, var(--black) 14%, transparent);
+    --craft-bevel-deep: color-mix(in srgb, var(--black) 22%, transparent);
+    --craft-well: color-mix(in srgb, var(--accent-faint) 28%, var(--bg));
+    --craft-well-track: color-mix(in srgb, var(--accent-faint) 18%, var(--bg2));
+    --craft-face: var(--bg-card);
+    --craft-radius: 2px;
+    --craft-press: 90ms ease;
+}
+
+[data-theme="dark"] {
+    --craft-bevel-hi: color-mix(in srgb, var(--white) 14%, transparent);
+    --craft-bevel-mid: color-mix(in srgb, var(--white) 5%, transparent);
+    --craft-bevel-lo: color-mix(in srgb, var(--black) 35%, transparent);
+    --craft-bevel-deep: color-mix(in srgb, var(--black) 48%, transparent);
+    --craft-well: color-mix(in srgb, var(--surface2) 70%, var(--bg));
+    --craft-well-track: color-mix(in srgb, var(--surface3) 45%, var(--surface));
+}
+
+/* --------------------------------------------
+   RAISED FACE BUTTONS
+   .tool-btn (rent tools) · .export-btn · shared
+   -------------------------------------------- */
+.tool-btn,
+.export-btn {
+    appearance: none;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 16px;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    background: var(--craft-face);
+    border: 1px solid var(--border);
+    border-radius: var(--craft-radius);
+    cursor: pointer;
+    user-select: none;
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 1px 0 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        inset -1px 0 0 var(--craft-bevel-mid),
+        0 1px 2px var(--craft-bevel-lo);
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--craft-press),
+        transform var(--craft-press);
+}
+
+.tool-btn:hover,
+.export-btn:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent-faint) 55%, var(--craft-face));
+}
+
+.tool-btn:active:not(:disabled),
+.export-btn:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-lo),
+        inset 1px 0 0 var(--craft-bevel-deep),
+        inset 0 -1px 0 var(--craft-bevel-hi),
+        inset -1px 0 0 var(--craft-bevel-mid),
+        inset 0 2px 3px var(--craft-bevel-lo);
+}
+
+.tool-btn:focus-visible,
+.export-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.tool-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-mid);
+}
+
+/* Primary gold face */
+.tool-btn.primary,
+.export-btn {
+    background: var(--accent);
+    border-color: color-mix(in srgb, var(--accent-dim) 70%, var(--border));
+    color: var(--accent-text);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--white) 38%, transparent),
+        inset 1px 0 0 color-mix(in srgb, var(--white) 18%, transparent),
+        inset 0 -1px 0 color-mix(in srgb, var(--black) 18%, transparent),
+        inset -1px 0 0 color-mix(in srgb, var(--black) 10%, transparent),
+        0 1px 2px color-mix(in srgb, var(--black) 12%, transparent);
+}
+
+.tool-btn.primary:hover,
+.export-btn:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent-dim);
+    color: var(--accent-text);
+}
+
+.tool-btn.primary:active:not(:disabled),
+.export-btn:active:not(:disabled) {
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--black) 20%, transparent),
+        inset 1px 0 0 color-mix(in srgb, var(--black) 14%, transparent),
+        inset 0 -1px 0 color-mix(in srgb, var(--white) 20%, transparent),
+        inset 0 2px 4px color-mix(in srgb, var(--black) 16%, transparent);
+}
+
+/* Export float position stays page-owned; craft owns the face */
+.export-btn {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1003;
+    padding: 11px 18px;
+    font-weight: 600;
+}
+
+/* --------------------------------------------
+   MODE RAIL — recessed well + raised active face
+   .mode-row houses .mode-btn
+   -------------------------------------------- */
+.mode-row {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 4px;
+    margin: 0 0 10px;
+    background: var(--craft-well);
+    border: 1px solid color-mix(in srgb, var(--border) 75%, var(--bg));
+    border-radius: var(--craft-radius);
+    box-shadow:
+        inset 0 1px 1px color-mix(in srgb, var(--black) 6%, transparent),
+        inset 0 -1px 0 var(--craft-bevel-hi);
+}
+
+.mode-btn {
+    appearance: none;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text2);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 1px;
+    cursor: pointer;
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.mode-btn:hover {
+    color: var(--text);
+}
+
+.mode-btn.active,
+.mode-btn[aria-pressed="true"] {
+    color: var(--text);
+    background: var(--craft-face);
+    border-color: var(--border);
+    font-weight: 600;
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        0 1px 1px var(--craft-bevel-lo);
+}
+
+.mode-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Compact latch used inside labels (closing costs On/Off) */
+.mode-btn.mode-btn--latch {
+    float: right;
+    padding: 3px 10px;
+    font-size: 11px;
+    background: var(--craft-face);
+    border: 1px solid color-mix(in srgb, var(--border) 75%, var(--bg));
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo);
+}
+
+.mode-btn.mode-btn--latch[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--accent) 22%, var(--craft-well));
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+    color: var(--accent-dim);
+}
+
+/* Mode note — soft well, not clinical bar */
+.mode-note {
+    font-size: 12px;
+    color: var(--text2);
+    background: var(--craft-well);
+    border: 1px solid color-mix(in srgb, var(--border) 75%, var(--bg));
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    border-radius: 0 var(--craft-radius) var(--craft-radius) 0;
+    margin-bottom: 14px;
+    box-shadow:
+        inset 0 1px 1px color-mix(in srgb, var(--black) 4%, transparent);
+}
+
+/* --------------------------------------------
+   CONTROLS PANEL / BOX — moulded frame
+   -------------------------------------------- */
+.controls-panel {
+    background: var(--craft-face);
+    border: 1px solid var(--border);
+    border-radius: var(--craft-radius);
+    padding: 25px 30px;
+    margin: 25px 0;
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        var(--shadow-sm);
+}
+
+/* --------------------------------------------
+   SLIDER WELL + PLANED THUMB
+   Wrap each range in .slider-well in markup.
+   -------------------------------------------- */
+.slider-well {
+    padding: 10px 6px;
+    border-radius: var(--craft-radius);
+    background: var(--craft-well);
+    border: 1px solid color-mix(in srgb, var(--border) 70%, var(--bg));
+    box-shadow:
+        inset 0 1px 1px color-mix(in srgb, var(--black) 5%, transparent),
+        inset 0 -1px 0 var(--craft-bevel-hi);
+    margin-bottom: 8px;
+}
+
+.slider-well input[type="range"],
+.control-group input[type="range"],
+.ctl input[type="range"],
+input.craft-range {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 4px;
+    border-radius: 1px;
+    background: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        var(--accent) var(--pct, 50%),
+        var(--craft-well-track) var(--pct, 50%),
+        var(--craft-well-track) 100%
+    );
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0;
+}
+
+.slider-well input[type="range"]::-webkit-slider-thumb,
+.control-group input[type="range"]::-webkit-slider-thumb,
+.ctl input[type="range"]::-webkit-slider-thumb,
+input.craft-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 1px;
+    background: var(--craft-face);
+    border: 1px solid var(--border2);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        0 1px 2px var(--craft-bevel-lo);
+    cursor: grab;
+}
+
+.slider-well input[type="range"]::-webkit-slider-thumb:active,
+.control-group input[type="range"]::-webkit-slider-thumb:active,
+.ctl input[type="range"]::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-lo),
+        inset 0 -1px 0 var(--craft-bevel-hi);
+}
+
+.slider-well input[type="range"]::-moz-range-thumb,
+.control-group input[type="range"]::-moz-range-thumb,
+.ctl input[type="range"]::-moz-range-thumb,
+input.craft-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 1px;
+    background: var(--craft-face);
+    border: 1px solid var(--border2);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        0 1px 2px var(--craft-bevel-lo);
+    cursor: grab;
+}
+
+.slider-well input[type="range"]:focus-visible,
+.control-group input[type="range"]:focus-visible,
+.ctl input[type="range"]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 6px;
+}
+
+.control-group input[type="range"]:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Hero accent thumb (NPV hurdle) — gold face block, not neon ball */
+input[type="range"].hero::-webkit-slider-thumb {
+    background: var(--accent);
+    border-color: var(--accent-dim);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--white) 35%, transparent),
+        inset 0 -1px 0 color-mix(in srgb, var(--black) 16%, transparent);
+}
+
+input[type="range"].hero::-moz-range-thumb {
+    background: var(--accent);
+    border-color: var(--accent-dim);
+}
+
+/* --------------------------------------------
+   FIELDS — recessed wells
+   -------------------------------------------- */
+.control-group input[type="number"],
+.rent-input {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    background: var(--craft-well);
+    border: 1px solid color-mix(in srgb, var(--border) 75%, var(--bg));
+    border-radius: var(--craft-radius);
+    box-shadow:
+        inset 0 1px 1px color-mix(in srgb, var(--black) 5%, transparent),
+        inset 0 -1px 0 var(--craft-bevel-hi);
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.rent-input {
+    max-width: 110px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-align: right;
+    padding: 6px 8px;
+}
+
+.control-group input[type="number"]:focus,
+.rent-input:focus {
+    outline: none;
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+    background: var(--craft-face);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.control-group label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.control-value {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------
+   KPI / LIVE METRICS — framed tablets
+   .live-metric (rent) · .metric (npv)
+   -------------------------------------------- */
+.live-metric,
+.metric {
+    background: var(--craft-face);
+    border: 1px solid var(--border);
+    border-radius: var(--craft-radius);
+    padding: 14px 12px 12px;
+    text-align: left;
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        var(--shadow-sm);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.live-metric:hover,
+.live-metric.updating,
+.metric:hover,
+.metric.feature {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
+.live-metric.updating {
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.metric.feature {
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+
+.live-metric-label,
+.metric-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 6px;
+}
+
+.live-metric-value,
+.metric-value {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+}
+
+.live-metric-value.positive,
+.metric-value.pos,
+.pos {
+    color: var(--success);
+}
+
+.live-metric-value.negative,
+.metric-value.neg,
+.neg {
+    color: var(--danger);
+}
+
+.live-metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+/* --------------------------------------------
+   NPV control surface + upload face
+   -------------------------------------------- */
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 1.15rem 1.6rem;
+    background: var(--craft-face);
+    border: 1px solid var(--border);
+    border-radius: var(--craft-radius);
+    padding: 1.5rem;
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        var(--shadow-sm);
+}
+
+.ctl label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 0.55rem;
+}
+
+.ctl .val {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+
+.ctl .val.hero {
+    color: var(--accent-dim);
+}
+
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.62rem 1.05rem;
+    border-radius: var(--craft-radius);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    background: var(--craft-face);
+    border: 1px solid var(--border);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 1px 0 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        inset -1px 0 0 var(--craft-bevel-mid),
+        0 1px 2px var(--craft-bevel-lo);
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--craft-press),
+        transform var(--craft-press),
+        background var(--transition-fast);
+}
+
+.upload-btn:hover,
+.upload-btn:focus-visible {
+    outline: none;
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    background: color-mix(in srgb, var(--accent-faint) 55%, var(--craft-face));
+}
+
+.upload-btn:active {
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-lo),
+        inset 1px 0 0 var(--craft-bevel-deep),
+        inset 0 -1px 0 var(--craft-bevel-hi),
+        inset 0 2px 3px var(--craft-bevel-lo);
+}
+
+/* --------------------------------------------
+   PORTFOLIO NAV CTA / secondary buttons
+   (components.css pages that also load craft.css)
+   -------------------------------------------- */
+.nav-cta,
+.btn-secondary,
+.btn-glass {
+    border-radius: var(--craft-radius);
+    background: var(--craft-face);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo),
+        0 1px 2px var(--craft-bevel-lo);
+}
+
+.nav-cta:hover,
+.btn-secondary:hover,
+.btn-glass:hover {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent-dim);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--white) 30%, transparent),
+        inset 0 -1px 0 color-mix(in srgb, var(--black) 14%, transparent);
+}
+
+.nav-cta:active,
+.btn-secondary:active,
+.btn-glass:active {
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--black) 16%, transparent),
+        inset 0 -1px 0 color-mix(in srgb, var(--white) 18%, transparent);
+}
+
+.btn-primary {
+    border-radius: var(--craft-radius);
+    color: var(--accent-text);
+    background: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent-dim) 70%, var(--border));
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--white) 38%, transparent),
+        inset 0 -1px 0 color-mix(in srgb, var(--black) 18%, transparent),
+        0 1px 2px color-mix(in srgb, var(--black) 12%, transparent);
+}
+
+.btn-primary:hover {
+    background: var(--accent-dim);
+    transform: none;
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+    box-shadow:
+        inset 0 1px 0 color-mix(in srgb, var(--black) 18%, transparent),
+        inset 0 2px 3px color-mix(in srgb, var(--black) 14%, transparent);
+}
+
+.btn-icon {
+    border-radius: var(--craft-radius);
+    background: var(--craft-face);
+    box-shadow:
+        inset 0 1px 0 var(--craft-bevel-hi),
+        inset 0 -1px 0 var(--craft-bevel-lo);
+}
+
+.btn-icon:hover {
+    transform: none;
+    background: color-mix(in srgb, var(--accent-faint) 55%, var(--craft-face));
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* --------------------------------------------
+   Print / mobile helpers (layout only)
+   -------------------------------------------- */
+@media (max-width: 768px) {
+    .export-btn {
+        top: auto;
+        bottom: 20px;
+        right: 16px;
+    }
+
+    .live-metrics {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .live-metrics {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .export-btn span.export-label {
+        display: none;
+    }
+}
+
+@media print {
+    .export-btn {
+        display: none !important;
+    }
+}

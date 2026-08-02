@@ -40,9 +40,7 @@ const PropertyStore = (function() {
                 'images/1045-patterson/IMG_5742.jpeg',
                 'images/1045-patterson/IMG_5747.jpeg',
                 'images/1045-patterson/IMG_5750.jpeg',
-                'images/1045-patterson/IMG_5808.jpeg',
-                'images/1045-patterson/IMG_5810.jpeg',
-                'images/1045-patterson/IMG_5812.jpeg'
+                'images/1045-patterson/IMG_5808.jpeg'
             ],
             details: {
                 bedrooms: 1,
@@ -82,10 +80,8 @@ const PropertyStore = (function() {
                 'images/2511-napier/builtin.jpg',
                 'images/2511-napier/laundry hookups.jpg',
                 'images/2511-napier/0002_1765729913_large.jpg',
-                'images/2511-napier/0007_1700479542_large.jpg',
                 'images/2511-napier/0008_623926216_large.jpg',
-                'images/2511-napier/0009_2093773465_large.jpg',
-                'images/2511-napier/0015_1999995006_large.jpg'
+                'images/2511-napier/0009_2093773465_large.jpg'
             ],
             details: {
                 bedrooms: 5,
@@ -196,7 +192,7 @@ const PropertyStore = (function() {
             id: '2529-napier-ave',
             name: '2529 Napier Ave',
             address: '2529 Napier Ave, Macon, GA',
-            description: '2-bedroom, 1-bath cottage, 750 sq ft.',
+            description: '2-bedroom, 1-bath rear cottage on the 2553 Napier Ave parcel, 750 sq ft.',
             thumbnail: 'images/2529-napier-ave/front.jpg',
             images: [
                 'images/2529-napier-ave/front.jpg',
