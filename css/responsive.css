@@ -95,7 +95,8 @@
         font-size: var(--text-xs);
     }
 
-    .nav-contact-btn {
+    .nav-contact-btn,
+    .nav-cta {
         display: none; /* Use floating contact button on mobile */
     }
 
