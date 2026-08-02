@@ -1,8 +1,9 @@
 # Napier Portfolio - Property Data
 
 ## Data Sources
-- Web search results (Zillow, Realtor.com snippets)
+- Owner-provided specs (2026-08-02) — authoritative
 - rent.html investment analysis
+- Prior web search results (Zillow, Realtor.com snippets) — superseded where they conflict
 
 ---
 
@@ -12,12 +13,12 @@
 |-------|-------|--------|
 | Type | Residential + Warehouse | User |
 | Zoning | R3 | User |
-| Residential Sq Ft | 1,000 | User |
-| Warehouse Sq Ft | 2,868 | Web search |
+| Bedrooms | 1 | User |
+| Bathrooms | 1 | User |
+| Residential Sq Ft | 588 | User |
+| Warehouse Sq Ft | 2,280 | User |
 | Lot Size | 1.13 acres | Web search |
 | Monthly Rent | $1,600 | rent.html |
-| Bedrooms | ? | |
-| Bathrooms | ? | |
 
 **Notes:** Commercial warehouse on residential zoned lot with small home.
 
@@ -29,12 +30,14 @@
 |-------|-------|--------|
 | Type | Duplex (2 units) | Web search |
 | Year Built | 1910 | Web search |
-| Bedrooms | 4 total (2 per unit) | Web search |
-| Bathrooms | ? | |
-| Square Feet | ? | |
+| Bedrooms | 5 | User |
+| Bathrooms | 3 | User |
+| Square Feet | 3,165 | User |
 | Monthly Rent | $1,750 | rent.html |
 
 **Notes:** rent.html mentions "currently below market" - upside potential.
+Per-unit split unknown — the old front (2/2, ~1,500 sq ft) / back (1/1, ~1,000 sq ft)
+breakdown contradicts the confirmed 5 bed / 3 bath / 3,165 sq ft totals and was removed.
 
 ---
 
@@ -47,21 +50,21 @@
 | Bedrooms | 4 | Web search |
 | Bathrooms | 2.5 | Web search |
 | Square Feet | 3,206 | Web search |
-| Monthly Rent | $3,150 | rent.html |
+| Monthly Rent | $1,750 | User |
 
 ---
 
-## 2525 Napier Cottage, Macon, GA 31204
+## 2525½ Napier Cottage, Macon, GA 31204
 
 | Field | Value | Source |
 |-------|-------|--------|
 | Type | Cottage/ADU | |
-| Bedrooms | ? | |
-| Bathrooms | ? | |
-| Square Feet | ? | |
-| Monthly Rent | ? | **SEE NOTE** |
+| Bedrooms | 1 | |
+| Bathrooms | 1 | |
+| Square Feet | 591 | User |
+| Monthly Rent | $1,400 | User |
 
-**NOTE:** rent.html shows "2553 Napier Ave" at $3,000/month. Is this the cottage or 2529?
+**Notes:** Referred to as "2525.5" by owner. Sits behind the main house.
 
 ---
 
@@ -72,10 +75,8 @@
 | Type | Cottage | Web search |
 | Bedrooms | 2 | Web search |
 | Bathrooms | 1 | Web search |
-| Square Feet | ? | |
-| Monthly Rent | ? | **SEE NOTE** |
-
-**NOTE:** rent.html shows "2553 Napier Ave" at $3,000/month. Is this 2529 or the cottage?
+| Square Feet | 750 | User |
+| Monthly Rent | $1,000 | User |
 
 ---
 
@@ -86,38 +87,108 @@
 | Type | Duplex | Web search |
 | Total Bedrooms | 4 | Web search |
 | Total Bathrooms | 2 | Web search |
-| Total Square Feet | 2,375 | Web search |
-| Monthly Rent | $1,925 | rent.html |
+| Total Square Feet | 2,430 | User |
+| Monthly Rent | $2,475 | User |
 
 ### Unit Breakdown:
 | Unit | Beds | Baths | Sq Ft |
 |------|------|-------|-------|
-| Left | 1 | 1 | 1,000 |
-| Right | 3 | 1 | 1,375 |
+| Left | 1 | 1 | ? |
+| Right | 3 | 1 | ? |
+
+**Notes:** Per-unit sq ft removed — the old 1,000 / 1,375 split summed to the superseded
+2,375 total. Beds and baths per unit are unchanged.
 
 ---
 
-## Summary - What's Confirmed
+## 2553 Napier Ave, Macon, GA 31204
+
+| Field | Value | Source |
+|-------|-------|--------|
+| Type | Single Family | |
+| Bedrooms | 5 | |
+| Bathrooms | 2.5 | |
+| Square Feet | 2,832 | User |
+| Monthly Rent | $2,000 | rent.html reconciliation |
+| Distance to Mercer | 2 minutes | User |
+
+---
+
+## Summary
 
 | Property | Beds | Baths | Sq Ft | Rent | Year |
 |----------|------|-------|-------|------|------|
-| 1045 Patterson | ? | ? | 1,000 (+2,868 warehouse) | $1,600 | ? |
-| 2511 Napier | 4 | ? | ? | $1,750 | 1910 |
-| 2525 Napier Ave | 4 | 2.5 | 3,206 | $3,150 | 1910 |
-| 2525 Cottage | ? | ? | ? | ? | ? |
-| 2529 Napier | 2 | 1 | ? | ? | ? |
-| 2534 Napier | 4 | 2 | 2,375 | $1,925 | ? |
+| 1045 Patterson | 1 | 1 | 588 (+2,280 warehouse) | $1,600 | ? |
+| 2511 Napier | 5 | 3 | 3,165 | $1,750 | 1910 |
+| 2525 Napier Ave | 4 | 2.5 | 3,206 | $1,750 | 1910 |
+| 2525½ Cottage | 1 | 1 | 591 | $1,400 | ? |
+| 2529 Napier | 2 | 1 | 750 | $1,000 | ? |
+| 2534 Napier | 4 | 2 | 2,430 | $2,475 | ? |
+| 2553 Napier | 5 | 2.5 | 2,832 | $2,000 | ? |
 
-**Total confirmed rent:** $8,425/month
-**rent.html total:** $11,425/month
-**Difference:** $3,000 (2553 Napier - need to identify which property)
+**Total monthly rent:** $11,975
+**Total annual (GSR):** $143,700
+
+---
+
+## Reconciliation with rent.html
+
+rent.html's rent roll has five line items; two of them bundle a second property:
+
+| rent.html line | Components | Monthly |
+|----------------|-----------|---------|
+| 2553 Napier Ave | 2553 ($2,000) + 2529 ($1,000) | $3,000 |
+| 2525 Napier Ave | 2525 main ($1,750) + cottage ($1,400) | $3,150 |
+| 2511 Napier Ave | 2511 | $1,750 |
+| 2534 Napier Ave | 2534 | $2,475 |
+| 1045 Patterson St | 1045 Patterson | $1,600 |
+| **Total** | | **$11,975** |
+
+Both bundled lines reconcile exactly under the corrected rents.
+The only GSR change from the corrections is 2534: $1,925 → $2,475
+(+$550/mo, +$6,600/yr), moving GSR from $137,100 to $143,700.
+
+---
+
+## Base Case Re-Underwrite (rent.html)
+
+The base case was rebuilt off the corrected $143,700 GSR.
+
+**Expense treatment:** verified property taxes and fixed-dollar expenses were held
+constant; only vacancy scales, since it is definitionally a percentage of rent.
+A $550/mo rent increase at one property does not raise taxes, insurance,
+maintenance, or capital reserves.
+
+| Line | Before | After | Treatment |
+|------|--------|-------|-----------|
+| Property Taxes | $9,497 | $9,497 | Held — verified from actual bills |
+| Insurance | $6,800 | $6,800 | Held — quoted premium |
+| Repairs & Maintenance | $16,370 | $16,370 | Held — property-driven |
+| Vacancy & Credit Loss | $10,915 | $11,440 | Scaled @ 7.96% of GSR |
+| Capital Reserves | $6,822 | $6,822 | Held — per-unit driven |
+| **Total OpEx** | **$50,404** | **$50,929** | 35% of GSR (was 37%) |
+
+**Resulting base case:**
+
+| Metric | Before | After |
+|--------|--------|-------|
+| GSR | $137,100 | $143,700 |
+| OpEx | ($50,404) | ($50,929) |
+| Stabilized NOI | $86,700 | $92,800 |
+| Value @ 8.0% cap | $1,084,000 | $1,160,000 |
+| DSCR @ $862,500 / 7.5% | 1.20× | 1.28× |
+| Year 1 cash flow after debt | $14,331 | $20,431 |
+| Levered IRR (5-yr, 7.75% exit) | ~10.8% | ~16.6% |
+| Unlevered IRR | ~8.4% | ~10.1% |
+
+Purchase price ($1,150,000), LTV, rate, exit cap, and hold period are unchanged —
+they are acquisition assumptions, not rent-derived. At the unchanged $1,150,000
+price the implied acquisition cap moves from 7.54% to 8.07%.
 
 ---
 
 ## Still Need From User
 
-1. **Which property is "2553 Napier Ave" in rent.html?** - The $3,000/month rent
-2. **1045 Patterson:** bedrooms, bathrooms
-3. **2511 Napier:** bathrooms, sqft
-4. **2525 Cottage:** beds, baths, sqft, rent
-5. **2529 Napier:** sqft, rent
+1. **2511 Napier:** per-unit bed/bath/sq ft split
+2. **2534 Napier:** per-unit sq ft split
+3. **Year built:** 1045 Patterson, 2529, 2534, 2553

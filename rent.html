@@ -1363,15 +1363,15 @@
             <div class="controls-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="control-group">
                     <label for="customGSR">Gross Scheduled Rent (Annual)</label>
-                    <input type="number" id="customGSR" value="137100" step="1000">
+                    <input type="number" id="customGSR" value="143700" step="1000">
                 </div>
                 <div class="control-group">
                     <label for="customOPEX">Operating Expenses (Annual)</label>
-                    <input type="number" id="customOPEX" value="50404" step="1000">
+                    <input type="number" id="customOPEX" value="50929" step="1000">
                 </div>
                 <div class="control-group">
                     <label for="customNOI">NOI (or leave blank to auto-calculate)</label>
-                    <input type="number" id="customNOI" value="86700" step="1000" placeholder="Auto from above">
+                    <input type="number" id="customNOI" value="92800" step="1000" placeholder="Auto from above">
                 </div>
             </div>
             
@@ -1496,8 +1496,8 @@
                 </tr>
                 <tr data-unit="3">
                     <td>2534 Napier Ave</td>
-                    <td class="text-right"><input class="rent-input" type="number" min="0" step="25" value="1925" data-rent-idx="3" aria-label="Monthly rent 2534 Napier"></td>
-                    <td class="text-right currency rent-annual" data-rent-annual="3">$23,100</td>
+                    <td class="text-right"><input class="rent-input" type="number" min="0" step="25" value="2475" data-rent-idx="3" aria-label="Monthly rent 2534 Napier"></td>
+                    <td class="text-right currency rent-annual" data-rent-annual="3">$29,700</td>
                 </tr>
                 <tr data-unit="4">
                     <td>1045 Patterson St</td>
@@ -1506,8 +1506,8 @@
                 </tr>
                 <tr class="total-row">
                     <td>Total Gross Scheduled Rent</td>
-                    <td class="text-right currency" id="rentRollMonthlyTotal">$11,425</td>
-                    <td class="text-right currency" id="rentRollAnnualTotal">$137,100</td>
+                    <td class="text-right currency" id="rentRollMonthlyTotal">$11,975</td>
+                    <td class="text-right currency" id="rentRollAnnualTotal">$143,700</td>
                 </tr>
             </tbody>
         </table>
@@ -1585,32 +1585,32 @@
                         <tr>
                             <td>Property Taxes</td>
                             <td class="text-right currency">$9,497</td>
-                            <td class="text-right">7.0%</td>
+                            <td class="text-right">6.6%</td>
                         </tr>
                         <tr>
                             <td>Insurance</td>
                             <td class="text-right currency">$6,800</td>
-                            <td class="text-right">5.0%</td>
+                            <td class="text-right">4.7%</td>
                         </tr>
                         <tr>
                             <td>Repairs & Maintenance</td>
                             <td class="text-right currency">$16,370</td>
-                            <td class="text-right">12.0%</td>
+                            <td class="text-right">11.4%</td>
                         </tr>
                         <tr>
                             <td>Vacancy & Credit Loss</td>
-                            <td class="text-right currency">$10,915</td>
+                            <td class="text-right currency">$11,440</td>
                             <td class="text-right">8.0%</td>
                         </tr>
                         <tr>
                             <td>Capital Reserves</td>
                             <td class="text-right currency">$6,822</td>
-                            <td class="text-right">5.0%</td>
+                            <td class="text-right">4.7%</td>
                         </tr>
                         <tr class="total-row">
                             <td>Total OpEx</td>
-                            <td class="text-right currency">$50,404</td>
-                            <td class="text-right">37%</td>
+                            <td class="text-right currency">$50,929</td>
+                            <td class="text-right">35%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1631,22 +1631,22 @@
         <div class="section-content">
             <div class="math-block">
                 <p>The Net Operating Income is computed as:</p>
-                $$\text{NOI} = \text{GSR} - \text{OpEx} = \$137{,}100 - \$50{,}404 = \$86{,}696 \approx \boxed{\$86{,}700}$$
+                $$\text{NOI} = \text{GSR} - \text{OpEx} = \$143{,}700 - \$50{,}929 = \$92{,}771 \approx \boxed{\$92{,}800}$$
             </div>
-            <p style="font-size: 13px; color: var(--text2);">All interactive metrics and valuation tables below use the rounded stabilized NOI of <strong>$86,700</strong> for consistency.</p>
+            <p style="font-size: 13px; color: var(--text2);">All interactive metrics and valuation tables below use the rounded stabilized NOI of <strong>$92,800</strong> for consistency.</p>
 
             <div class="grid-3">
                 <div class="metric-card">
                     <div class="metric-label">Gross Scheduled Rent</div>
-                    <div class="metric-value">$137,100</div>
+                    <div class="metric-value">$143,700</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-label">Operating Expenses</div>
-                    <div class="metric-value" style="color: var(--warning);">($50,404)</div>
+                    <div class="metric-value" style="color: var(--warning);">($50,929)</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-label">Stabilized NOI</div>
-                    <div class="metric-value success">$86,700</div>
+                    <div class="metric-value success">$92,800</div>
                 </div>
             </div>
 
@@ -1667,7 +1667,7 @@
         <p>Value is determined via direct capitalization, where the capitalization rate \(\kappa\) represents the required yield:</p>
 
         <div class="math-block">
-            $$V = \frac{\text{NOI}}{\kappa} \implies V(\kappa) = \frac{\$86{,}700}{\kappa}$$
+            $$V = \frac{\text{NOI}}{\kappa} \implies V(\kappa) = \frac{\$92{,}800}{\kappa}$$
         </div>
 
         <div class="grid-2">
@@ -1684,19 +1684,19 @@
                     <tbody>
                         <tr>
                             <td>8.0%</td>
-                            <td class="text-right currency">$1,084,000</td>
+                            <td class="text-right currency highlight-cell">$1,160,000</td>
                         </tr>
                         <tr>
                             <td>7.5%</td>
-                            <td class="text-right currency highlight-cell">$1,156,000</td>
+                            <td class="text-right currency">$1,237,000</td>
                         </tr>
                         <tr>
                             <td>7.0%</td>
-                            <td class="text-right currency">$1,239,000</td>
+                            <td class="text-right currency">$1,326,000</td>
                         </tr>
                         <tr>
                             <td>6.5%</td>
-                            <td class="text-right currency">$1,334,000</td>
+                            <td class="text-right currency">$1,428,000</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1716,19 +1716,19 @@
                     <tbody>
                         <tr>
                             <td>7.9×</td>
-                            <td class="text-right currency">$1,083,000</td>
+                            <td class="text-right currency highlight-cell">$1,135,000</td>
                         </tr>
                         <tr>
                             <td>8.3×</td>
-                            <td class="text-right currency highlight-cell">$1,138,000</td>
-                        </tr>
-                        <tr>
-                            <td>8.7×</td>
                             <td class="text-right currency">$1,193,000</td>
                         </tr>
                         <tr>
+                            <td>8.7×</td>
+                            <td class="text-right currency">$1,250,000</td>
+                        </tr>
+                        <tr>
                             <td>8.8×</td>
-                            <td class="text-right currency">$1,206,000</td>
+                            <td class="text-right currency">$1,265,000</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1737,7 +1737,7 @@
         </div>
 
         <div class="chart-wrapper">
-            <h3>Valuation Curve: \(V(\kappa) = \frac{86{,}700}{\kappa}\)</h3>
+            <h3>Valuation Curve: \(V(\kappa) = \frac{92{,}800}{\kappa}\)</h3>
             <div class="chart-container">
                 <canvas id="capRateChart"></canvas>
             </div>
@@ -1747,8 +1747,8 @@
             <div class="value-box-label">Final Value Conclusion (As-Is, Off-Market)</div>
             <div class="value-box-value" id="finalValueConclusion">$1,150,000</div>
             <div id="finalValueNote" style="margin-top: 15px; font-size: 14px;">
-                Matches scenario purchase price at <strong id="finalCapNote">7.54%</strong> acquisition cap
-                (<span id="finalNoiNote">$86,700</span> NOI). Cap-rate sensitivity table above shows other returns.
+                Matches scenario purchase price at <strong id="finalCapNote">8.07%</strong> acquisition cap
+                (<span id="finalNoiNote">$92,800</span> NOI). Cap-rate sensitivity table above shows other returns.
             </div>
         </div>
     </section>
@@ -1784,19 +1784,19 @@
 
             <h3>Debt Service Coverage Ratio</h3>
             <div class="math-block">
-                $$\text{DSCR} = \frac{\text{NOI}}{DS} = \frac{\$86{,}700}{\$72{,}369} = \boxed{1.20\times}$$
+                $$\text{DSCR} = \frac{\text{NOI}}{DS} = \frac{\$92{,}800}{\$72{,}369} = \boxed{1.28\times}$$
             </div>
 
             <div class="callout callout-success">
                 <div class="callout-title">✓ Lender Minimum Satisfied</div>
-                <p>DSCR of 1.20× meets or exceeds most lender minimums (typically 1.15–1.25×) for small-balance multifamily.</p>
+                <p>DSCR of 1.28× comfortably exceeds most lender minimums (typically 1.15–1.25×) for small-balance multifamily.</p>
             </div>
 
             <h3>Year 1 Cash Flow</h3>
             <div class="grid-3">
                 <div class="metric-card">
                     <div class="metric-label">NOI</div>
-                    <div class="metric-value">$86,700</div>
+                    <div class="metric-value">$92,800</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-label">Debt Service</div>
@@ -1804,7 +1804,7 @@
                 </div>
                 <div class="metric-card">
                     <div class="metric-label">Cash Flow After Debt</div>
-                    <div class="metric-value success">$14,331</div>
+                    <div class="metric-value success">$20,431</div>
                 </div>
             </div>
 
@@ -1909,11 +1909,11 @@
         <div class="grid-2">
             <div class="metric-card">
                 <div class="metric-label">Unlevered IRR</div>
-                <div class="metric-value" id="unleveredIrrDisplay">~8.4%</div>
+                <div class="metric-value" id="unleveredIrrDisplay">~10.1%</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Levered IRR</div>
-                <div class="metric-value success" id="leveredIrrDisplay">~10.8%</div>
+                <div class="metric-value success" id="leveredIrrDisplay">~16.6%</div>
             </div>
         </div>
 
@@ -1994,7 +1994,7 @@
                 labels: ['2553 Napier', '2525 Napier', '2511 Napier', '2534 Napier', '1045 Patterson'],
                 datasets: [{
                     label: 'Annual Rent',
-                    data: [36000, 37800, 21000, 23100, 19200],
+                    data: [36000, 37800, 21000, 29700, 19200],
                     backgroundColor: colors.palette,
                     borderRadius: 4
                 }]
@@ -2028,7 +2028,7 @@
                 labels: ['Repairs & Maintenance', 'Vacancy & Credit Loss', 'Property Taxes', 'Capital Reserves', 'Insurance'],
                 datasets: [{
                     label: 'Annual Expense',
-                    data: [16370, 10915, 9497, 6822, 6800],
+                    data: [16370, 11440, 9497, 6822, 6800],
                     backgroundColor: colors.primary,
                     borderRadius: 4
                 }]
@@ -2042,7 +2042,7 @@
                     tooltip: {
                         callbacks: {
                             label: ctx => {
-                                const pct = (ctx.raw / 50404 * 100).toFixed(1);
+                                const pct = (ctx.raw / 50929 * 100).toFixed(1);
                                 return '$' + ctx.raw.toLocaleString() + ' (' + pct + '%)';
                             }
                         }
@@ -2060,7 +2060,7 @@
         });
 
         // Cap Rate Valuation Curve (6.0% to 8.75%) — uses stabilized NOI
-        const valuationNOI = 86700;
+        const valuationNOI = 92800;
         const capRates = [];
         const values = [];
         for (let cap = 6.0; cap <= 8.75; cap += 0.25) {
@@ -2147,12 +2147,12 @@
 
         // ========== INTERACTIVE SCENARIO ANALYSIS ==========
         const STORAGE_KEY = 'gn-invest-scenario-v1';
-        const DEFAULT_RENTS = [3000, 3150, 1750, 1925, 1600];
+        const DEFAULT_RENTS = [3000, 3150, 1750, 2475, 1600];
         const RENT_LABELS = ['2553 Napier', '2525 Napier', '2511 Napier', '2534 Napier', '1045 Patterson'];
 
-        let currentGSR = 137100;
-        let currentOPEX = 50404;
-        let currentNOI = 86700;
+        let currentGSR = 143700;
+        let currentOPEX = 50929;
+        let currentNOI = 92800;
         let rentRollMonthly = DEFAULT_RENTS.slice();
         let syncingPriceCap = false;
         let urlWriteTimer = null;
@@ -2201,9 +2201,9 @@
         }
 
         function resetToExamplePortfolio() {
-            currentGSR = 137100;
-            currentOPEX = 50404;
-            currentNOI = 86700;
+            currentGSR = 143700;
+            currentOPEX = 50929;
+            currentNOI = 92800;
             rentRollMonthly = DEFAULT_RENTS.slice();
 
             document.getElementById('customGSR').value = currentGSR;
@@ -2261,8 +2261,8 @@
         const principalPaidEl = document.getElementById('principalPaid');
         const equityBuiltEl = document.getElementById('equityBuilt');
 
-        // Vacancy allowance in OpEx model — matches example line item $10,915 / $137,100 GSR (~8%)
-        const VACANCY_RATE = 10915 / 137100;
+        // Vacancy allowance in OpEx model — matches example line item $11,440 / $143,700 GSR (~8%)
+        const VACANCY_RATE = 11440 / 143700;
 
         // Calculate monthly payment (standard amortizing mortgage)
         function calcMonthlyPayment(principal, annualRate, months) {
@@ -2385,7 +2385,7 @@
                 labels: ['Gross Rent', 'Vacancy', 'Taxes', 'Insurance', 'Repairs', 'Reserves', 'NOI', 'Debt Svc', 'Cash Flow'],
                 datasets: [{
                     label: 'Amount',
-                    data: [137100, -10915, -9497, -6800, -16370, -6822, 86700, -72369, 14331],
+                    data: [143700, -11440, -9497, -6800, -16370, -6822, 92800, -72369, 20431],
                     backgroundColor: [
                         colors.success, colors.warning, colors.warning, colors.warning,
                         colors.warning, colors.warning, colors.accent, colors.warning, colors.success

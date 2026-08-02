@@ -25,7 +25,7 @@ const PropertyStore = (function() {
             id: '1045-patterson',
             name: '1045 Patterson St',
             address: '1045 Patterson St, Macon, GA',
-            description: '2-bedroom, 1-bath home on 1.13 acres with a 2,868 sq ft warehouse. Zoned R3.',
+            description: '1-bedroom, 1-bath home (588 sq ft) on 1.13 acres with a 2,280 sq ft warehouse. Zoned R3.',
             thumbnail: 'images/1045-patterson/1045 Patterson St.jpg',
             images: [
                 'images/1045-patterson/1045 Patterson St.jpg',
@@ -45,10 +45,10 @@ const PropertyStore = (function() {
                 'images/1045-patterson/IMG_5812.jpeg'
             ],
             details: {
-                bedrooms: 2,
+                bedrooms: 1,
                 bathrooms: 1,
-                sqft: 1000,
-                warehouseSqft: 2868,
+                sqft: 588,
+                warehouseSqft: 2280,
                 type: 'Residential + Warehouse',
                 zoning: 'R3',
                 rent: 1600,
@@ -59,7 +59,7 @@ const PropertyStore = (function() {
             id: '2511-napier',
             name: '2511 Napier Ave',
             address: '2511 Napier Ave, Macon, GA',
-            description: 'Duplex built in 1910. Front unit: 2 bed, 2 bath, ~1,500 sq ft. Back unit: 1 bed, 1 bath, ~1,000 sq ft.',
+            description: '5-bedroom, 3-bath duplex built in 1910. 3,165 sq ft.',
             thumbnail: 'images/2511-napier/2511 Napier Ave.jpg',
             images: [
                 'images/2511-napier/2511 Napier Ave.jpg',
@@ -88,23 +88,19 @@ const PropertyStore = (function() {
                 'images/2511-napier/0015_1999995006_large.jpg'
             ],
             details: {
-                bedrooms: 3,
+                bedrooms: 5,
                 bathrooms: 3,
-                sqft: 2500,
+                sqft: 3165,
                 type: 'Duplex',
                 yearBuilt: 1910,
-                rent: 1750,
-                units: {
-                    front: { bedrooms: 2, bathrooms: 2, sqft: 1500 },
-                    back: { bedrooms: 1, bathrooms: 1, sqft: 1000 }
-                }
+                rent: 1750
             }
         },
         {
             id: '2525-napier-cottage',
             name: '2525 Napier Cottage',
             address: '2525 Napier Ave (Cottage), Macon, GA',
-            description: '1-bedroom, 1-bath cottage, approximately 1,000 sq ft. Located behind the main house at 2525 Napier Ave.',
+            description: '1-bedroom, 1-bath cottage, 591 sq ft. Located behind the main house at 2525 Napier Ave.',
             thumbnail: 'images/2525-napier-cottage/exterior front.png',
             images: [
                 'images/2525-napier-cottage/exterior front.png',
@@ -129,9 +125,9 @@ const PropertyStore = (function() {
             details: {
                 bedrooms: 1,
                 bathrooms: 1,
-                sqft: 1000,
+                sqft: 591,
                 type: 'Cottage',
-                rent: 1200
+                rent: 1400
             }
         },
         {
@@ -193,14 +189,14 @@ const PropertyStore = (function() {
                 sqft: 3206,
                 type: 'Single Family',
                 yearBuilt: 1910,
-                rent: 1950
+                rent: 1750
             }
         },
         {
             id: '2529-napier-ave',
             name: '2529 Napier Ave',
             address: '2529 Napier Ave, Macon, GA',
-            description: '2-bedroom, 1-bath cottage, approximately 1,000 sq ft.',
+            description: '2-bedroom, 1-bath cottage, 750 sq ft.',
             thumbnail: 'images/2529-napier-ave/front.jpg',
             images: [
                 'images/2529-napier-ave/front.jpg',
@@ -228,16 +224,16 @@ const PropertyStore = (function() {
             details: {
                 bedrooms: 2,
                 bathrooms: 1,
-                sqft: 1000,
+                sqft: 750,
                 type: 'Cottage',
-                rent: 1200
+                rent: 1000
             }
         },
         {
             id: '2553-napier-ave',
             name: '2553 Napier Ave',
             address: '2553 Napier Ave, Macon, GA',
-            description: 'Historic single-family home in the Napier Heights Historic District.',
+            description: 'Historic single-family home in the Napier Heights Historic District. 2,832 sq ft, two minutes from Mercer University campus.',
             thumbnail: 'images/2553-Napier-Ave/72-5W7A7996.jpg',
             images: [
                 'images/2553-Napier-Ave/72-5W7A7996.jpg',
@@ -292,7 +288,7 @@ const PropertyStore = (function() {
             details: {
                 bedrooms: 5,
                 bathrooms: 2.5,
-                sqft: 3000,
+                sqft: 2832,
                 type: 'Single Family',
                 rent: 2000
             }
@@ -301,7 +297,7 @@ const PropertyStore = (function() {
             id: '2534-napier',
             name: '2534 Napier Ave',
             address: '2534 Napier Ave, Macon, GA',
-            description: 'Duplex, 2,375 sq ft total. Left unit: 1 bed, 1 bath, 1,000 sq ft. Right unit: 3 bed, 1 bath, 1,375 sq ft.',
+            description: 'Duplex, 2,430 sq ft total. Left unit: 1 bed, 1 bath. Right unit: 3 bed, 1 bath.',
             thumbnail: 'images/2534-napier/2534 Napier Ave.jpg',
             images: [
                 'images/2534-napier/2534 Napier Ave.jpg',
@@ -336,12 +332,12 @@ const PropertyStore = (function() {
             details: {
                 bedrooms: 4,
                 bathrooms: 2,
-                sqft: 2375,
+                sqft: 2430,
                 type: 'Duplex',
-                rent: 1925,
+                rent: 2475,
                 units: {
-                    left: { bedrooms: 1, bathrooms: 1, sqft: 1000 },
-                    right: { bedrooms: 3, bathrooms: 1, sqft: 1375 }
+                    left: { bedrooms: 1, bathrooms: 1 },
+                    right: { bedrooms: 3, bathrooms: 1 }
                 }
             }
         }
