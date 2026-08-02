@@ -494,8 +494,11 @@
             @page { size: letter; margin: 0; }
         }
     </style>
+    <link rel="stylesheet" href="../css/mobile-app.css">
+    <meta name="theme-color" content="#14110e">
+    <style>@view-transition { navigation: auto; }</style>
 </head>
-<body>
+<body class="has-inquire">
 
     <div class="toolbar">
         <span class="brand">GN Property Group</span>
@@ -511,7 +514,7 @@
         <!-- 01 COVER · aerial: the whole parcel is the story -->
         <section class="sheet cover">
             <div class="cover-hero">
-                <img src="../images/1045-patterson/1045 Patterson St.jpg" alt="" style="object-position:50% 45%;">
+                <img src="../images/1045-patterson/1045 Patterson St.jpg" alt="" style="view-transition-name: showing-photo; object-position:50% 45%;">
                 <span class="page-mark">01 / 07</span>
             </div>
             <div class="cover-plate">
@@ -637,5 +640,21 @@
 
     </div>
 
+
+    <!-- Inquire (mobile only) -->
+    <button type="button" class="inquire-pill" id="inquirePill" aria-expanded="false" aria-controls="inquireSheet">Inquire</button>
+    <div class="inquire-scrim" id="inquireScrim"></div>
+    <div class="inquire-sheet" id="inquireSheet" role="dialog" aria-label="Inquire about 1045 Patterson Street">
+        <div class="grab"></div>
+        <h3>GN Property Group</h3>
+        <p>Private inquiry for 1045 Patterson Street. Direct to the owner — no brokers, no forms.</p>
+        <div class="sheet-actions">
+            <a href="mailto:bryan@gnpropertygroup.com?subject=Inquiry%20%C2%B7%201045%20Patterson%20Street">Email the owner</a>
+            <button type="button" onclick="window.print()">Print / Save as PDF</button>
+            <a href="../portfolio.html">View the full portfolio</a>
+        </div>
+        <p class="sign-line">1045 Patterson Street · Macon, Georgia</p>
+    </div>
+    <script src="../js/mobile-app.js"></script>
 </body>
 </html>

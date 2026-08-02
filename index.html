@@ -37,6 +37,15 @@
     <link rel="stylesheet" href="css/craft.css">
     <link rel="stylesheet" href="css/gallery.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/mobile-app.css">
+
+    <!-- App shell -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#14110e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <style>@view-transition { navigation: auto; }</style>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -74,7 +83,76 @@
     }
     </script>
 </head>
-<body>
+<body class="has-tabbar has-showing">
+
+    <!-- ============================================
+         THE PRIVATE SHOWING — mobile-only book
+         Five holdings, one per viewport, swipe to turn.
+         Hidden ≥769px; the desktop booklet iframe serves there.
+         ============================================ -->
+    <section class="showing-deck" id="privateShowing" aria-label="The Napier Portfolio">
+
+        <div class="leaf-page">
+            <img class="leaf-photo" src="images/2553-Napier-Ave/72-5W7A7996.jpg" alt="2553 Napier Avenue" style="object-position:50% 40%;" fetchpriority="high">
+            <span class="turn-hint">The Napier Portfolio · Swipe</span>
+            <a class="leaf-plate" href="flyers/2553-napier.html">
+                <span class="kicker">The University Anchor <span class="folio">I / V</span></span>
+                <h2>2553 Napier Avenue<br>&amp; Carriage House</h2>
+                <span class="specline"><strong>$3,000</strong>/mo · <strong>3,582</strong> sq ft · <strong>7</strong> bed · <span style="white-space:nowrap"><strong>2 min</strong> to Mercer</span></span>
+                <span class="open-cue">Open the brochure →</span>
+            </a>
+        </div>
+
+        <div class="leaf-page">
+            <img class="leaf-photo" src="images/2525-napier-ave/2525 Napier Ave.jpg" alt="2525 Napier Avenue" loading="lazy">
+            <a class="leaf-plate" href="flyers/2525-napier.html">
+                <span class="kicker">The Flagship <span class="folio">II / V</span></span>
+                <h2>2525 Napier Avenue<br>&amp; Cottage</h2>
+                <span class="specline"><strong>$3,150</strong>/mo · <strong>3,797</strong> sq ft · <strong>1910</strong> · one parcel</span>
+                <span class="open-cue">Open the brochure →</span>
+            </a>
+        </div>
+
+        <div class="leaf-page">
+            <img class="leaf-photo" src="images/2534-napier/2534 Napier Ave.jpg" alt="2534 Napier Avenue" loading="lazy">
+            <a class="leaf-plate" href="flyers/2534-napier.html">
+                <span class="kicker">The Producer <span class="folio">III / V</span></span>
+                <h2>2534 Napier Avenue</h2>
+                <span class="specline"><strong>$2,475</strong>/mo · <strong>2,430</strong> sq ft · <strong>1/1 + 3/1</strong> duplex</span>
+                <span class="open-cue">Open the brochure →</span>
+            </a>
+        </div>
+
+        <div class="leaf-page">
+            <img class="leaf-photo" src="images/2511-napier/2511 Napier Ave.jpg" alt="2511 Napier Avenue" loading="lazy">
+            <a class="leaf-plate" href="flyers/2511-napier.html">
+                <span class="kicker">The Value Add <span class="folio">IV / V</span></span>
+                <h2>2511 Napier Avenue</h2>
+                <span class="specline"><strong>$1,750</strong>/mo · <strong>3,165</strong> sq ft · below market</span>
+                <span class="open-cue">Open the brochure →</span>
+            </a>
+        </div>
+
+        <div class="leaf-page">
+            <img class="leaf-photo" src="images/1045-patterson/1045 Patterson St.jpg" alt="1045 Patterson Street" loading="lazy">
+            <a class="leaf-plate" href="flyers/1045-patterson.html">
+                <span class="kicker">The Land Bank <span class="folio">V / V</span></span>
+                <h2>1045 Patterson Street</h2>
+                <span class="specline"><strong>$1,600</strong>/mo · <strong>1.13 ac</strong> R-3 · <strong>2,280</strong> sq ft warehouse</span>
+                <span class="open-cue">Open the brochure →</span>
+            </a>
+        </div>
+
+    </section>
+
+    <nav class="showing-rail" aria-label="Holdings">
+        <a href="#privateShowing" class="current">I</a>
+        <a href="#privateShowing">II</a>
+        <a href="#privateShowing">III</a>
+        <a href="#privateShowing">IV</a>
+        <a href="#privateShowing">V</a>
+    </nav>
+
     <!-- ============================================
          HEADER COMPONENT
          - Logo/Title
@@ -134,7 +212,7 @@
 
             <!-- Offering book, embedded -->
             <div class="booklet-embed">
-                <iframe src="portfolio.html" title="The Napier Portfolio offering book"
+                <iframe data-src="portfolio.html" title="The Napier Portfolio offering book"
                         loading="lazy" id="bookletFrame"></iframe>
             </div>
 
@@ -393,10 +471,35 @@
          4. gallery.js (modal logic)
          5. app.js (main controller - initializes all)
          ============================================ -->
+    <!-- App tab bar (mobile only) -->
+    <nav class="app-tabbar" aria-label="App navigation">
+        <a href="index.html" aria-current="page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Book
+        </a>
+        <a href="macon.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Macon
+        </a>
+        <a href="rent.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg>
+            Tools
+        </a>
+        <a href="npv.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            NPV
+        </a>
+        <a href="mailto:bryan@gnpropertygroup.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Inquire
+        </a>
+    </nav>
+
     <script src="js/data.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/contact.js"></script>
     <script src="js/gallery.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/mobile-app.js"></script>
 </body>
 </html>

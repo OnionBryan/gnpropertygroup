@@ -1,0 +1,408 @@
+/* ============================================================
+   MOBILE APP SHELL — ≤768px only
+   The editorial collateral held in one hand. Print furniture
+   as app chrome: ink, paper, gold hairlines, Cormorant, folios.
+   Desktop is untouched.
+   ============================================================ */
+
+:root {
+    --app-ink: #14110e;
+    --app-umber: #2a2622;
+    --app-paper: #f7f3ec;
+    --app-paper-deep: #efe8dc;
+    --app-gold: #9a7b4f;
+    --app-gold-line: #b8956a;
+    --app-alabaster: #fdfbf7;
+    --app-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --app-sans: "DM Sans", system-ui, sans-serif;
+    --tabbar-h: calc(58px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Everything in this file activates only on phones */
+.app-tabbar,
+.showing-deck,
+.showing-rail,
+.inquire-pill,
+.inquire-sheet,
+.inquire-scrim,
+.kpi-strip { display: none; }
+
+@media (max-width: 768px) {
+
+    /* ---------- Cross-document page turns ---------- */
+    /* (Chrome 126+/Safari 18.2+; others navigate normally) */
+
+    /* ---------- App tab bar ---------- */
+    .app-tabbar {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 1200;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        background: var(--app-paper);
+        border-top: 1px solid var(--app-gold-line);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        height: var(--tabbar-h);
+    }
+
+    .app-tabbar a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        text-decoration: none;
+        color: #6b635a;
+        font-family: var(--app-sans);
+        font-size: 0.56rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .app-tabbar a svg {
+        width: 20px; height: 20px;
+        stroke-width: 1.4;
+    }
+
+    .app-tabbar a[aria-current="page"] { color: var(--app-ink); }
+
+    .app-tabbar a[aria-current="page"]::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 50%;
+        transform: translateX(-50%);
+        width: 22px; height: 2px;
+        background: var(--app-gold);
+    }
+
+    .app-tabbar a:active { color: var(--app-gold); }
+
+    /* Page bodies breathe above the bar */
+    body.has-tabbar { padding-bottom: var(--tabbar-h); }
+
+    /* Desktop navigation retires on phones */
+    body.has-tabbar .sticky-nav,
+    body.has-tabbar .site-header { display: none !important; }
+    body.has-tabbar { padding-top: 0 !important; }
+
+    /* rent.html keeps its section strip, pinned to the true top */
+    body.has-tabbar .sticky-nav.section-nav { display: flex !important; top: 0; }
+
+    /* ============================================================
+       THE PRIVATE SHOWING — homepage becomes the book
+       ============================================================ */
+    .showing-deck { display: block; background: var(--app-ink); }
+
+    /* The desktop portfolio presentation stands down */
+    body.has-showing .hero,
+    body.has-showing .portfolio-section { display: none; }
+
+    .leaf-page {
+        position: relative;
+        height: 100svh;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        overflow: hidden;
+        background: var(--app-ink);
+    }
+
+    .leaf-page img.leaf-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .leaf-page::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg,
+            rgba(20, 17, 14, 0.35) 0%,
+            rgba(20, 17, 14, 0) 30%,
+            rgba(20, 17, 14, 0.08) 55%,
+            rgba(20, 17, 14, 0.55) 100%);
+        pointer-events: none;
+    }
+
+    /* Paper plate over the photo's lower third */
+    .leaf-plate {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: var(--tabbar-h);
+        z-index: 2;
+        background: var(--app-paper);
+        border-top: 1px solid var(--app-gold-line);
+        padding: 1rem 1.15rem calc(1rem + 2px);
+        color: var(--app-ink);
+        text-decoration: none;
+        display: block;
+    }
+
+    .leaf-plate .kicker {
+        font-family: var(--app-sans);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--app-gold);
+        margin-bottom: 0.35rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    .leaf-plate .kicker .folio { color: #6b635a; letter-spacing: 0.2em; }
+
+    .leaf-plate h2 {
+        font-family: var(--app-serif);
+        font-weight: 500;
+        font-size: 1.85rem;
+        line-height: 0.98;
+        letter-spacing: -0.02em;
+        color: var(--app-ink);
+        margin: 0 0 0.55rem;
+    }
+
+    .leaf-plate .specline {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem 1.1rem;
+        border-top: 1px solid #c4b8a8;
+        padding-top: 0.55rem;
+        font-family: var(--app-sans);
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #3d3832;
+    }
+
+    .leaf-plate .specline strong { color: var(--app-ink); font-weight: 600; }
+
+    .leaf-plate .open-cue {
+        margin-top: 0.6rem;
+        font-family: var(--app-sans);
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--app-gold);
+    }
+
+    .leaf-plate:active { background: var(--app-paper-deep); }
+
+    /* Roman rail — the folio marks as progress */
+    .showing-rail {
+        position: fixed;
+        right: 0.55rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1100;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 240ms ease;
+    }
+
+    body.showing-active .showing-rail { opacity: 1; pointer-events: auto; }
+
+    .showing-rail a {
+        font-family: var(--app-serif);
+        font-size: 0.72rem;
+        color: rgba(247, 243, 236, 0.55);
+        text-decoration: none;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        line-height: 1;
+        padding: 0.1rem 0.2rem;
+    }
+
+    .showing-rail a.current {
+        color: #f0e2c8;
+        border-bottom: 1px solid var(--app-gold-line);
+    }
+
+    /* Deck intro whisper on the first leaf */
+    .leaf-page .turn-hint {
+        position: absolute;
+        top: calc(env(safe-area-inset-top, 0px) + 0.9rem);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        font-family: var(--app-sans);
+        font-size: 0.58rem;
+        font-weight: 600;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(247, 243, 236, 0.85);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        white-space: nowrap;
+    }
+
+    /* Page-level snapping while the deck is on screen */
+    html.snap-deck {
+        scroll-snap-type: y proximity;
+    }
+
+    /* ---------- Inquire bottom sheet (brochures) ---------- */
+    .inquire-pill {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 0.85rem);
+        z-index: 1200;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--app-ink);
+        color: #f0e2c8;
+        font-family: var(--app-sans);
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        border: 1px solid var(--app-gold-line);
+        padding: 0.72rem 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .inquire-pill:active { background: #241f1a; }
+
+    .inquire-scrim {
+        position: fixed;
+        inset: 0;
+        z-index: 1290;
+        background: rgba(20, 17, 14, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+    }
+
+    .inquire-sheet {
+        position: fixed;
+        left: 0; right: 0;
+        bottom: 0;
+        z-index: 1300;
+        display: block;
+        background: var(--app-paper);
+        border-top: 1px solid var(--app-gold-line);
+        padding: 0.85rem 1.35rem calc(env(safe-area-inset-bottom, 0px) + 1.35rem);
+        transform: translateY(105%);
+        transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    body.sheet-open .inquire-sheet { transform: translateY(0); }
+    body.sheet-open .inquire-scrim { opacity: 1; pointer-events: auto; }
+
+    .inquire-sheet .grab {
+        width: 44px; height: 2px;
+        background: var(--app-gold-line);
+        margin: 0 auto 1rem;
+    }
+
+    .inquire-sheet h3 {
+        font-family: var(--app-serif);
+        font-weight: 500;
+        font-size: 1.5rem;
+        margin: 0 0 0.25rem;
+        color: var(--app-ink);
+    }
+
+    .inquire-sheet p {
+        font-family: var(--app-sans);
+        font-size: 0.85rem;
+        color: #3d3832;
+        margin: 0 0 1rem;
+        line-height: 1.5;
+    }
+
+    .inquire-sheet .sheet-actions {
+        display: grid;
+        gap: 0.5rem;
+    }
+
+    .inquire-sheet .sheet-actions a,
+    .inquire-sheet .sheet-actions button {
+        font-family: var(--app-sans);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        text-align: center;
+        text-decoration: none;
+        color: var(--app-ink);
+        background: transparent;
+        border: 1px solid var(--app-gold);
+        padding: 0.8rem 1rem;
+        cursor: pointer;
+    }
+
+    .inquire-sheet .sheet-actions a:first-child {
+        background: var(--app-ink);
+        color: #f0e2c8;
+        border-color: var(--app-ink);
+    }
+
+    .inquire-sheet .sign-line {
+        margin-top: 1rem;
+        font-family: var(--app-sans);
+        font-size: 0.58rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #6b635a;
+        text-align: center;
+    }
+
+    /* Brochure toolbar clears the pill zone */
+    body.has-inquire .stack { padding-bottom: 5.5rem; }
+
+    /* ---------- Sticky KPI strip (tool pages) ---------- */
+    .kpi-strip {
+        position: fixed;
+        left: 0; right: 0;
+        bottom: var(--tabbar-h);
+        z-index: 1150;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        background: var(--app-ink);
+        border-top: 1px solid var(--app-gold-line);
+        padding: 0.5rem 0.75rem;
+    }
+
+    .kpi-strip div { text-align: center; }
+
+    .kpi-strip b {
+        display: block;
+        font-family: var(--app-serif);
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: #f0e2c8;
+        line-height: 1.1;
+    }
+
+    .kpi-strip span {
+        font-family: var(--app-sans);
+        font-size: 0.52rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(247, 243, 236, 0.6);
+    }
+
+    body.has-kpis { padding-bottom: calc(var(--tabbar-h) + 52px); }
+
+    /* ---------- Motion respect ---------- */
+    @media (prefers-reduced-motion: reduce) {
+        .inquire-sheet { transition: none; }
+        .inquire-scrim { transition: none; }
+        .showing-rail { transition: none; }
+        html.snap-deck { scroll-snap-type: none; }
+    }
+}

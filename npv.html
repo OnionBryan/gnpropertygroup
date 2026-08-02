@@ -230,8 +230,13 @@
             .controls { padding: 1.15rem; }
         }
     </style>
+    <link rel="stylesheet" href="css/mobile-app.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#14110e">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <style>@view-transition { navigation: auto; }</style>
 </head>
-<body>
+<body class="has-tabbar">
 
 <header class="site-header">
     <div class="site-nav-container">
@@ -1340,5 +1345,35 @@ window.addEventListener('drop', e => {
 el.ltv.max = MODES[mode].maxLtv;
 render();
 </script>
+
+    <!-- App tab bar (mobile only) -->
+    <nav class="app-tabbar" aria-label="App navigation">
+        <a href="index.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Book
+        </a>
+        <a href="macon.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Macon
+        </a>
+        <a href="rent.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg>
+            Tools
+        </a>
+        <a href="npv.html" aria-current="page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            NPV
+        </a>
+        <a href="mailto:bryan@gnpropertygroup.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Inquire
+        </a>
+    </nav>
+    <div class="kpi-strip">
+        <div><b data-kpi-mirror="#mNpv">—</b><span>NPV</span></div>
+        <div><b data-kpi-mirror="#mIrr">—</b><span>IRR</span></div>
+        <div><b data-kpi-mirror="#mEm">—</b><span>Multiple</span></div>
+    </div>
+    <script src="js/mobile-app.js"></script>
 </body>
 </html>
