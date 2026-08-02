@@ -1,0 +1,6 @@
+listening 8765
+[02/Aug/2026 15:51:55] "GET / HTTP/1.1" 200 -
+[02/Aug/2026 15:51:56] "PUT /shot3-2553.mp4 HTTP/1.1" 200 -
+RECEIVED 16788145 -> /Users/bryan/Nopier_Houses/videos/napier-flyer-reel/uploads/shot3-2553.mp4
+[02/Aug/2026 15:51:58] "PUT /shot2-living.mp4 HTTP/1.1" 200 -
+RECEIVED 7822737 -> /Users/bryan/Nopier_Houses/videos/napier-flyer-reel/uploads/shot2-living.mp4
