@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | GN Property Group</title>
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #14110e;
+            --ink-soft: #3d3832;
+            --muted: #6b635a;
+            --rule: #c4b8a8;
+            --paper: #f7f3ec;
+            --gold: #9a7b4f;
+            --gold-line: #b8956a;
+            --serif: "Cormorant Garamond", Georgia, serif;
+            --sans: "DM Sans", system-ui, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { background: #2a2622; }
+        body {
+            font-family: var(--sans);
+            background: #2a2622;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            -webkit-font-smoothing: antialiased;
+        }
+        .sheet {
+            background: var(--paper);
+            color: var(--ink);
+            max-width: 560px;
+            width: 100%;
+            padding: 3.5rem 3rem 3rem;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+            text-align: center;
+        }
+        .kicker {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-family: var(--serif);
+            font-weight: 500;
+            font-size: 2.6rem;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.9rem;
+        }
+        p {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--ink-soft);
+            margin-bottom: 2rem;
+        }
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--rule);
+            padding-top: 1.75rem;
+        }
+        .links a {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink);
+            border: 1px solid var(--rule);
+            padding: 0.6rem 1rem;
+            text-decoration: none;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+        .links a:hover { border-color: var(--gold); color: var(--gold); }
+    </style>
+</head>
+<body>
+    <main class="sheet">
+        <p class="kicker">GN Property Group</p>
+        <h1>This page has moved on.</h1>
+        <p>The address you followed isn't part of the portfolio.</p>
+        <nav class="links">
+            <a href="/">Home</a>
+            <a href="/portfolio.html">The Portfolio</a>
+            <a href="/rent.html">Investment Tools</a>
+        </nav>
+    </main>
+</body>
+</html>

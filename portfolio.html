@@ -8,6 +8,36 @@
     <meta name="description" content="The GN Property Group offering book — five holdings, seven historic residences in Macon, Georgia's Napier Heights Historic District. Open the private brochure for each holding.">
     <link rel="canonical" href="https://gnpropertygroup.com/portfolio.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta property="og:title" content="The Napier Portfolio · Offering Book">
+    <meta property="og:description" content="Five holdings, seven historic residences on one street in Macon, Georgia. Turn the pages — each photo opens that holding's private brochure.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gnpropertygroup.com/portfolio.html">
+    <meta property="og:site_name" content="GN Property Group">
+    <meta property="og:image" content="https://gnpropertygroup.com/images/2553-Napier-Ave/72-5W7A7996.jpg">
+    <meta property="og:image:alt" content="2553 Napier Avenue, first holding of the Napier portfolio">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Napier Portfolio · Offering Book">
+    <meta name="twitter:image" content="https://gnpropertygroup.com/images/2553-Napier-Ave/72-5W7A7996.jpg">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "The Napier Portfolio — Offering Book",
+      "url": "https://gnpropertygroup.com/portfolio.html",
+      "description": "Five holdings, seven historic residences in the Napier Heights Historic District, Macon, Georgia.",
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": 5,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "2553 Napier Avenue & Carriage House", "url": "https://gnpropertygroup.com/flyers/2553-napier.html" },
+          { "@type": "ListItem", "position": 2, "name": "2525 Napier Avenue & Cottage", "url": "https://gnpropertygroup.com/flyers/2525-napier.html" },
+          { "@type": "ListItem", "position": 3, "name": "2534 Napier Avenue", "url": "https://gnpropertygroup.com/flyers/2534-napier.html" },
+          { "@type": "ListItem", "position": 4, "name": "2511 Napier Avenue", "url": "https://gnpropertygroup.com/flyers/2511-napier.html" },
+          { "@type": "ListItem", "position": 5, "name": "1045 Patterson Street", "url": "https://gnpropertygroup.com/flyers/1045-patterson.html" }
+        ]
+      }
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -285,6 +315,16 @@
             transform: translateY(-0.22em);
         }
 
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
         /* Embedded in an iframe: no chrome, book fills the frame */
         body.embedded { padding: 0; }
         body.embedded .masthead { display: none; }
@@ -381,6 +421,8 @@
             <button type="button" onclick="window.print()">Print / PDF</button>
         </nav>
     </div>
+
+    <h1 class="sr-only">The Napier Portfolio — Offering Book · Five Holdings in Napier Heights, Macon, Georgia</h1>
 
     <div class="book">
         <div class="track" id="track">

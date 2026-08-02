@@ -10,11 +10,12 @@ Allow: /css/
 Allow: /js/
 Allow: /images/
 
-# Exclude repository utility scripts, notebooks, and markdown docs
+# Exclude repository utility scripts, notebooks, markdown docs, and design labs
 Disallow: /*.sh$
 Disallow: /*.ipynb$
 Disallow: /*.md$
 Disallow: /~*
+Disallow: /craft-lab.html
 
 # XML Sitemap location for search crawlers
 Sitemap: https://gnpropertygroup.com/sitemap.xml
