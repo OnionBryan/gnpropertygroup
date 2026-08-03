@@ -90,6 +90,49 @@
         });
     }
 
+    /* ---------- Slider value balloon (tool pages) ----------
+       While dragging, the control's live value floats above the
+       thumb in serif — the number you're tuning, where your eye is. */
+    if (mirrors.length && mobile.matches) {
+        var balloon = document.createElement('div');
+        balloon.className = 'slider-balloon';
+        balloon.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(balloon);
+        var hideTimer = null;
+
+        var valueFor = function (slider) {
+            var el = document.getElementById(slider.id + 'Val') ||
+                     document.getElementById(slider.id.replace('Slider', 'Value'));
+            return el ? el.textContent : slider.value;
+        };
+
+        var place = function (slider) {
+            var r = slider.getBoundingClientRect();
+            var min = parseFloat(slider.min) || 0;
+            var max = parseFloat(slider.max) || 100;
+            var pct = (parseFloat(slider.value) - min) / (max - min || 1);
+            var thumb = 26;
+            balloon.textContent = valueFor(slider);
+            balloon.style.left = (r.left + pct * (r.width - thumb) + thumb / 2) + 'px';
+            balloon.style.top = r.top + 'px';
+            balloon.classList.add('on');
+            clearTimeout(hideTimer);
+        };
+
+        var hide = function () {
+            hideTimer = setTimeout(function () { balloon.classList.remove('on'); }, 350);
+        };
+
+        document.addEventListener('input', function (e) {
+            if (e.target.matches && e.target.matches('input[type="range"]')) place(e.target);
+        }, false);
+        document.addEventListener('pointerdown', function (e) {
+            if (e.target.matches && e.target.matches('input[type="range"]')) place(e.target);
+        }, true);
+        document.addEventListener('pointerup', hide, true);
+        document.addEventListener('pointercancel', hide, true);
+    }
+
     /* ---------- Service worker ---------- */
     if ('serviceWorker' in navigator && location.protocol === 'https:') {
         window.addEventListener('load', function () {

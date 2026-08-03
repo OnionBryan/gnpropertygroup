@@ -398,11 +398,99 @@
 
     body.has-kpis { padding-bottom: calc(var(--tabbar-h) + 52px); }
 
+    /* ============================================================
+       INSTRUMENTS — tool pages as touch-grade controls
+       ============================================================ */
+
+    /* Sliders you can actually grab: 44px hit target, thicker rail */
+    body.has-kpis input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 44px;
+        padding: 0;
+        background: transparent;
+    }
+
+    body.has-kpis input[type="range"]::-webkit-slider-runnable-track {
+        height: 3px;
+        background: var(--app-gold-line);
+        border-radius: 0;
+    }
+
+    body.has-kpis input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 26px;
+        height: 26px;
+        margin-top: -11.5px;
+        border-radius: 50%;
+        background: var(--app-paper);
+        border: 1.5px solid var(--app-gold);
+        box-shadow: 0 2px 6px rgba(20, 17, 14, 0.35);
+    }
+
+    body.has-kpis input[type="range"]::-moz-range-track {
+        height: 3px;
+        background: var(--app-gold-line);
+    }
+
+    body.has-kpis input[type="range"]::-moz-range-thumb {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--app-paper);
+        border: 1.5px solid var(--app-gold);
+    }
+
+    /* iOS zoom-on-focus prevention */
+    body.has-kpis input[type="number"],
+    body.has-kpis input[type="text"],
+    body.has-kpis select {
+        font-size: 16px;
+    }
+
+    /* npv financing modes read as a segmented control */
+    body.has-kpis .mode-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.4rem;
+    }
+
+    body.has-kpis .mode-row .mode-btn {
+        padding: 0.65rem 0.25rem;
+        font-size: 0.72rem;
+    }
+
+    /* Value balloon while dragging — ink chip, serif figure */
+    .slider-balloon {
+        position: fixed;
+        z-index: 1400;
+        transform: translate(-50%, -130%) scale(0.9);
+        background: var(--app-ink);
+        color: #f0e2c8;
+        font-family: var(--app-serif);
+        font-size: 1.15rem;
+        font-weight: 500;
+        line-height: 1;
+        padding: 0.45rem 0.7rem;
+        border: 1px solid var(--app-gold-line);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 120ms ease, transform 120ms ease;
+        white-space: nowrap;
+    }
+
+    .slider-balloon.on {
+        opacity: 1;
+        transform: translate(-50%, -130%) scale(1);
+    }
+
     /* ---------- Motion respect ---------- */
     @media (prefers-reduced-motion: reduce) {
         .inquire-sheet { transition: none; }
         .inquire-scrim { transition: none; }
         .showing-rail { transition: none; }
         html.snap-deck { scroll-snap-type: none; }
+        .slider-balloon { transition: none; }
     }
 }
