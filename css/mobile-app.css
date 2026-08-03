@@ -109,6 +109,108 @@
         background: var(--app-ink);
     }
 
+    /* ---------- Intro leaf: the cover, held in one hand ---------- */
+    .leaf-intro {
+        position: relative;
+        height: 100svh;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        background: var(--app-paper);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.9rem 0.9rem calc(var(--tabbar-h) + 0.9rem);
+    }
+
+    .leaf-intro .intro-frame {
+        flex: 1;
+        border: 1px solid #c4b8a8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 1.4rem;
+    }
+
+    .leaf-intro .kicker {
+        font-family: var(--app-sans);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--app-gold);
+        margin-bottom: 1rem;
+    }
+
+    .leaf-intro .intro-title {
+        font-family: var(--app-serif);
+        font-weight: 500;
+        font-size: clamp(2.5rem, 12vw, 3.3rem);
+        line-height: 0.96;
+        letter-spacing: -0.02em;
+        color: var(--app-ink);
+        margin: 0;
+        max-width: 11ch;
+    }
+
+    .leaf-intro .intro-sub {
+        font-family: var(--app-serif);
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #3d3832;
+        margin-top: 0.9rem;
+    }
+
+    .leaf-intro .intro-rule {
+        width: 48px;
+        height: 1px;
+        background: var(--app-gold-line);
+        margin: 1.4rem 0;
+    }
+
+    .leaf-intro .intro-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        font-family: var(--app-sans);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #3d3832;
+    }
+
+    .leaf-intro .intro-meta strong { color: var(--app-ink); font-weight: 600; }
+
+    .leaf-intro .intro-cue {
+        margin-top: 2.2rem;
+        font-family: var(--app-sans);
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: #6b635a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .leaf-intro .intro-cue svg {
+        width: 16px; height: 16px;
+        color: var(--app-gold);
+        animation: intro-drift 2.2s ease-in-out infinite;
+    }
+
+    @keyframes intro-drift {
+        0%, 100% { transform: translateY(0); opacity: 0.9; }
+        55% { transform: translateY(6px); opacity: 0.45; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .leaf-intro .intro-cue svg { animation: none; }
+    }
+
     .leaf-page img.leaf-photo {
         position: absolute;
         inset: 0;
@@ -212,6 +314,7 @@
     }
 
     body.showing-active .showing-rail { opacity: 1; pointer-events: auto; }
+    body.showing-active.on-cover .showing-rail { opacity: 0; pointer-events: none; }
 
     .showing-rail a {
         font-family: var(--app-serif);

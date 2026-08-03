@@ -48,6 +48,14 @@
         }, { threshold: 0.15 });
         deckVisible.observe(deck);
 
+        // ...but not on the cover
+        var intro = deck.querySelector('.leaf-intro');
+        if (intro) {
+            new IntersectionObserver(function (entries) {
+                document.body.classList.toggle('on-cover', entries[0].intersectionRatio > 0.4);
+            }, { threshold: [0.4] }).observe(intro);
+        }
+
         // The book opens: name the tapped photo so the brochure
         // cover inherits it (cross-document view transition).
         deck.querySelectorAll('a.leaf-plate').forEach(function (plate) {
